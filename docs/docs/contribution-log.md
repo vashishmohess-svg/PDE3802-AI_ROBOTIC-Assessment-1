@@ -58,7 +58,7 @@ Each contribution should describe the work completed and include evidence where 
 - Both members synchronised their local repositories with the completed Step 0 changes.
 - Step 0 was completed successfully by both members.
 
-## 30 October 2026 — Step 1 Dataset Audit
+## 30–31 October 2026 — Step 1 Dataset Audit
 
 ### Member 1 — Project Lead
 
@@ -66,19 +66,50 @@ Each contribution should describe the work completed and include evidence where 
 - Inspected the dataset structure and confirmed that all three splits contain the eight expected class folders.
 - Prepared `scripts/audit_dataset.py` to perform a read-only dataset audit using Python and Pillow.
 - Installed and verified Pillow in the project's Python virtual environment.
-- Executed the audit and inspected all 1,142 dataset images.
-- Confirmed that all 1,142 images were successfully decoded, with zero invalid or unreadable images and zero unsupported files.
+- Executed the initial audit and inspected all 1,142 dataset images.
+- Confirmed the original image counts: 816 training, 223 validation and 103 testing images.
 - Confirmed that all images use JPEG format, have `.jpg` extensions and have dimensions of 416 × 416 pixels.
 - Performed SHA-256 exact duplicate detection and found zero exact duplicate groups.
-- Confirmed zero reported structure issues and zero reported file issues.
 - Generated the audit results in `results/dataset_audit/`.
-- Prepared the dataset audit report, including dataset source, licence, class distribution, split suitability and audit limitations.
+- Prepared `docs/dataset-audit.md`, documenting the dataset source, licence, class distribution, split suitability and audit limitations.
+- Committed and pushed the initial audit work to the shared GitHub repository.
+- Addressed the requested improvements from Member 2's independent review by adding full image decoding using Pillow's `image.load()`, recursive directory checks and misplaced-file detection.
+- Reran the revised audit and confirmed that all 1,142 images were successfully decoded, with zero invalid images, misplaced files, unexpected directories, exact duplicate groups or reported file issues.
+- Updated the dataset audit report and audit results following the corrections.
 
 **Evidence / Status:**
 
 - Branch: `data/step1-dataset-audit`
+- Initial audit commit: `0b5cb51` — data: add dataset audit and verification results.
+- Pull Request: [PR #2](https://github.com/vashishmohess-svg/PDE3802-AI_ROBOTIC-Assessment-1/pull/2)
 - Script: `scripts/audit_dataset.py`
 - Report: `docs/dataset-audit.md`
-- Results: `results/dataset_audit/audit_summary.json`, `class_counts.csv`, `file_audit.csv` and `duplicates.json`
-- Audit findings: 1,142 images inspected; zero invalid images, unsupported files, exact duplicate groups or reported issues.
-- Status: Audit and report prepared; commit, push and Member 2 independent verification pending.
+- Results: `results/dataset_audit/audit_summary.json`, `class_counts.csv`, `file_audit.csv` and `duplicates.json`.
+- Revised audit findings: 1,142 fully decoded images; zero invalid images, unsupported files, misplaced files, unexpected directories or exact duplicate groups.
+- Status: Corrections prepared and revised audit completed; updated commit and Member 2's final review pending.
+
+### Member 2 — Independent Dataset Verification
+
+- Updated their local repository and checked out Member 1's Step 1 audit branch.
+- Independently reran the dataset verification using their own local dataset.
+- Confirmed the overall total of 1,142 images and all 24 class/split counts.
+- Independently checked full image decoding using Pillow's `image.load()` and confirmed zero decoding failures.
+- Confirmed that all images were JPEG files with dimensions of 416 × 416 pixels.
+- Confirmed zero exact duplicate groups and no unexpected nested directories or misplaced files.
+- Compared the independent audit results with Member 1's results and confirmed that they matched, apart from the audit timestamp.
+- Reviewed Member 1's Pull Request #2 and submitted a Request changes review identifying improvements to full image decoding, recursive structure checks and contribution-log accuracy.
+
+**Evidence / Status:**
+
+- Independent verification: Completed.
+- Pull Request review: Request changes submitted successfully.
+- Final approval: Pending Member 1's corrections and updated review.
+
+### Step 1 Integration Status
+
+- Member 1's initial audit commit and pull request were completed.
+- Member 2's independent dataset verification was completed.
+- Member 1 has addressed Member 2's requested corrections, including full image decoding and recursive structure checks.
+- The revised audit has been executed successfully, and the audit report and results have been updated. The updated changes are awaiting commit and Member 2's final review.
+- Pull Request #2 remains open and must receive Member 2's final review and approval before merging.
+- Member 2's verification document and final Step 1 integration remain pending.

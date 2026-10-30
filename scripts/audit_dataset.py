@@ -52,55 +52,47 @@ print(f"Audit output:     {OUTPUT_DIR}")
 print(f"Audit started:    {audit_time}")
 print()
 
-
 # --------------------------------------------------
 # 3. Check the dataset directory structure
 # --------------------------------------------------
 
 structure_issues = []
+misplaced_files = []
 
-if not DATASET_DIR.exists():
+if not DATASET_DIR.is_dir():
     raise FileNotFoundError(
         f"Dataset directory not found: {DATASET_DIR}"
     )
 
-actual_splits = {
-    item.name
-    for item in DATASET_DIR.iterdir()
-    if item.is_dir()
+# Define all expected split and class directories.
+expected_split_dirs = {
+    DATASET_DIR / split
+    for split in SPLITS
 }
 
-for split in SPLITS:
-    if split not in actual_splits:
-        structure_issues.append(
-            f"Missing split directory: {split}"
-        )
+expected_class_dirs = {
+    DATASET_DIR / split / class_name
+    for split in SPLITS
+    for class_name in EXPECTED_CLASSES
+}
 
-unexpected_splits = actual_splits - set(SPLITS)
-
-for split in sorted(unexpected_splits):
-    structure_issues.append(
-        f"Unexpected split directory: {split}"
-    )
+expected_directories = (
+    expected_split_dirs | expected_class_dirs
+)
 
 print("DATASET STRUCTURE")
 print("-" * 65)
 
+# Check that every expected split and class folder exists.
 for split in SPLITS:
     split_path = DATASET_DIR / split
 
     if not split_path.is_dir():
         print(f"{split}: MISSING")
+        structure_issues.append(
+            f"Missing split directory: {split}"
+        )
         continue
-
-    actual_classes = {
-        item.name
-        for item in split_path.iterdir()
-        if item.is_dir()
-    }
-
-    missing_classes = set(EXPECTED_CLASSES) - actual_classes
-    unexpected_classes = actual_classes - set(EXPECTED_CLASSES)
 
     print(f"\n{split}:")
 
@@ -115,12 +107,24 @@ for split in SPLITS:
                 f"Missing class folder: {split}/{class_name}"
             )
 
-    for class_name in sorted(unexpected_classes):
-        print(f"  Unexpected class folder: {class_name}")
-        structure_issues.append(
-            f"Unexpected class folder: {split}/{class_name}"
-        )
+# Recursively check for unexpected directories and misplaced files.
+for item in sorted(DATASET_DIR.rglob("*")):
 
+    if item.is_dir() and item not in expected_directories:
+        relative_path = item.relative_to(DATASET_DIR).as_posix()
+        parts = item.relative_to(DATASET_DIR).parts
+
+        if len(parts) == 1:
+            issue = f"Unexpected split directory: {relative_path}"
+        elif len(parts) == 2:
+            issue = f"Unexpected class directory: {relative_path}"
+        else:
+            issue = f"Unexpected nested directory: {relative_path}"
+
+        structure_issues.append(issue)
+
+    elif item.is_file() and item.parent not in expected_class_dirs:
+        misplaced_files.append(item)
 
 # --------------------------------------------------
 # 4. Inspect files and count images
@@ -211,13 +215,10 @@ for split in SPLITS:
                 hash_locations[file_hash].append(
                     relative_path
                 )
-
-                # Verify that Pillow can decode the image.
+                # Fully decode the image pixel data and inspect its properties.
                 with Image.open(file_path) as image:
-                    image.verify()
+                    image.load()
 
-                # Reopen the image to inspect its properties.
-                with Image.open(file_path) as image:
                     image_format = image.format
                     width, height = image.size
                     mode = image.mode
@@ -258,31 +259,17 @@ for split in SPLITS:
 
             file_records.append(record)
 
-
 # --------------------------------------------------
 # 5. Identify files outside expected class folders
 # --------------------------------------------------
 
-unexpected_files = []
+for file_path in sorted(misplaced_files):
+    relative_path = file_path.relative_to(PROJECT_ROOT).as_posix()
 
-for split in SPLITS:
-    split_path = DATASET_DIR / split
-
-    if not split_path.is_dir():
-        continue
-
-    for item in split_path.iterdir():
-        if item.is_file():
-            unexpected_files.append(
-                item.relative_to(PROJECT_ROOT).as_posix()
-            )
-
-for file_path in sorted(unexpected_files):
     file_issues.append({
-        "file": file_path,
-        "issue": "File directly inside split directory",
+        "file": relative_path,
+        "issue": "File outside an expected class folder",
     })
-
 
 # --------------------------------------------------
 # 6. Detect exact duplicate images
@@ -348,6 +335,7 @@ for dimensions, count in sorted(dimension_counts.items()):
 print("\n\nDUPLICATE CHECK")
 print("-" * 65)
 print(f"Exact duplicate groups: {len(duplicates)}")
+print(f"Misplaced files: {len(misplaced_files)}")
 
 for duplicate in duplicates:
     print(f"\nSHA-256: {duplicate['sha256']}")
@@ -467,6 +455,7 @@ summary = {
         for (width, height), count in dimension_counts.items()
     },
     "duplicate_groups": len(duplicates),
+    "misplaced_file_count": len(misplaced_files),
     "structure_issues": structure_issues,
     "file_issue_count": len(file_issues),
 }

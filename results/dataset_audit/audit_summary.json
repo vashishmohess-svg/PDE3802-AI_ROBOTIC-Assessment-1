@@ -1,5 +1,5 @@
 {
-    "audit_time": "2026-10-30T23:42:51",
+    "audit_time": "2026-10-31T02:19:38",
     "dataset_location": "dataset",
     "expected_classes": [
         "Bottle",
@@ -36,6 +36,7 @@
         "416x416": 1142
     },
     "duplicate_groups": 0,
+    "misplaced_file_count": 0,
     "structure_issues": [],
     "file_issue_count": 0
 }

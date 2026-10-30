@@ -6,7 +6,7 @@
 
 **Audit owner:** Member 1 — Project Lead
 
-**Audit date:** 30 October 2026
+**Audit date:** 31 October 2026
 
 **Audit branch:** `data/step1-dataset-audit`
 
@@ -53,7 +53,9 @@ Each split contains the following eight class folders:
 
 All eight expected class folders were present in all three splits.
 
-No unexpected split or class folders were identified.
+The revised audit script also performs a recursive check of the dataset directory. It checks for unexpected split folders, unexpected class folders, nested directories and files located outside the expected class folders.
+
+No unexpected directories or misplaced files were identified.
 
 ## 4. Class Distribution
 
@@ -79,7 +81,7 @@ The dataset contains 1,142 images in total:
 
 ## 5. Image Integrity and Properties
 
-The audit script used Python and Pillow to inspect the image files.
+The revised audit script used Python and Pillow to inspect and fully decode the image files.
 
 The results were:
 
@@ -94,10 +96,14 @@ The results were:
 | Images with `.jpg` extension | 1,142 |
 | Image dimensions | 416 × 416 pixels |
 | Exact duplicate groups | 0 |
+| Misplaced files | 0 |
 | Reported structure issues | 0 |
 | Reported file issues | 0 |
 
-All inspected images were successfully opened and decoded. Every image was in JPEG format and had dimensions of 416 × 416 pixels.
+All 1,142 inspected images were successfully opened and fully decoded using Pillow's `image.load()` method. Every image was in JPEG format and had dimensions of 416 × 416 pixels.
+
+The revised audit also checked for files outside the expected class folders. No misplaced files, unexpected directories or file-integrity issues were identified.
+
 
 ## 6. Duplicate Detection
 
@@ -131,7 +137,7 @@ Based on the audit findings, the existing dataset structure and splits are accep
 
 ## 8. Audit Limitations
 
-The audit checked file integrity, image properties, folder structure and exact duplicates.
+The audit checked file integrity through full image decoding, image properties, folder structure, misplaced files and exact duplicates. The revised script also performs recursive directory checks to identify unexpected nested directories and files outside the expected class folders.
 
 However, it did not establish that every image has the correct class label or that every image visually represents its assigned category.
 
@@ -158,9 +164,9 @@ The audit program is stored at:
 
 ## 10. Conclusion
 
-The dataset audit confirmed that the selected dataset contains 1,142 JPEG images across eight office-item classes and three splits.
+The revised dataset audit confirmed that the selected dataset contains 1,142 JPEG images across eight office-item classes and three splits.
 
-All inspected images were successfully decoded, all images had dimensions of 416 × 416 pixels, and no unsupported files, invalid images, exact duplicate groups or reported structure issues were identified.
+All 1,142 inspected images were successfully fully decoded, and all images had dimensions of 416 × 416 pixels. No unsupported files, invalid images, exact duplicate groups, misplaced files or unexpected directories were identified. No reported structure or file issues remained.
 
 The training, validation and testing splits contain 816, 223 and 103 images respectively.
 
@@ -172,4 +178,4 @@ The dataset's class imbalance, relatively small test set and the limitations of 
 
 **Audit prepared by:** Member 1 — Project Lead
 
-**Date:** 30 October 2026
+**Date:** 31 October 2026
