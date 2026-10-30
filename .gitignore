@@ -1,0 +1,72 @@
+# ==========================================
+# Python cache and compiled files
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ==========================================
+# Python virtual environments
+# ==========================================
+.venv/
+venv/
+env/
+ENV/
+
+# ==========================================
+# Jupyter Notebook temporary files
+# ==========================================
+.ipynb_checkpoints/
+
+# ==========================================
+# Python testing and coverage
+# ==========================================
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ==========================================
+# Python packaging and build files
+# ==========================================
+build/
+dist/
+*.egg-info/
+
+# ==========================================
+# Environment variables and secrets
+# ==========================================
+.env
+.env.*
+!.env.example
+
+# ==========================================
+# Operating system temporary files
+# ==========================================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ==========================================
+# Editor and IDE temporary settings
+# ==========================================
+.vscode/
+.idea/
+
+# ==========================================
+# Log and temporary files
+# ==========================================
+*.log
+*.tmp
+*.temp
+
+# ==========================================
+# Temporary model and checkpoint files
+# ==========================================
+*.tmp.h5
+*.tmp.keras
+*.ckpt
+
+# ==========================================
+# Temporary Python notebook exports
+# ==========================================
+.ipynb_checkpoints/
