@@ -1,0 +1,41 @@
+{
+    "audit_time": "2026-10-30T23:42:51",
+    "dataset_location": "dataset",
+    "expected_classes": [
+        "Bottle",
+        "Calculator",
+        "Keyboard",
+        "Mouse",
+        "Mug",
+        "Notebook",
+        "Pencil",
+        "Scissors"
+    ],
+    "splits": [
+        "train",
+        "valid",
+        "test"
+    ],
+    "total_files": 1142,
+    "total_supported_image_files": 1142,
+    "valid_images": 1142,
+    "invalid_images": 0,
+    "unsupported_files": 0,
+    "split_totals": {
+        "train": 816,
+        "valid": 223,
+        "test": 103
+    },
+    "extension_counts": {
+        ".jpg": 1142
+    },
+    "format_counts": {
+        "JPEG": 1142
+    },
+    "dimension_counts": {
+        "416x416": 1142
+    },
+    "duplicate_groups": 0,
+    "structure_issues": [],
+    "file_issue_count": 0
+}

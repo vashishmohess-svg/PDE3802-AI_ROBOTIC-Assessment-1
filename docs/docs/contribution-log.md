@@ -1,5 +1,3 @@
-
-
 # PDE3802 Assessment 1 — Contribution Log
 
 This document records the actual contributions made by each team member throughout the project.
@@ -15,21 +13,8 @@ Each contribution should describe the work completed and include evidence where 
 | 30/10/2026 | Member 1 | Prepared and updated the project README with the project overview, dataset information, folder structure, development stages and dataset attribution. | `README.md` |
 | 30/10/2026 | Member 1 | Prepared the `.gitignore` file to exclude Python temporary files, virtual environments, notebook checkpoints and other unnecessary files. | `.gitignore` |
 | 30/10/2026 | Member 1 | Inspected the existing documentation and identified the need to update the project plan, decisions and contribution log to reflect the agreed Step 0 workflow. | `project-plan.md`, `decisions.md`, `contribution-log.md` |
-| 30/10/2026 | Member 1 | Initialised the local Git repository on the `main` branch. | Local Git repository; initial commit not yet created. |
-
-## Step 0 — Remaining Contributions to Record
-
-The following activities must be added to this log only after they have actually been completed.
-
-| Member | Planned contribution | Evidence to record when completed |
-|---|---|---|
-| Member 1 | Connect the local project to the agreed shared GitHub repository. | Remote URL and successful verification. |
-| Member 1 | Review the project files, stage the required files, create the initial commit and push it. | Commit hash and GitHub repository link. |
-| Member 2 | Verify the development environment and clone the shared repository. | Successful clone and local repository verification. |
-| Member 2 | Configure Git identity and create a separate contribution branch. | Branch name and Git configuration verification. |
-| Member 2 | Make a genuine project contribution, commit it and push the branch. | Commit hash and branch link. |
-| Member 1 | Review Member 2's contribution and merge the approved changes into `main`. | Pull request or merge record and merge commit. |
-| Both members | Pull the updated `main` branch and verify that their local repositories are synchronised. | Git status and repository verification from both computers. |
+| 30/10/2026 | Member 1 | Initialised the local Git repository, connected it to the shared GitHub repository, prepared the project files and created the initial commit. | Initial commit: `3274eba` |
+| 30/10/2026 | Member 1 | Created and pushed the Step 0 contribution-log update after Member 2's pull request was merged. | Commit: `357d8bf` |
 
 ## Contribution Recording Rules
 
@@ -40,7 +25,6 @@ The following activities must be added to this log only after they have actually
 5. Do not invent commit hashes or evidence.
 6. Update this log throughout the project rather than waiting until the final submission.
 7. Record shared work as a joint contribution when both members genuinely participated.
-
 
 ## 30 October 2026 — Step 0 GitHub Collaboration and Integration
 
@@ -67,8 +51,34 @@ The following activities must be added to this log only after they have actually
 
 ### Integration Status
 
-- Member 2's contribution reviewed by Member 1.
-- Dataset counts independently compared and confirmed.
-- Documentation corrections completed.
+- Member 2's contribution was reviewed by Member 1.
+- Dataset counts were independently compared and confirmed.
+- Documentation corrections were completed.
 - Pull Request successfully merged into `main`.
-- Final synchronisation of both members' local repositories pending.
+- Both members synchronised their local repositories with the completed Step 0 changes.
+- Step 0 was completed successfully by both members.
+
+## 30 October 2026 — Step 1 Dataset Audit
+
+### Member 1 — Project Lead
+
+- Created the Step 1 audit branch `data/step1-dataset-audit`.
+- Inspected the dataset structure and confirmed that all three splits contain the eight expected class folders.
+- Prepared `scripts/audit_dataset.py` to perform a read-only dataset audit using Python and Pillow.
+- Installed and verified Pillow in the project's Python virtual environment.
+- Executed the audit and inspected all 1,142 dataset images.
+- Confirmed that all 1,142 images were successfully decoded, with zero invalid or unreadable images and zero unsupported files.
+- Confirmed that all images use JPEG format, have `.jpg` extensions and have dimensions of 416 × 416 pixels.
+- Performed SHA-256 exact duplicate detection and found zero exact duplicate groups.
+- Confirmed zero reported structure issues and zero reported file issues.
+- Generated the audit results in `results/dataset_audit/`.
+- Prepared the dataset audit report, including dataset source, licence, class distribution, split suitability and audit limitations.
+
+**Evidence / Status:**
+
+- Branch: `data/step1-dataset-audit`
+- Script: `scripts/audit_dataset.py`
+- Report: `docs/dataset-audit.md`
+- Results: `results/dataset_audit/audit_summary.json`, `class_counts.csv`, `file_audit.csv` and `duplicates.json`
+- Audit findings: 1,142 images inspected; zero invalid images, unsupported files, exact duplicate groups or reported issues.
+- Status: Audit and report prepared; commit, push and Member 2 independent verification pending.
