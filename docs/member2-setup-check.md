@@ -1,23 +1,23 @@
-
 # Member 2 — Setup Verification
 
 ## Project Information
+
 - Module: PDE3802 Artificial Intelligence in Robotics
 - Assessment: Assessment 1
 - Role: Member 2
 
-
 ## Software Verification
+
 - Visual Studio Code: Working
 - Python: Installed and checked
 - Git: Installed and checked
-- Git username: Rohan311202
-- Git email: Rohanhaulkhory3102@gmail.com
+- Git identity: Configured and verified
 
 ## Repository Verification
+
 - Shared repository: Successfully cloned
 - Working branch: member2-setup
-- Git remote:  verified
+- Git remote: Verified
 
 ## Dataset Verification
 
@@ -40,17 +40,25 @@
 | Notebook | 117 | 27 | 15 |
 | Pencil | 72 | 14 | 10 |
 | Scissors | 126 | 34 | 14 |
-| TOTAL | 816 | 223 | 103 |
+| **TOTAL** | **816** | **223** | **103** |
 
-Total images: 1,142
+**Total images: 1,142**
 
-Comparison with Member 1's audit:
-Pending - original counts not yet located.
+**Comparison with Member 1's audit:**
+
+Completed — all eight class counts and all dataset split totals match Member 1's original audit.
 
 No dataset files were modified.
 
 ## Contribution
-I  cloned the shared repository, configured Git and created a separate working branch.
+
+I cloned the shared repository, configured Git and created a separate working branch named `member2-setup`.
+
+I also documented the software, repository and dataset verification.
 
 ## Final Status
-Setup documentation in progress. Final verification and merge pending.
+
+- Setup verification completed.
+- Dataset counts compared with Member 1's original audit and confirmed to match.
+- Contribution committed and pushed to member2-setup.
+- Pull Request review and merge pending.
