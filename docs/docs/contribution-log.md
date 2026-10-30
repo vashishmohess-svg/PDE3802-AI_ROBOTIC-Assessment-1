@@ -41,3 +41,34 @@ The following activities must be added to this log only after they have actually
 6. Update this log throughout the project rather than waiting until the final submission.
 7. Record shared work as a joint contribution when both members genuinely participated.
 
+
+## 30 October 2026 — Step 0 GitHub Collaboration and Integration
+
+### Member 1 — Project Lead
+
+- Created the initial shared project repository.
+- Committed and pushed the initial project setup and dataset to GitHub.
+- Initial commit: `3274eba` — Initial project setup and dataset.
+- Reviewed Member 2's setup verification document.
+- Independently compared all eight class counts across training, validation and testing against the original dataset audit.
+- Confirmed that all 1,142 image counts matched.
+- Corrected and committed documentation updates on the `member2-setup` branch.
+- Reviewed and merged Member 2's Pull Request into `main`.
+
+### Member 2 — Setup Verification
+
+- Accepted access to the shared GitHub repository.
+- Verified Python, Git and VS Code.
+- Cloned the shared repository.
+- Verified the project structure and dataset.
+- Created `member2-setup` and added `docs/member2-setup-check.md`.
+- Commit: `d35e66a` — docs: add member 2 setup verification.
+- Successfully pushed the contribution to GitHub.
+
+### Integration Status
+
+- Member 2's contribution reviewed by Member 1.
+- Dataset counts independently compared and confirmed.
+- Documentation corrections completed.
+- Pull Request successfully merged into `main`.
+- Final synchronisation of both members' local repositories pending.
