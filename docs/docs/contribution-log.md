@@ -113,3 +113,30 @@ Each contribution should describe the work completed and include evidence where 
 - The revised audit was executed successfully, and the audit report and results were updated. Member 1 committed and pushed the corrections in commit `77fe99e`; Member 2's final verification and approval are pending.
 - Pull Request #2 remains open and must receive Member 2's final review and approval before merging.
 - Member 2's verification document and final Step 1 integration remain pending.
+## 31 October 2026 — Step 1.12 Member 2 Verification Update
+
+This update supersedes the earlier pending statements about PR #2.
+
+### Member 2 — Independent Verification
+
+- Pulled main using git pull --ff-only origin main.
+- Confirmed local main and origin/main at PR #2 merge commit 4dd6336.
+- Created branch docs/step1-member2-verification.
+- Independently confirmed all eight class folders in train, valid and test.
+- Confirmed all 24 class/split counts against Member 1's report: 816 training, 223 validation and 103 testing images; 1,142 total.
+- Confirmed all 1,142 files have .jpg extensions.
+- Fully decoded all images using Python 3.13.14 and Pillow 12.3.0: all JPEG, all 416 x 416 pixels, zero unreadable files.
+- Independently checked SHA-256 hashes: zero exact duplicate groups.
+- Recursively checked directory placement: zero unexpected folders or misplaced files.
+- Personally checked the Roboflow source page: office_home_dataset by stefanpublic, version 1, displayed licence CC BY 4.0.
+- Prepared docs/member2-dataset-verification.md with verified findings and limitations.
+- Performed these checks without modifying dataset images or regenerating Member 1's audit outputs.
+
+### Current Integration Status
+
+- PR #2 is merged at commit 4dd6336; the earlier statement that it remains open is outdated.
+- Member 2's verification document is prepared locally.
+- Commit, push and a separate verification-document PR remain pending.
+- Member 1's review and merge of that PR remain pending.
+- Final synchronization and verification by both members remain pending.
+- Step 1 is not yet fully complete.
