@@ -82,4 +82,11 @@ The independently checked local structure, all class/split counts, image propert
 
 No dataset changes were required by these checks. The existing splits can be retained for subsequent work, with the limitations above documented. The test split should remain reserved for final evaluation.
 
-PR #2 is merged at `4dd6336`. This Member 2 verification document still requires its own pull request, Member 1's review and merge, and final synchronization by both members. Step 1 is not yet fully complete.
+**Integration and completion status:**
+
+- PR #2, containing Member 1's dataset audit, was successfully merged into `main` at commit `4dd6336`.
+- PR #3, containing this independent Member 2 verification document and the contribution-log update, was successfully merged into `main` at commit `41746fb`.
+- Member 1 confirmed that local `main` and `origin/main` were synchronized at `41746fb`, with a clean working tree.
+- Member 2 independently confirmed that local `main` and `origin/main` were synchronized at `41746fb`, with a clean working tree.
+- Both members completed the final synchronization and verification.
+- Step 1.13 and Step 1 are complete for both members.
