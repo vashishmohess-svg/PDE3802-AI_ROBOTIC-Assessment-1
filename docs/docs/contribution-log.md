@@ -170,3 +170,27 @@ This section records the final integration of the Member 2 dataset verification 
 - The dataset remains unchanged following the audit and independent verification.
 - Step 1.13 — Final synchronization: completed.
 - **Step 1 — Dataset audit and independent verification: completed by both members.**
+
+## 1 November 2026 — Classifier Requirements Revision Following Member 2 Review
+
+### Member 1 — Project Lead
+
+- Received and reviewed Member 2's feedback on Pull Request #5.
+- Revised `docs/step2-classifier-requirements.md` to clarify that confidence is returned and displayed when the selected model provides it.
+- Defined the classifier result contract, including predicted class, confidence when available, input source, success/failure status and meaningful error information.
+- Clarified that failed input acquisition, image opening, decoding or classification processing must not return a predicted class.
+- Explicitly documented image-file input and standard-camera input requirements.
+- Added requirements for independent processing of multiple image files, camera-opening and frame-acquisition failure handling, and safe camera-resource release.
+- Added functional requirements FR-01 to FR-10, non-functional requirements NFR-01 to NFR-08, and acceptance criteria AC-01 to AC-16.
+- Added requirement priorities and planned verification stages based on the official project-plan stages.
+- Preserved the eight agreed classification classes, verified dataset counts, existing dataset splits, held-out test policy, CC BY 4.0 attribution and no-ROS decision.
+- Reviewed the revised document structure, illustrative result examples, formatting and Git whitespace checks.
+
+### Review and Integration Status
+
+- Member 2 provided review feedback on PR #5 and requested corrections before approval.
+- The revised requirements document is being prepared for Member 2's second review.
+- PR #5 remains open and has not yet been merged.
+- The requirements-document revision and contribution-log update must be committed and pushed before the second review.
+
+**Status:** Requirements revision prepared; second review and integration pending.
