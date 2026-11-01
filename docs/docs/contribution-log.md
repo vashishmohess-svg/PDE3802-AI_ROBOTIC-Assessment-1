@@ -194,3 +194,25 @@ This section records the final integration of the Member 2 dataset verification 
 - The requirements-document revision and contribution-log update must be committed and pushed before the second review.
 
 **Status:** Requirements revision prepared; second review and integration pending.
+## 1 November 2026 — Member 2 Requirements Review and Design Drafts
+
+### Completed work
+
+- Reviewed Member 1's classifier requirements in PR #5 and provided correction requests.
+- Reviewed revision `d81e4a3` and submitted formal approval.
+- Synchronised local `main` with PR #5 merge commit `3294c1e` and confirmed a clean working tree.
+- Created branch `docs/step2-system-interface-design`.
+- Inspected the existing decisions D001–D012 and official project plan.
+- Confirmed that the requirements' verification-stage references match the official project stages. Official Step 2 remains Environment Setup; this requirements/interface planning activity does not replace it.
+- Prepared `docs/step2-application-interface.md`, covering proposed interaction, file and camera workflows, result fields, conditional confidence, failure handling and safe camera shutdown.
+- Prepared `docs/step2-system-design-outline.md`, covering the proposed mission, task sequence, skills, architecture, data flow, hardware alternatives, handling, safety and assistance.
+- Kept unapproved design choices identified as proposals or open questions. No new approved decisions have been added.
+
+### Current status
+
+- Both design documents were committed as `a75d19c`, pushed on branch `docs/step2-system-interface-design` and submitted through PR #6.
+- Member 1 completed the initial review of PR #6 and requested corrections. Member 2 pushed correction commit 46c18b0 to PR #6 for the second review. Member 1 reviewed it and requested final formatting and status corrections. Member 2 completed and pushed those final corrections in commit 6b96129. PR #6 is now awaiting Member 1 final review and approval. Re-review, approval, merge, joint consistency review and final synchronisation remain pending.
+- The subsequent formal approval of PR #5 and its merge at `3294c1e` supersede the earlier entries stating that PR #5 review and integration were pending. Those earlier entries are retained as historical records.
+- No classifier implementation, model training or physical robot integration was performed during this documentation work.
+- The original dataset, split assignments and audit outputs remain unchanged.
+- The project plan's historical Current Project Status section was identified as outdated and should be considered during joint documentation closeout.
