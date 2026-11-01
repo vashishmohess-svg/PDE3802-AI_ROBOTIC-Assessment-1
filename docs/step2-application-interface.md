@@ -59,8 +59,7 @@ The proposed workflow is:
 A missing, unreadable, unsupported or undecodable file produces a failure result with meaningful error information and no predicted class. A failure during prediction is also reported as failure.
 
 The exact supported external image formats remain open for team agreement. JPG/JPEG and PNG are candidates, not confirmed application capabilities. The audited dataset's JPEG format does not itself establish application format support.
-
-If multiple-file input is provided, each file must receive its own result or failure information. Continuing with later files after one failure is proposed; the final continue-or-stop policy remains open for agreement. Results must never be assigned to the wrong file.
+If multiple-file input is provided, each supplied file must be processed independently and receive its own result or failure information. A failure for one file must not corrupt, replace or be reported as another file's result, or cause another file's processing to fail. Whether the application continues with remaining files or stops the batch after reporting an individual failure remains open for team agreement. Results must never be assigned to the wrong file.
 
 ## 5. Standard-camera workflow
 
@@ -176,7 +175,7 @@ The following are planned checks, not completed tests.
 | Standard-camera frames can be acquired and processed. | FR-03; AC-04 | Step 5 |
 | Camera failures are reported and resources released. | FR-08, FR-10; AC-10, AC-11 | Steps 5 and 7 |
 | Multiple files remain independent if that extension is provided. | FR-02; AC-03 | Step 7 |
-| Usage instructions are understandable and reproducible on both computers. | NFR-02, NFR-03, NFR-07; AC-12, AC-13 | Steps 5, 8 and 11 |
+| Usage instructions are understandable and reproducible on both computers. | NFR-02, NFR-03, NFR-07; AC-12, AC-13 | Steps 2, 5, 8 and 11 |
 
 Original dataset files and splits must remain preserved. The held-out test split must not be used for interface development, troubleshooting or model selection; its role remains final evaluation.
 

@@ -45,8 +45,8 @@ The initial design assumes:
 
 Item dimensions, payload, workspace, lighting, floor conditions and permitted operating speeds require later specification and validation.
 
-Unsupported items, empty scenes and images containing multiple items are outside the classifier's established input assumption. Automatic detection or rejection of these situations is not an approved capability.
-
+Unsupported items, empty scenes and images containing multiple items are outside the classifier's established input assumption. Automatic detection or rejection of these situations is not an approved capability
+The organisation task is non-time-critical: it does not require completion within a strict time limit after the user submits a request. Safe operation and correct task handling take priority over speed. This does not remove the need for responsive stop controls or timely safety responses. No numerical completion-time or frame-rate target is established here.
 ## 4. Proposed mission sequence
 
 1. Receive a request and confirm the permitted operating area.

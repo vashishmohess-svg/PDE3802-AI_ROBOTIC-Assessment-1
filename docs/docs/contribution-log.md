@@ -210,8 +210,9 @@ This section records the final integration of the Member 2 dataset verification 
 
 ### Current status
 
-- Both design documents are local drafts awaiting final content checks, commit, push and a pull request.
-- Member 1's review, any corrections, merge, joint consistency review and final synchronisation remain pending.
+- Both design documents were committed as `a75d19c`, pushed on branch `docs/step2-system-interface-design` and submitted through PR #6.
+- Member 1 completed the initial review of PR #6 and requested corrections. Member 2 is preparing those corrections. Re-review, approval, merge, joint consistency review and final synchronisation remain pending.
+- The subsequent formal approval of PR #5 and its merge at `3294c1e` supersede the earlier entries stating that PR #5 review and integration were pending. Those earlier entries are retained as historical records.
 - No classifier implementation, model training or physical robot integration was performed during this documentation work.
 - The original dataset, split assignments and audit outputs remain unchanged.
 - The project plan's historical Current Project Status section was identified as outdated and should be considered during joint documentation closeout.
