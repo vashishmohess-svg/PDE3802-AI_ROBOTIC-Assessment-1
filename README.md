@@ -250,8 +250,8 @@ Detailed installation instructions, dependency requirements and execution comman
 - The agreed multiple-file processing clarification has been incorporated into the classifier requirements and application-interface documents.
 - The documentation structure has been consolidated into a single `docs/` directory.
 - The project plan and contribution log have been updated to reflect the verified project status.
-- The closeout changes have not yet been committed, pushed or submitted through a pull request.
-- Member 2's independent review, approval and merge of the documentation-closeout pull request remain outstanding.
+- PR #7 — Documentation closeout: submitted from branch `docs/documentation-closeout`. Member 2's initial review identified three outdated current-status statements; corrections have been incorporated into this revision.
+- Member 2's re-review and formal approval, Member 1's merge of PR #7, and final synchronisation by both members remain outstanding.
 
 ### Outstanding development work
 

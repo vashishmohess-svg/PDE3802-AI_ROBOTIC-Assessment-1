@@ -299,7 +299,7 @@ The final submission must include:
 - The documentation files have been consolidated into a single `docs/` directory on branch `docs/documentation-closeout`.
 - The decisions document preserves D001–D012, records D013 and distinguishes open questions from approved decisions.
 - Document statuses, contribution history, project references and the folder structure have been updated on branch `docs/documentation-closeout`.
-- The documentation-closeout changes have not yet been submitted through a pull request or merged into `main`.
+- PR #7 — Documentation closeout: submitted from branch `docs/documentation-closeout`. Member 2's initial review identified three outdated current-status statements, which have been corrected in this revision. Member 2's re-review and formal approval, Member 1's merge, and final synchronisation by both members remain outstanding.
 
 ### Outstanding development stages
 

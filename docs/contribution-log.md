@@ -252,9 +252,9 @@ This section records the joint consistency review and completed documentation co
 - PR #5 — Classifier Requirements: approved and merged at commit `3294c1e`.
 - PR #6 — Application Interface and System Design: approved and merged at commit `b25e047`.
 - Both members previously synchronised their local `main` branches with `origin/main` at `b25e047` and confirmed clean working trees.
-- The documentation-closeout changes are being prepared on branch `docs/documentation-closeout`.
-- The closeout changes have not yet been committed, pushed or submitted through a pull request.
-- Member 2's independent review of the closeout pull request, its approval and merge, and final synchronisation by both members remain outstanding.
+- The documentation-closeout changes were committed as `f6a951f`, pushed to `origin/docs/documentation-closeout` and submitted through PR #7.
+- Member 2 completed an initial review and identified three outdated current-status statements in this contribution log, the project plan and the README. The corrections have been incorporated into this PR #7 revision.
+- Member 2's re-review and formal approval, Member 1's merge of PR #7, and final synchronisation by both members remain outstanding.
 - Official Step 2 — Environment Setup has not started.
 - Classifier implementation, model training, prediction-application implementation and physical robot construction or integration have not started.
 - No dataset images, existing split assignments or dataset-audit outputs were changed during this documentation closeout work.
