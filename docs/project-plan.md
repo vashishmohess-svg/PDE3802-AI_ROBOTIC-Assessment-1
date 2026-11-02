@@ -10,7 +10,7 @@ The implementation must follow the assessment requirements and the technical ins
 
 ## 2. Team Responsibilities
 
-### Member 1 — Dataset and Model Lead
+### Member 1 — Project Lead and Dataset/Model Lead
 
 - Coordinate the initial project setup and shared Git repository workflow.
 - Lead dataset inspection, preparation and documentation.
@@ -84,13 +84,13 @@ Each member must verify their own Python and Git installations and configure Git
 
 Both members have confirmed that they have the same dataset structure and image counts.
 
-The existing training, validation and test splits must be preserved unless the dataset audit identifies a justified reason for changing them.
+The existing training, validation and test splits must be preserved. The completed dataset audit did not identify a reason to change the existing split assignments.
 
 The test dataset must remain separate from training and model selection. It will only be used for the final evaluation.
 
 ## 5. Project Folder Structure
 
-The project will use the following structure:
+The project uses the following structure:
 
 ```text
 1.office-item-classifier/
@@ -101,20 +101,47 @@ The project will use the following structure:
 │   └── test/
 │
 ├── docs/
-│   └── docs/
-│       ├── contribution-log.md
-│       ├── project-plan.md
-│       └── docs/
-│           └── decisions.md
+│   ├── contribution-log.md
+│   ├── dataset-audit.md
+│   ├── decisions.md
+│   ├── member2-dataset-verification.md
+│   ├── member2-setup-check.md
+│   ├── project-plan.md
+│   ├── step2-application-interface.md
+│   ├── step2-classifier-requirements.md
+│   └── step2-system-design-outline.md
 │
 ├── report/
+│   └── .gitkeep
+│
 ├── results/
+│   ├── .gitkeep
+│   └── dataset_audit/
+│       ├── audit_summary.json
+│       ├── class_counts.csv
+│       ├── duplicates.json
+│       └── file_audit.csv
+│
+├── scripts/
+│   └── audit_dataset.py
+│
 ├── src/
+│   └── .gitkeep
+│
 ├── tests/
+│   └── .gitkeep
 │
 ├── .gitignore
 └── README.md
 ```
+
+The `dataset` directory contains the existing training, validation and testing splits. Their class-folder structure and image assignments must remain unchanged.
+
+The `docs` directory contains the project documentation, requirements, interface planning, system design, decisions and contribution records.
+
+The `scripts` directory currently contains the read-only dataset audit script. The `results/dataset_audit` directory contains the generated audit outputs.
+
+The `report`, `src` and `tests` directories are reserved for their respective project work.
 
 The folder structure may be extended as development progresses, but existing project files and dataset folders must not be moved or renamed without an agreed reason.
 
@@ -233,7 +260,7 @@ The report should explain the proposed autonomous office-item organisation syste
 - ROS must not be used.
 - Part B handles one office item per input image or camera frame.
 - The project uses the eight agreed office-item classes.
-- Existing train, validation and test splits must be preserved unless a justified issue is identified.
+- The existing training, validation and test splits must be preserved.
 - The test dataset must remain held out during training and model selection.
 - Git commits must represent meaningful project changes.
 - Both members must use the agreed shared repository.
@@ -253,11 +280,32 @@ The final submission must include:
 
 ## 9. Current Project Status
 
-**Current stage: Step 0 — Project Setup and Git Collaboration**
+**Current stage: Documentation closeout; official Step 2 — Environment Setup has not started.**
 
-The local project folder has been created, the README and `.gitignore` have been prepared, the dataset has been inspected and the local Git repository has been initialised on the `main` branch.
+### Completed stages and integration
 
-The remaining Step 0 work includes completing the initial Git commit and remote setup, verifying Member 2's clone and branch contribution, reviewing and merging that contribution, and confirming that both local repositories are synchronised.
+- Step 0 — Project Setup and Git Collaboration: completed by both members.
+- Step 1 — Dataset Audit and Independent Verification: completed by both members.
+- PR #2 — Member 1 dataset audit: merged at commit `4dd6336`.
+- PR #3 — Member 2 independent dataset verification: merged at commit `41746fb`.
+- PR #5 — Classifier Requirements: approved and merged at commit `3294c1e`.
+- PR #6 — Application Interface and System Design: approved and merged at commit `b25e047`.
+- Both members synchronised their local `main` branches with `origin/main` at `b25e047` and confirmed clean working trees.
 
-Model development will begin only after the required setup and collaboration checks have been completed.
+### Current documentation closeout
 
+- The three planning documents have undergone a joint consistency review.
+- The members agreed to clarify multiple-file result association while leaving the batch continue-or-stop policy unresolved.
+- The documentation files have been consolidated into a single `docs/` directory on branch `docs/documentation-closeout`.
+- The decisions document preserves D001–D012, records D013 and distinguishes open questions from approved decisions.
+- Document statuses, contribution history, project references and the folder structure have been updated on branch `docs/documentation-closeout`.
+- The documentation-closeout changes have not yet been submitted through a pull request or merged into `main`.
+
+### Outstanding development stages
+
+- Official Step 2 — Environment Setup is the next development stage and has not started.
+- Classifier implementation and model training have not started.
+- The prediction application has not been implemented or tested.
+- No physical robot has been constructed or integrated.
+
+Model development and implementation will proceed after the documentation closeout and the required environment checks.

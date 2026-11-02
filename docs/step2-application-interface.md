@@ -2,14 +2,14 @@
 
 **Project:** Autonomous Office Item Organisation System
 **Document owner:** Member 2 — Application and System Design Lead
-**Status:** Draft proposal for Member 1 review
+**Status:** Original planning document reviewed and merged through PR #6 at commit `b25e047`; this documentation-closeout revision remains subject to pull-request review and merge. Proposed interface choices remain subject to agreement; implementation and verification are pending.
 **Requirements baseline:** PR #5, merged at `3294c1e`
 
 ## 1. Purpose and scope
 
 This document proposes how users provide inputs to the classification application and receive results. It follows `docs/step2-classifier-requirements.md`.
 
-This is a planning document. The workflows described below have not yet been implemented or tested. The filename follows the team's requirements/interface planning roadmap; it does not replace official Step 2 — Environment Setup in `docs/docs/project-plan.md`.
+This is a planning document. The workflows described below have not yet been implemented or tested. The filename follows the team's requirements/interface planning roadmap; it does not replace official Step 2 — Environment Setup in `docs/project-plan.md`.
 
 The application will classify one office item per image file or standard-camera frame using these eight labels:
 
@@ -59,7 +59,7 @@ The proposed workflow is:
 A missing, unreadable, unsupported or undecodable file produces a failure result with meaningful error information and no predicted class. A failure during prediction is also reported as failure.
 
 The exact supported external image formats remain open for team agreement. JPG/JPEG and PNG are candidates, not confirmed application capabilities. The audited dataset's JPEG format does not itself establish application format support.
-If multiple-file input is provided, each supplied file must be processed independently and receive its own result or failure information. A failure for one file must not corrupt, replace or be reported as another file's result, or cause another file's processing to fail. Whether the application continues with remaining files or stops the batch after reporting an individual failure remains open for team agreement. Results must never be assigned to the wrong file.
+If multiple-file input is provided, each file must be treated as an independent input and any result or failure information must remain associated with the correct file. A failure for one file must not corrupt, replace or be incorrectly attributed to another file's result. Whether the application continues processing the remaining files or stops the batch after an individual failure remains open for team agreement. Any files not processed must not be presented as successfully classified.
 
 ## 5. Standard-camera workflow
 
@@ -200,7 +200,9 @@ Descriptions marked as proposals are not approved decisions. Only mutually appro
 ## 12. References and review status
 
 - `docs/step2-classifier-requirements.md` — approved requirements merged through PR #5.
-- `docs/docs/project-plan.md` — official stages and team responsibilities.
-- `docs/docs/docs/decisions.md` — existing decisions D001–D012.
+- `docs/project-plan.md` — official stages and team responsibilities.
+- `docs/decisions.md` — project decisions D001–D013.
 
-Member 1 review, joint consistency review and integration of this draft remain pending.
+PR #6, which included this document and the system-design outline, was approved and merged into `main` at commit `b25e047`. Both members subsequently synchronised their local `main` branches at that commit and confirmed clean working trees.
+
+The agreed multiple-file processing clarification has been incorporated in this documentation-closeout revision. Its integration remains subject to the closeout pull request review and merge. The proposals and open questions in Section 11 remain unapproved until separately agreed. Implementation and verification remain pending.

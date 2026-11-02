@@ -137,3 +137,50 @@ The test dataset must not be used to select or tune models.
 
 Documentation must be updated when the project workflow or agreed decisions change.
 
+## D013 — Non-Time-Critical Organisation Task
+
+**Decision:** The Part A organisation activity is not time-critical. There is no strict time limit per action once a turn or command has been established.
+
+**Safety qualification:** The non-time-critical assumption does not remove the need for emergency-stop capability, appropriate fallback behaviour or timely responses to unsafe conditions.
+
+**Timing:** No numerical task-completion-time target is established by this decision.
+
+**Reason:** The Assessment 1 Part A brief explicitly states that the organisation activity is not time-critical. This decision records that requirement while preserving the need for safe operation and appropriate safety responses.
+
+## Open Questions — Not Yet Approved Decisions
+
+The following matters require further team agreement, technical evidence or validation. Listing them here does not constitute approval of a particular solution.
+
+### Application and Input Handling
+
+1. Will the application use a command-line interface, graphical interface or another interaction method?
+2. Which external image formats will be officially supported?
+3. What camera hardware, camera selection method and acquisition method will be used?
+4. What camera-preview and stop controls will be provided?
+5. Will camera operation use manual or continuous frame classification?
+6. What camera retry or recovery behaviour will be implemented?
+7. If multiple-file input is provided, will the application continue processing remaining files or stop the batch after an individual failure?
+
+### Classification and Image Processing
+
+8. How will confidence values be displayed when available?
+9. Will a confidence threshold or uncertain-prediction response be required?
+10. How will images containing no supported item, unsupported objects or multiple items be handled?
+11. What final image dimensions, colour representation, resizing, normalisation and preprocessing will the selected model require?
+
+### Wider Autonomous System
+
+12. What method will be used to find candidate office items?
+13. Which mapping, robot-localisation and item-localisation methods will be selected?
+14. What hardware will be selected for computing, cameras, sensors and the mobile platform?
+15. Will autonomous manipulation be implemented, or will human assistance be required for some items?
+16. How will classification categories be associated with approved storage destinations?
+17. What retry, recovery and mission-completion rules will be used?
+
+### Safety and Performance
+
+18. What safety measures and operating limits will be required for the selected hardware?
+19. How will emergency-stop, obstacle response, handling suitability and fallback behaviour be validated?
+20. Are any additional response-time or frame-rate targets justified by the assessment requirements or technical evidence?
+
+No numerical task-completion-time target is established for the Part A organisation activity. Any proposed classifier response-time or frame-rate target must be considered separately against the Part B requirements and supporting technical evidence, and must be agreed before being treated as a project decision.
