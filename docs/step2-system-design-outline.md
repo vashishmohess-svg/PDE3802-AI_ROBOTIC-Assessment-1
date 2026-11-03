@@ -2,7 +2,7 @@
 
 **Project:** Autonomous Office Item Organisation System
 **Document owner:** Member 2 — Application and System Design Lead
-**Status:** Draft proposal for Member 1 review
+**Status:** Original system-design outline reviewed and merged through PR #6 at commit `b25e047`; this documentation-closeout revision remains subject to pull-request review and merge. System-design proposals remain subject to team agreement and technical validation; implementation and verification are pending.
 **Requirements baseline:** PR #5, merged at `3294c1e`
 
 ## 1. Purpose and planning status
@@ -259,16 +259,20 @@ The following remain open for team agreement or later technical evidence:
 - Safety measures and their validation.
 - Response-time or frame-rate targets, if justified.
 
-Only mutually approved choices should be added as new entries in the decision log. Existing decisions D001–D012 must be preserved.
+Only mutually approved choices should be added as new entries in the decision log. Existing decisions D001–D013 must be preserved.
 
-Member 1 review, joint consistency review, approval of design choices and integration remain pending.
+PR #6, which included this document and the application-interface document, was approved and merged into `main` at commit `b25e047`. Both members subsequently synchronised their local `main` branches at that commit and confirmed clean working trees.
+
+The joint consistency review found the main technical scope of the three planning documents consistent. The agreed multiple-file processing clarification has been incorporated into the classifier requirements and application-interface documents through this documentation-closeout revision.
+
+The design proposals and open questions listed above remain unapproved until explicitly agreed and, where necessary, technically validated. No physical robot construction, system implementation or system testing is claimed as completed.
 
 ## 15. References
 
 - `docs/step2-classifier-requirements.md`
 - `docs/step2-application-interface.md`
-- `docs/docs/project-plan.md`
-- `docs/docs/docs/decisions.md`
+- `docs/project-plan.md`
+- `docs/decisions.md`
 - `docs/dataset-audit.md`
 - `docs/member2-dataset-verification.md`
 - `results/dataset_audit/`

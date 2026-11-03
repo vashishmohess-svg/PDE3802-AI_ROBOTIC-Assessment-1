@@ -50,7 +50,7 @@ The eight object categories are:
 
 ### 3.2 Dataset Distribution
 
-The initial dataset inspection identified the following image counts:
+The completed dataset audit confirmed the following image counts:
 
 | Category | Training | Validation | Testing | Total |
 |---|---:|---:|---:|---:|
@@ -64,9 +64,11 @@ The initial dataset inspection identified the following image counts:
 | Scissors | 126 | 34 | 14 | 174 |
 | **Total** | **816** | **223** | **103** | **1,142** |
 
-The inspected dataset contains 1,142 image files, all in JPG format, with a combined size of approximately 21.04 MB.
+The completed dataset audit verified 1,142 image files, all using the `.jpg` extension. All 1,142 images decoded successfully and measured 416 × 416 pixels.
 
-These figures describe the initial dataset inspection. Further checks may be required to verify image integrity and suitability before model training.
+The audit identified no exact duplicate image groups, unexpected folders or misplaced files. The existing training, validation and test split assignments have been preserved.
+
+The test subset remains held out from training and model selection and is reserved for the final model evaluation.
 
 ### 3.3 Dataset Folder Structure
 
@@ -128,24 +130,51 @@ The project repository is organised as follows:
 ```text
 1.office-item-classifier/
 │
-├── dataset/          # Office-item image dataset
+├── dataset/
+│   ├── train/
+│   ├── valid/
+│   └── test/
 │
-├── docs/             # Project documentation
+├── docs/
+│   ├── contribution-log.md
+│   ├── dataset-audit.md
+│   ├── decisions.md
+│   ├── member2-dataset-verification.md
+│   ├── member2-setup-check.md
+│   ├── project-plan.md
+│   ├── step2-application-interface.md
+│   ├── step2-classifier-requirements.md
+│   └── step2-system-design-outline.md
 │
-├── report/           # Assessment report and written work
+├── report/
+│   └── .gitkeep
 │
-├── results/          # Model outputs, evaluation results and figures
+├── results/
+│   ├── .gitkeep
+│   └── dataset_audit/
+│       ├── audit_summary.json
+│       ├── class_counts.csv
+│       ├── duplicates.json
+│       └── file_audit.csv
 │
-├── src/              # Main project source code
+├── scripts/
+│   └── audit_dataset.py
 │
-├── tests/             # Testing scripts and test cases
+├── src/
+│   └── .gitkeep
 │
-├── .gitignore        # Files and folders excluded from Git
+├── tests/
+│   └── .gitkeep
 │
-└── README.md         # Project overview and documentation
+├── .gitignore
+└── README.md
 ```
 
-Additional files and subfolders may be introduced as development progresses.
+The `dataset` directory contains the existing training, validation and testing splits. The `docs` directory contains project planning, requirements, decisions, audit records and contribution history.
+
+The `scripts` directory currently contains the read-only dataset audit script. The `results/dataset_audit` directory contains the generated dataset audit outputs. The `report`, `src` and `tests` directories are reserved for their respective project work.
+
+Additional files and subfolders may be introduced as development progresses, provided changes are consistent with the agreed project structure and collaboration workflow.
 
 ## 5. Development Tools and Technologies
 
@@ -162,17 +191,20 @@ The Python libraries and frameworks required for image processing, model develop
 
 The project will be developed through the following stages:
 
-1. **Project setup:** Prepare the development environment, project folders and GitHub repository.
-2. **Dataset inspection:** Examine the dataset structure, class distribution and image quality.
-3. **Data preprocessing:** Prepare images for use in the classification model.
-4. **Model development:** Select and implement a suitable classification approach.
-5. **Model training:** Train the model using the training dataset.
-6. **Model validation:** Monitor model performance using the validation dataset.
-7. **Model evaluation:** Evaluate the final model using the test dataset and suitable performance measures.
-8. **System testing:** Test the classification component using appropriate input images.
-9. **Documentation:** Record the implementation, experiments, results and conclusions.
+0. **Step 0 — Project Setup and Git Collaboration:** Establish the project structure, shared repository and collaboration workflow.
+1. **Step 1 — Dataset Audit:** Inspect and independently verify the dataset structure, image counts, image integrity and dataset properties.
+2. **Step 2 — Environment Setup:** Establish and verify the Python development environment and required dependencies.
+3. **Step 3 — Baseline Classifier:** Implement an initial office-item classification model.
+4. **Step 4 — Model Comparison and Selection:** Compare suitable classification approaches and select the final model using validation results.
+5. **Step 5 — Prediction Application:** Develop the application for image-file and standard-camera input.
+6. **Step 6 — Final Held-Out Evaluation:** Evaluate the selected model using the reserved test dataset.
+7. **Step 7 — Robustness and Input-Handling Tests:** Test application behaviour, invalid inputs, processing failures and other relevant conditions.
+8. **Step 8 — Dataset Card and README:** Complete the dataset documentation and update the project README.
+9. **Step 9 — System Design Report:** Complete the report describing the autonomous office-item organisation system.
+10. **Step 10 — Videos:** Prepare the required assessment demonstration videos.
+11. **Step 11 — Final Checks and Release:** Perform final project checks and prepare the submission.
 
-These stages will be updated as the project progresses.
+Each stage will be completed and verified before proceeding to the next stage. The project plan and contribution log will be updated as work progresses.
 
 ## 7. Version Control and Team Collaboration
 
@@ -200,11 +232,36 @@ Detailed installation instructions, dependency requirements and execution comman
 
 ## 9. Project Status
 
-**Current status:** Initial project setup.
+**Current status: Documentation closeout in progress on branch `docs/documentation-closeout`.**
 
-The project repository and basic folder structure have been created. The initial dataset inspection has also been completed.
+### Completed stages and integration
 
-The classification implementation, model training, evaluation and system testing are still to be completed and will be documented in this repository as development progresses.
+- Step 0 — Project Setup and Git Collaboration: completed by both members.
+- Step 1 — Dataset Audit and Independent Verification: completed by both members.
+- PR #2 — Member 1 dataset audit: merged at commit `4dd6336`.
+- PR #3 — Member 2 independent dataset verification: merged at commit `41746fb`.
+- PR #5 — Classifier Requirements: approved and merged at commit `3294c1e`.
+- PR #6 — Application Interface and System Design: approved and merged at commit `b25e047`.
+- Both members synchronised their local `main` branches with `origin/main` at `b25e047` and confirmed clean working trees.
+
+### Current documentation closeout
+
+- The three planning documents have undergone a joint consistency review.
+- The agreed multiple-file processing clarification has been incorporated into the classifier requirements and application-interface documents.
+- The documentation structure has been consolidated into a single `docs/` directory.
+- The project plan and contribution log have been updated to reflect the verified project status.
+- PR #7 — Documentation closeout: submitted from branch `docs/documentation-closeout`. Member 2's initial review identified three outdated current-status statements; corrections have been incorporated into this revision.
+- Member 2's re-review and formal approval, Member 1's merge of PR #7, and final synchronisation by both members remain outstanding.
+
+### Outstanding development work
+
+- Official Step 2 — Environment Setup has not started.
+- Classifier implementation and model training have not started.
+- The prediction application has not been implemented or tested.
+- Final held-out model evaluation has not been performed.
+- No physical robot has been constructed or integrated.
+
+The project will proceed to official Step 2 — Environment Setup after the documentation closeout has been reviewed, approved and merged.
 
 ## 10. Assessment Deliverables
 

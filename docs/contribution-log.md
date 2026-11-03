@@ -216,3 +216,45 @@ This section records the final integration of the Member 2 dataset verification 
 - No classifier implementation, model training or physical robot integration was performed during this documentation work.
 - The original dataset, split assignments and audit outputs remain unchanged.
 - The project plan's historical Current Project Status section was identified as outdated and should be considered during joint documentation closeout.
+
+## 2 November 2026 — Documentation Closeout Review and Consolidation
+
+This section records the joint consistency review and completed documentation consolidation following the approval and merge of PR #6. It supersedes the earlier historical statements that PR #5 and PR #6 were still awaiting review, approval or merge.
+
+### Joint Review and Agreed Clarifications
+
+- Completed a joint consistency review of:
+  - `docs/step2-classifier-requirements.md`
+  - `docs/step2-application-interface.md`
+  - `docs/step2-system-design-outline.md`
+- Confirmed that the three documents consistently describe the eight agreed office-item classes and the one-item-per-image or camera-frame classification scope.
+- Agreed to clarify multiple-file processing: each processed file must retain its own result or failure information, and an individual failure must not corrupt or be incorrectly attributed to another file.
+- Left the batch continue-or-stop behaviour after an individual file failure as an open question. Files not processed must not be presented as successfully classified.
+- Confirmed that the Part A organisation activity is not time-critical, while safety responses, emergency-stop capability and appropriate fallback behaviour remain necessary.
+- Recorded D013 in `docs/decisions.md` to document the non-time-critical Part A requirement and its safety qualification.
+- Added a separate `Open Questions — Not Yet Approved Decisions` section to distinguish unresolved matters from approved decisions. It contains 20 questions grouped by project topic.
+- Preserved decisions D001–D012 and added D013 for the non-time-critical Part A requirement.
+
+### Member 1 — Project Lead
+
+- Created branch `docs/documentation-closeout` from the synchronised `main` branch at commit `b25e047`.
+- Consolidated the documentation structure into a single `docs/` directory using Git file moves.
+- Moved the contribution log, decisions document and project plan to the root of `docs/`, and removed the obsolete empty nested documentation directories after checking their contents.
+- Updated affected document references to the consolidated paths.
+- Updated `docs/step2-classifier-requirements.md` with the agreed multiple-file clarification and an accurate status distinguishing the merged requirements baseline from the pending closeout update.
+- Updated `docs/step2-application-interface.md` and `docs/step2-system-design-outline.md` to reflect the PR #6 merge, joint review and current implementation status.
+- Updated `docs/decisions.md` with D013 and the separate open-questions section.
+- Updated `docs/project-plan.md` with the verified project folder structure, current documentation-closeout status and outstanding development stages.
+- Checked the project documentation for obsolete `docs/docs/` references and ran Git whitespace validation.
+
+### Integration Status
+
+- PR #5 — Classifier Requirements: approved and merged at commit `3294c1e`.
+- PR #6 — Application Interface and System Design: approved and merged at commit `b25e047`.
+- Both members previously synchronised their local `main` branches with `origin/main` at `b25e047` and confirmed clean working trees.
+- The documentation-closeout changes were committed as `f6a951f`, pushed to `origin/docs/documentation-closeout` and submitted through PR #7.
+- Member 2 completed an initial review and identified three outdated current-status statements in this contribution log, the project plan and the README. The corrections have been incorporated into this PR #7 revision.
+- Member 2's re-review and formal approval, Member 1's merge of PR #7, and final synchronisation by both members remain outstanding.
+- Official Step 2 — Environment Setup has not started.
+- Classifier implementation, model training, prediction-application implementation and physical robot construction or integration have not started.
+- No dataset images, existing split assignments or dataset-audit outputs were changed during this documentation closeout work.

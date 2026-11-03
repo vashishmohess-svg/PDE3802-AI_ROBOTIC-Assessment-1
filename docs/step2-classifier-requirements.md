@@ -4,7 +4,7 @@
 
 **Document owner:** Member 1 — Project Lead
 
-**Document status:** Revised draft for team review
+**Document status:** Approved requirements baseline; joint documentation closeout update in progress
 
 **Purpose:** Define the scope, functional and non-functional requirements, input/output contract, priorities, acceptance criteria and future verification stages for the office-item classification component of Part B.
 
@@ -107,7 +107,7 @@ The application must accept an image file for classification.
 - Each input image is expected to contain one office item.
 - The application must check that the file can be accessed, opened and decoded before classification.
 - Missing, unreadable, unsupported or invalid image files must be handled appropriately.
-- Where multiple image files are supplied, each file must be processed independently and must have its own result or failure information.
+- If multiple image files are supplied, each processed file must have its result or failure information associated with the correct file. A failure for one file must not corrupt, replace or be incorrectly attributed to another file's result. The batch continue-or-stop policy after an individual failure remains open for team agreement. Any files not processed must not be presented as successfully classified.
 
 The exact external image formats that the application will accept have not yet been agreed. JPG/JPEG and PNG are possible formats for consideration, but they must not be described as confirmed supported formats until agreed and verified during implementation.
 
@@ -237,7 +237,7 @@ The step numbers refer to the later implementation and verification stages in th
 | ID | Functional requirement | Expected behaviour | Priority | Planned verification stage |
 |---|---|---|---|---|
 | FR-01 | Image-file input | The application must accept an image file as an input for classification. | Must-have | Step 3 — Baseline Classifier |
-| FR-02 | Multiple file inputs | If multiple image files are supplied, each image must be processed independently, one at a time, with its own result or failure information. | Desirable | Step 7 — Robustness and Input-Handling Tests |
+| FR-02 | Multiple file inputs | If multiple image files are supplied, each processed file must be handled independently and its result or failure information must remain associated with the correct file. The batch continue-or-stop policy after an individual failure remains open for team agreement; unprocessed files must not be reported as successfully classified. | Desirable | Step 7 — Robustness and Input-Handling Tests |
 | FR-03 | Standard-camera input | The completed application must provide input from a standard camera for frame-based classification. | Must-have | Step 5 — Prediction Application |
 | FR-04 | One-item classification | Each image or camera frame must be treated as containing one office item for classification. | Must-have | Steps 3, 5 and 7 |
 | FR-05 | Eight-class output | A successful classification must return one of the eight supported office-item classes. | Must-have | Steps 3–6 |
@@ -278,7 +278,7 @@ They are future verification conditions. They do not mean that the classifier, c
 |---|---|---|---|
 | AC-01 | Class list | The classifier's supported output labels must match the eight agreed class names exactly. | Steps 3–6 |
 | AC-02 | Image-file input | A valid, readable image file can be supplied to the classifier for processing. | Step 3 |
-| AC-03 | Multiple files | If multiple files are supplied, each image is processed independently and receives its own result or failure information. | Step 7 |
+| AC-03 | Multiple files | If multiple files are supplied, each processed file receives its own correctly associated result or failure information. Unprocessed files are not reported as successfully classified; the batch continue-or-stop policy remains open for team agreement. | Step 7 |
 | AC-04 | Standard-camera input | The completed application provides a way to obtain frames from a standard camera. | Step 5 |
 | AC-05 | One-item scope | The classifier processes one office item per image or frame and does not claim to perform multi-object detection. | Steps 3, 5 and 7 |
 | AC-06 | Successful result | A successful classification returns the predicted class, input source and success status. | Steps 3 and 5 |
@@ -331,7 +331,7 @@ Examples of failures include:
 
 When processing fails, the application must provide meaningful error information and must not return or display a predicted class for that failed operation.
 
-If multiple image files are supplied, a failure associated with one file must not cause another file to receive an incorrect or unrelated prediction.
+If multiple image files are supplied, each processed file must retain its own result or failure information, correctly associated with that file. A failure for one file must not corrupt, replace or be incorrectly attributed to another file's result. Whether the application continues with remaining files or stops the batch after an individual failure remains open for team agreement. Any files not processed must not be presented as successfully classified.
 
 The current classification scope assumes one supported office item per image or camera frame. Detecting and separating several items in one image is not part of the agreed classifier scope.
 
@@ -405,7 +405,7 @@ A successful result must identify the predicted class, input source and success 
 
 A failed input acquisition or processing operation must return a failure status and meaningful error information, without returning a predicted class.
 
-If multiple image files are supplied, each must be processed independently. Camera-opening and frame-acquisition failures must be handled appropriately, and camera resources must be released safely when camera operation ends.
+If multiple image files are supplied, each processed file must retain its own correctly associated result or failure information. The continue-or-stop policy after an individual failure remains open for team agreement, and files that are not processed must not be presented as successfully classified. Camera-opening and frame-acquisition failures must be handled appropriately, and camera resources must be released safely when camera operation ends.
 
 The existing dataset and its training, validation and testing splits must be preserved. Model development and selection must use the training and validation splits, while the test split must be reserved for final evaluation.
 
@@ -419,4 +419,4 @@ This document defines the expected behaviour and boundaries of the classificatio
 
 **Document prepared by:** Member 1 — Project Lead
 
-**Status:** Revised draft for team review following Member 2's feedback
+**Status:** Approved requirements baseline, formally reviewed and merged through PR #5 at commit `3294c1e`. The agreed multiple-file clarification in this documentation-closeout update remains subject to the closeout pull request's review and merge. Implementation and future verification remain pending.
