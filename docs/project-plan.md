@@ -59,7 +59,7 @@ Both members have installed and verified the agreed Python version and dependenc
 
 Each member must use their own project virtual environment when working on the project. The shared dependency files should be used to maintain consistency between both computers.
 
-Both members must keep their Git identity configured correctly before making commits to the shared repository
+Both members must keep their Git identity configured correctly before making commits to the shared repository.
 
 ROS must not be used, in accordance with the lecturer's instruction. The proposed system design and classification application will therefore use a ROS-independent architecture.
 
@@ -69,7 +69,7 @@ ROS must not be used, in accordance with the lecturer's instruction. The propose
 
 - Dataset name: `office_home_dataset`
 - Creator: `stefanpublic`
-- Source: https://universe.roboflow.com/stefanpublic/office_home_dataset/dataset/1
+- Source: [Roboflow — office_home_dataset, version 1](https://universe.roboflow.com/stefanpublic/office_home_dataset/dataset/1)
 - Version: 1
 - Licence: CC BY 4.0
 - The project uses a selected subset containing eight office-item classes.
@@ -104,15 +104,41 @@ The dataset source and licence must be acknowledged in the project documentation
 
 ## 5. Project Folder Structure
 
-The project uses the following structure:
+The project uses the following repository structure. The displayed root name represents the repository root; the local checkout folder name may differ between team members.
 
 ```text
-1.office-item-classifier/
+repository-root/
 │
 ├── dataset/
 │   ├── train/
+│   │   ├── Bottle/
+│   │   ├── Calculator/
+│   │   ├── Keyboard/
+│   │   ├── Mouse/
+│   │   ├── Mug/
+│   │   ├── Notebook/
+│   │   ├── Pencil/
+│   │   └── Scissors/
+│   │
 │   ├── valid/
+│   │   ├── Bottle/
+│   │   ├── Calculator/
+│   │   ├── Keyboard/
+│   │   ├── Mouse/
+│   │   ├── Mug/
+│   │   ├── Notebook/
+│   │   ├── Pencil/
+│   │   └── Scissors/
+│   │
 │   └── test/
+│       ├── Bottle/
+│       ├── Calculator/
+│       ├── Keyboard/
+│       ├── Mouse/
+│       ├── Mug/
+│       ├── Notebook/
+│       ├── Pencil/
+│       └── Scissors/
 │
 ├── docs/
 │   ├── contribution-log.md
@@ -146,11 +172,13 @@ The project uses the following structure:
 ├── tests/
 │   └── .gitkeep
 │
-├── requirements.txt
 ├── requirements-lock.txt
+├── requirements.txt
 ├── .gitignore
 └── README.md
 ```
+
+The tree reflects the tracked repository files checked with `git ls-files`. The dataset contains 816 tracked training images, 223 tracked validation images and 103 tracked test images. The eight class folders are present under each split.
 
 The `dataset` directory contains the existing training, validation and testing splits. Their class-folder structure and image assignments must remain unchanged.
 
@@ -170,7 +198,7 @@ The folder structure may be extended as development progresses, but existing pro
 
 ### Step 0 — Project Setup and Git Collaboration
 
-Establish a working development environment and a shared repository before beginning model development.
+Establish the initial project structure and shared repository workflow before beginning model development.
 
 The workflow is:
 
@@ -191,7 +219,6 @@ The workflow is:
 - Both members can work using separate Git branches.
 - A contribution from Member 2 can be reviewed and merged.
 - Both members can update their local main branch successfully.
-- Record the dataset size and relevant dataset information., with the dataset size recorded for the dataset card.
 - No credentials, unnecessary temporary files or unintended large files are committed.
 
 ### Step 1 — Dataset Audit
@@ -200,10 +227,13 @@ The workflow is:
 - Confirm the eight classification classes.
 - Check the image counts in each split.
 - Check image formats and image readability.
-- Identify missing, corrupted or incorrectly labelled images.
+- Identify file-level problems, including missing or unreadable images and misplaced files.
+- Record duplicate-file findings.
 - Record the dataset findings.
 - Generate the dataset audit outputs.
 - Have Member 2 independently verify the dataset structure and class counts.
+
+The completed automated audit checked the dataset structure, class counts, image formats and readability, misplaced files and exact byte-identical duplicates. It did not constitute a full manual semantic review of every image label. A targeted visual review of representative images from all eight classes is therefore required as a separate pre-training quality check. This activity is included at the beginning of Step 3.
 
 ### Step 2 — Environment Setup
 
@@ -272,6 +302,7 @@ The work is divided into the following sub-stages:
 
 ### Step 3 — Baseline Classifier
 
+- Before training, visually inspect representative images from all eight classes and record any obvious label-quality issues. Investigate suspected mislabelled images and document any decisions while preserving the existing dataset splits.
 - Develop an initial image classification model.
 - Begin with a suitable baseline approach, such as HOG feature extraction with an SVM classifier.
 - Train the model using the training dataset.
@@ -320,7 +351,7 @@ The work is divided into the following sub-stages:
 
 - Document the dataset source and licence.
 - Describe the eight classes and dataset splits.
-- Record the dataset size and relevant dataset information.
+- Record the total dataset size on disk, image dimensions, image counts for each split, and image counts for each class within each split.
 - Explain the project setup and execution instructions.
 - Document how to provide image files and camera input.
 - Explain the prediction output.
@@ -398,12 +429,12 @@ The final submission must include:
 
 ## 9. Current Project Status
 
-**Current stage: Step 2 — Environment Setup. Technical stages 2.1–2.6 are complete. Step 2.7 — Documentation and Integration is in progress.**
+**Current stage: Step 2 — Environment Setup is complete. Step 3 — Baseline Classifier is next.**
 
 ### Completed stages and integration
 
 - Step 0 — Project Setup and Git Collaboration: completed by both members.
-- Step 1 — Dataset Audit and Independent Verification: completed by both members.
+- Step 1 — Dataset Audit and Independent Verification: completed by both members. The targeted visual label-quality review remains a separate pre-training activity at the beginning of Step 3.
 - Step 2.1 — Repository Baseline: completed.
 - Step 2.2 — Independent Environment Inspection: completed.
 - Step 2.3 — Shared Environment Agreement: completed.
@@ -422,6 +453,7 @@ The final submission must include:
 - PR #7 — Documentation Closeout: merged at commit `fda9951`.
 - PR #8 — Shared Python Dependencies: reviewed and merged at commit `9a985b2`.
 - PR #9 — Resolved Python Dependency Lock File: reviewed and merged at commit `b2e0aaa`.
+- PR #10 — Step 2.7 Environment Setup Documentation and Project Plan: approved and merged at commit `54f7fda`.
 
 Both members independently installed and tested the agreed Python environment. The shared dependency files contain six direct dependencies and 48 pinned package entries in the lock file.
 
@@ -429,33 +461,25 @@ Both members reported successful package imports, TensorFlow CPU execution, SVM 
 
 Both members also reported matching `requirements-lock.txt` SHA-256 hashes:
 
-`99641B5F28BDE103918F0AA1E457E6C1386B6056BA68BF8D85DAFDA5A0A3E11D`
+```text
+99641B5F28BDE103918F0AA1E457E6C1386B6056BA68BF8D85DAFDA5A0A3E11D
+```
 
-### Current Step 2.7 — Documentation and Integration
+### Step 2.7 — Documentation and Integration (Complete)
 
 - Member 1 prepared `docs/step2-environment-setup.md`, documenting the agreed Python environment, hardware information, dependencies, installation procedure, runtime checks, Git integration and member contributions.
-- Member 2 independently reviewed the environment information and confirmed that the technical details were consistent with his recorded environment and verification work.
-- Member 1 committed the environment documentation on branch `member1/step2-environment-documentation` at commit `e9cc509`.
-- Member 1 updated `docs/project-plan.md` to reflect the completed environment work and current project status at commit `5cf78b1`.
-- Both documentation commits were pushed successfully to the shared GitHub repository.
-- PR #10 — Step 2.7: Document environment setup and update project plan — is open and contains both documentation files.
-- Member 2's initial review identified outdated Step 2.7 progress statements in the project plan and environment setup document. The technical environment information was reported as consistent with the recorded verification results.
-- Member 1 corrected the outdated Step 2.7 progress statements in both documentation files following Member 2's initial review.
-- The corrections have been committed and pushed to the existing PR #10 branch for final review.
-- PR #10 is awaiting Member 2's final independent re-review and approval.
+- Member 2 independently reviewed the environment information and completed the final documentation review.
+- Both members successfully synchronised their local `main` branches with `origin/main` after PR #10 was merged.
+- Member 1 confirmed that local HEAD and `origin/main` both referenced `54f7fda`, the working tree was clean, and both documentation files were present.
+- Member 2 independently confirmed the same merge commit, clean working tree and presence of both documentation files.
+- Both members completed the post-merge documentation verification.
 
-**Outstanding Step 2.7 work:**
+**Step 2.7 is complete. Steps 2.1–2.7 have been completed and verified by both members.**
 
-- Obtain Member 2's final independent re-review and approval.
-- Merge PR #10 into `main`.
-- Have both members synchronise their local repositories.
-- Verify that both documentation files are present on `main` and both working trees are clean.
-- Formally close Step 2 after successful integration and verification.
-
+No outstanding technical or environment setup activities remain. This final closeout update records their completion following PR #10 and the successful verification by both members.
 
 ### Outstanding development stages
 
-- Step 2 — Environment Setup: technical installation and verification are complete; formal closure is awaiting documentation review and integration.
 - Step 3 — Baseline Classifier: not started.
 - Step 4 — Model Comparison and Selection: not started.
 - Step 5 — Prediction Application: not started.
@@ -465,6 +489,7 @@ Both members also reported matching `requirements-lock.txt` SHA-256 hashes:
 - Step 9 — System Design Report: final report remains outstanding.
 - Step 10 — Videos: required assessment videos remain outstanding.
 - Step 11 — Final Checks and Release: final integration and submission checks remain outstanding.
+
 No final office-item classifier has been trained or evaluated at this stage. The prediction application has not yet been implemented or tested, and no physical robot has been constructed or integrated.
 
-After the Step 2 documentation has been reviewed, approved and merged, the team can formally close Step 2 and proceed to **Step 3 — Baseline Classifier**.
+The team can now proceed to **Step 3 — Baseline Classifier**.

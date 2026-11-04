@@ -4,8 +4,7 @@
 - **Step:** 2 — Environment Setup
 - **Project lead:** Member 1
 - **Independent verification and review:** Member 2
-- **Current status:** Technical environment setup and cross-computer verification completed; final documentation integration in progress.
-
+- **Current status:** Technical environment setup, cross-computer verification and PR #10 documentation integration completed.
 
 ---
 
@@ -42,31 +41,25 @@ Both members therefore prepared new environments using the same Python release r
 | Processor | Intel Core i5-8265U | Intel Core i5-1335U |
 | CPU cores | 4 | 10 |
 | Logical processors | 8 | 12 |
-| Recorded RAM | 11.88 GB | 7.64 GB |
+| Physical RAM reported by Windows at inspection | 11.88 GB | 7.64 GB |
 | Graphics | Intel UHD Graphics 620 and Radeon 520 | Intel UHD Graphics |
 | Available C: drive space at inspection | 240.53 GB | 102.48 GB |
 
-The hardware inspection was useful because the two computers have different processing capabilities and available memory. In particular, Member 2's computer has less recorded RAM. This needs to be considered during later model experiments, especially when selecting model sizes and batch sizes. The team should use manageable experiments and avoid assuming that both computers will perform at the same speed.
+The hardware inspection was useful because the two computers have different processing capabilities and available memory. In particular, Member 2's computer has less usable physical memory reported by Windows. This needs to be considered during later model experiments, especially when selecting model sizes and batch sizes. The team should use manageable experiments and avoid assuming that both computers will perform at the same speed. The memory and free-space figures are measurements recorded at the time of inspection and may change.
 
 ## 3. Python version selection
 
 The team selected **Python 3.13.17, 64-bit** as the common Python version for the project.
 
-Both members installed and verified this version independently.
+Both members installed and verified this version independently. Python 3.13.17 was selected because it was the final Python 3.13 release with official Windows installer binaries. Python 3.13.18 was subsequently released on 25 October 2026 as a source-only security release, without a newer Windows installer. TensorFlow 2.21.0 provides a Windows x64 wheel for CPython 3.13. The team therefore retained the tested Python 3.13.17 Windows installation as the common project interpreter. This is a reproducibility decision based on the Windows-installable version tested by both members; it does not mean that 3.13.17 is the newest upstream source release or contains every change in 3.13.18. The interpreter choice should be reassessed before any production or externally exposed deployment.
 
-The verified Python executable paths were:
-
-**Member 1**
+The verified Python installation path on each computer follows this structure:
 
 ```text
-C:\Users\Veeresh.Mohess\AppData\Local\Programs\Python\Python31317\python.exe
+%LOCALAPPDATA%\Programs\Python\Python31317\python.exe
 ```
 
-**Member 2**
-
-```text
-C:\Users\Nishant\AppData\Local\Programs\Python\Python31317\python.exe
-```
+Each member has this installation structure under their own Windows user profile.
 
 Both members confirmed:
 
@@ -81,9 +74,7 @@ The previous virtual environments were archived rather than reused. Each member 
 
 The following PowerShell commands show how the environment can be recreated in a fresh project checkout. They explicitly select and verify Python 3.13.17 before creating the virtual environment. The installation command uses the shared `requirements-lock.txt` file so that the complete pinned package set is installed.
 
-These commands are provided as reproduction instructions and are not intended to claim that both members used this exact command sequence during the original environment creation.
-
-Run the commands from the project root in the VS Code PowerShell terminal:
+These commands are provided as reproduction instructions and are not intended to claim that both members used this exact command sequence during the original environment creation. Run them from the project root in the VS Code PowerShell terminal. The commands assume that a `.venv` directory does not already exist in the fresh checkout.
 
 ```powershell
 # Locate the Python 3.13.17 installation
@@ -99,6 +90,11 @@ $pythonVersion = & $python31317 --version
 
 if ($pythonVersion -ne "Python 3.13.17") {
     throw "The selected interpreter is not Python 3.13.17."
+}
+
+# Check that a virtual environment does not already exist
+if (Test-Path .\.venv) {
+    throw "A .venv directory already exists. Use the existing environment or inspect it before creating another one."
 }
 
 # Create the project virtual environment
@@ -154,9 +150,7 @@ Keras is installed as part of the TensorFlow dependency set. Both members verifi
 
 ### 4.2 NumPy version decision
 
-The team selected `numpy==2.1.3` as a conservative version for the shared TensorFlow environment. The TensorFlow 2.21 release requirements-updater information indicated a NumPy range below 2.2.0. The team therefore used NumPy 2.1.3 rather than retaining the newer NumPy version found in Member 2's original environment.
-
-This provided a common version for both computers and avoided unnecessary differences in the main numerical dependency.
+The TensorFlow 2.21.0 release requirements-updater specifies NumPy `>=2.0.0` and `<2.2.0`. The team selected `numpy==2.1.3`, which falls within that range and was successfully installed and tested in both project environments. This provided a common NumPy version for both computers and avoided unnecessary differences in the main numerical dependency.
 
 ### 4.3 Dependency lock file
 
@@ -214,9 +208,7 @@ The checks confirmed:
 - A TensorFlow CPU device was detected.
 - A simple TensorFlow calculation returned `6`.
 
-The tests used native Windows CPU execution. TensorFlow displayed a warning concerning GPU support on native Windows, but the CPU device was available and the calculation completed successfully.
-
-**GPU acceleration was not configured or tested as part of this environment setup.** The verified TensorFlow execution was CPU-based.
+The tests used native Windows CPU execution. TensorFlow 2.21.0 detected a CPU device, and the simple calculation completed successfully. Native Windows CUDA GPU support is not available for TensorFlow versions later than 2.10. Therefore, GPU acceleration was not configured or tested as part of this project environment.
 
 ### 6.3 scikit-learn test
 
@@ -335,7 +327,7 @@ Member 1's results are supported by the terminal outputs supplied in the project
 
 ## 9. Hardware and platform considerations
 
-Although both computers now use the same Python version and package set, their hardware specifications are different. Member 2's computer has 7.64 GB of recorded RAM, while Member 1's has 11.88 GB.
+Although both computers now use the same Python version and package set, their hardware specifications are different. The physical RAM reported by Windows at inspection was 7.64 GB on Member 2's computer and 11.88 GB on Member 1's computer.
 
 This difference is relevant when the team starts training and comparing models. The experiments should remain manageable on both computers. Small batch sizes and CPU-friendly experiments are suitable starting points, with resource usage monitored during development.
 
@@ -365,7 +357,7 @@ Member 1 prepared the dependency files and submitted the changes for review. Mem
 
 After PR #9 was merged, Member 1 switched back to `main`, pulled the latest changes from `origin/main` and confirmed that the working tree was clean at commit `b2e0aaa`.
 
-The remaining environment documentation work was started on the following branch:
+The documentation changes for PR #10 were prepared on the following branch:
 
 ```text
 member1/step2-environment-documentation
@@ -411,15 +403,18 @@ The package imports, TensorFlow CPU test, SVM smoke test, image decoding, Matplo
 
 The project-plan update has been completed in `docs/project-plan.md` and is included in PR #10.
 
-**PR #10 — Step 2.7: Document environment setup and update project plan — is open for independent review by Member 2.**
+PR #10 — Step 2.7: Document environment setup and update project plan — was approved and merged into `main` at commit `54f7fda`.
 
-Member 1 has completed the requested documentation-status corrections in both files and pushed them to the existing PR #10 branch. Member 2's final independent re-review and approval remain outstanding. After approval, PR #10 must be merged, and both members must synchronise and verify their local repositories.
+During the post-merge verification following PR #10, both members confirmed that:
 
-**The technical setup is complete, but Step 2 should not be formally closed until the corrected PR #10 has been reviewed, approved and merged, and both members' local repositories are synchronised and verified.**
+- At the time of post-merge verification, their local branch was `main`.
+- Local HEAD and `origin/main` referenced commit `54f7fda`.
+- Both documentation files were present.
+- Their working trees were clean.
 
-Once the documentation work is approved and merged, the team can proceed to:
+**Step 2 — Environment Setup, including Steps 2.1–2.7, is complete and verified by both members.**
 
-**Step 3 — Baseline Classifier**
+The team can now proceed to Step 3 — Baseline Classifier.
 
 ---
 
@@ -441,4 +436,20 @@ docs/step2-environment-setup.md
 
 ---
 
-**Document status:** Environment verification completed; documentation review and integration pending.
+## 15. External technical references
+
+The following official or package-maintainer sources were consulted when documenting the selected interpreter, framework compatibility and platform limitations. They support the technical rationale; the installed-version and runtime results recorded above come from the team's own environment checks.
+
+- [Python 3.13.17 release](https://www.python.org/downloads/release/python-31317/) — release information and Windows installer files.
+- [Python 3.13.18 release](https://www.python.org/downloads/release/python-31318/) — source-only security release; confirms that Python 3.13.17 was the last 3.13 release with binary installers.
+- [TensorFlow 2.21.0 release](https://github.com/tensorflow/tensorflow/releases/tag/v2.21.0) — framework release notes.
+- [TensorFlow 2.21.0 on PyPI](https://pypi.org/project/tensorflow/2.21.0/) — published wheel for CPython 3.13 on Windows x86-64.
+- [TensorFlow 2.21.0 requirements-updater file](https://github.com/tensorflow/tensorflow/blob/v2.21.0/ci/official/requirements_updater/requirements.in) — NumPy requirements used in the TensorFlow release requirements-updater.
+- [TensorFlow pip installation guide](https://www.tensorflow.org/install/pip) — Python-version guidance and native-Windows GPU support limitation.
+- [NumPy 2.1.3 on PyPI](https://pypi.org/project/numpy/2.1.3/).
+- [Pillow 13.0.0 on PyPI](https://pypi.org/project/pillow/13.0.0/).
+- [OpenCV-Python 4.14.0.94 on PyPI](https://pypi.org/project/opencv-python/4.14.0.94/).
+- [scikit-learn 1.9.1 on PyPI](https://pypi.org/project/scikit-learn/1.9.1/).
+- [Matplotlib 3.11.2 on PyPI](https://pypi.org/project/matplotlib/3.11.2/).
+
+**Document status:** Records the completed environment setup and the post-merge verification of PR #10 at commit `54f7fda`.
