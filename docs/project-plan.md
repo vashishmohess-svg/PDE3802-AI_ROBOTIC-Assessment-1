@@ -433,23 +433,25 @@ Both members also reported matching `requirements-lock.txt` SHA-256 hashes:
 
 ### Current Step 2.7 — Documentation and Integration
 
-- Member 1 prepared `docs/step2-environment-setup.md`, recording the shared Python environment, dependencies, hardware information, runtime checks, Git integration and member contributions.
-- Member 2 independently reviewed and confirmed their environment setup, technical verification results and contribution descriptions.
-- The environment documentation includes the reproduction procedure, shared JPEG image test, package verification and the distinction between the OpenCV package version and its imported library version.
-- Member 1 committed the environment document on branch `member1/step2-environment-documentation` at commit `e9cc509`.
-- The branch was pushed successfully to `origin/member1/step2-environment-documentation`.
-- The environment documentation has been staged, checked and committed. The next documentation update is the current project-plan status and folder-structure correction.
-- The project-plan update is being prepared on the same documentation branch so both documentation files can be reviewed together.
+- Member 1 prepared `docs/step2-environment-setup.md`, documenting the agreed Python environment, hardware information, dependencies, installation procedure, runtime checks, Git integration and member contributions.
+- Member 2 independently reviewed the environment information and confirmed that the technical details were consistent with his recorded environment and verification work.
+- Member 1 committed the environment documentation on branch `member1/step2-environment-documentation` at commit `e9cc509`.
+- Member 1 updated `docs/project-plan.md` to reflect the completed environment work and current project status at commit `5cf78b1`.
+- Both documentation commits were pushed successfully to the shared GitHub repository.
+- PR #10 — Step 2.7: Document environment setup and update project plan — is open and contains both documentation files.
+- Member 2's initial review identified outdated Step 2.7 progress statements in the project plan and environment setup document. The technical environment information was reported as consistent with the recorded verification results.
+- Member 1 corrected the outdated Step 2.7 progress statements in both documentation files following Member 2's initial review.
+- The corrections have been committed and pushed to the existing PR #10 branch for final review.
+- PR #10 is awaiting Member 2's final independent re-review and approval.
 
 **Outstanding Step 2.7 work:**
 
-- Complete the project-plan status and folder-structure update.
-- Review both documentation files and their staged changes.
-- Prepare one documentation pull request containing the environment document and updated project plan.
-- Obtain Member 2's final independent review and approval.
-- Merge the approved documentation changes into `main`.
+- Obtain Member 2's final independent re-review and approval.
+- Merge PR #10 into `main`.
 - Have both members synchronise their local repositories.
-- Verify that the merged documentation is present and that both working trees are clean.
+- Verify that both documentation files are present on `main` and both working trees are clean.
+- Formally close Step 2 after successful integration and verification.
+
 
 ### Outstanding development stages
 

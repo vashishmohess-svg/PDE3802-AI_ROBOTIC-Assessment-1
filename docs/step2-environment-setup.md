@@ -409,9 +409,13 @@ Both members have successfully completed the technical environment installation 
 
 The package imports, TensorFlow CPU test, SVM smoke test, image decoding, Matplotlib test and dependency consistency checks were reported as successful. The shared dependency files were also reviewed and merged through PR #8 and PR #9.
 
-The remaining work under Step 2.7 is to complete the documentation update, review it and merge the documentation branch. The current status section in `docs/project-plan.md` must also be reconciled with the completed dependency pull requests and the current environment documentation work. The existing project roadmap should be retained rather than unnecessarily rewritten.
+The project-plan update has been completed in `docs/project-plan.md` and is included in PR #10.
 
-**The technical setup is complete, but Step 2 should not be formally closed until the documentation update has been reviewed and merged.**
+**PR #10 — Step 2.7: Document environment setup and update project plan — is open for independent review by Member 2.**
+
+Member 1 has completed the requested documentation-status corrections in both files and pushed them to the existing PR #10 branch. Member 2's final independent re-review and approval remain outstanding. After approval, PR #10 must be merged, and both members must synchronise and verify their local repositories.
+
+**The technical setup is complete, but Step 2 should not be formally closed until the corrected PR #10 has been reviewed, approved and merged, and both members' local repositories are synchronised and verified.**
 
 Once the documentation work is approved and merged, the team can proceed to:
 
