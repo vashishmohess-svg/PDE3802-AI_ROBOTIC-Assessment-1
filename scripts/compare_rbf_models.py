@@ -483,12 +483,14 @@ def main() -> None:
             save_confusion_matrix(candidate_name, matrix)
         )
 
+        # Summary uses "none" for schema consistency.
+        # The actual SVC configuration retains class_weight=None.
         result = {
             "candidate": candidate_name,
             "kernel": "rbf",
             "C": c_value,
             "gamma": "scale",
-            "class_weight": None,
+            "class_weight": "none",
             "probability": False,
             "validation_accuracy": accuracy,
             "validation_macro_f1": macro_f1,

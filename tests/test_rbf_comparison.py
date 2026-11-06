@@ -1,4 +1,3 @@
-
 from __future__ import annotations
 
 import csv
@@ -188,3 +187,38 @@ def test_existing_loader_blocks_test_split():
             PROJECT_ROOT / "dataset",
             "test",
         )
+
+def test_rbf_summary_class_weight_consistency():
+    """Check summary schema without running model experiments."""
+    import ast
+
+    source_path = PROJECT_ROOT / "scripts" / "compare_rbf_models.py"
+    tree = ast.parse(source_path.read_text(encoding="utf-8"))
+
+    result_dicts = [
+        node.value
+        for node in ast.walk(tree)
+        if isinstance(node, ast.Assign)
+        and any(
+            isinstance(target, ast.Name) and target.id == "result"
+            for target in node.targets
+        )
+        and isinstance(node.value, ast.Dict)
+    ]
+
+    assert len(result_dicts) == 1
+
+    summary_fields = {
+        key.value: value
+        for key, value in zip(
+            result_dicts[0].keys,
+            result_dicts[0].values,
+        )
+        if isinstance(key, ast.Constant)
+        and isinstance(key.value, str)
+    }
+
+    assert ast.literal_eval(summary_fields["class_weight"]) == "none"
+
+    for c_value in (0.1, 1.0, 10.0):
+        assert rbf.candidate_parameters(c_value)["class_weight"] is None
