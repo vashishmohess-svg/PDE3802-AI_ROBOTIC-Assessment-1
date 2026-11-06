@@ -1,0 +1,8 @@
+# PDE3802 Assessment 1
+# Development and testing dependencies
+# Runtime dependencies are inherited from requirements-lock.txt
+
+-r requirements-lock.txt
+
+# Test runner: development/testing only
+pytest==9.2.0
