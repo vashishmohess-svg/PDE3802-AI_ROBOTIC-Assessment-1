@@ -15,6 +15,9 @@ Each contribution should describe the work completed and include evidence where 
 | 30/10/2026 | Member 1 | Inspected the existing documentation and identified the need to update the project plan, decisions and contribution log to reflect the agreed Step 0 workflow. | `project-plan.md`, `decisions.md`, `contribution-log.md` |
 | 30/10/2026 | Member 1 | Initialised the local Git repository, connected it to the shared GitHub repository, prepared the project files and created the initial commit. | Initial commit: `3274eba` |
 | 30/10/2026 | Member 1 | Created and pushed the Step 0 contribution-log update after Member 2's pull request was merged. | Commit: `357d8bf` |
+| 6/11/2026 | Member 1 | Implemented and trained the baseline HOG + Linear SVM classifier, generated validation evidence, verified the saved model and submitted the implementation through PR #12. | Commit `6fbae66`; 20 tests passed; validation accuracy 68.58%; macro-F1 0.6497; Git LFS model uploaded successfully. |
+| 6/11/2026 | Member 2 | Independently verified the Step 3 baseline implementation, tests, saved model and validation results, and submitted formal approval on PR #12. | Review branch `review/step3-baseline-pr12`; 20/20 tests passed; model retrieved through Git LFS; validation metrics and confusion matrix reproduced; PR #12 approved. |
+
 
 ## Contribution Recording Rules
 
@@ -258,3 +261,121 @@ This section records the joint consistency review and completed documentation co
 - Official Step 2 — Environment Setup has not started.
 - Classifier implementation, model training, prediction-application implementation and physical robot construction or integration have not started.
 - No dataset images, existing split assignments or dataset-audit outputs were changed during this documentation closeout work.
+
+## 4 November 2026 — Step 2.7 Environment Setup Documentation and Integration
+
+### Member 1 — Project Lead
+
+- Prepared `docs/step2-environment-setup.md`, documenting the agreed Python environment, hardware information, dependencies, installation procedure, runtime checks, Git integration and member contributions.
+- Updated the project documentation to reflect the agreed environment and completed verification activities.
+- Submitted the documentation changes for review through PR #10.
+
+### Member 2 — Independent Review
+
+- Independently reviewed the environment documentation.
+- Checked the agreed Python environment, dependency information and verification records.
+- Completed the final documentation review and approval.
+
+### Final Integration Status
+
+- PR #10 — Step 2.7 Environment Setup Documentation and Project Plan: approved and merged at commit `54f7fda`.
+- Member 1 and Member 2 synchronised their local `main` branches with `origin/main`.
+- Both members confirmed the merged documentation was available and their working trees were clean.
+- Both members completed the post-merge documentation verification.
+- **Step 2.7 — Documentation and Integration: completed.**
+- **Step 2 — Environment Setup: completed by both members.**
+
+This update supersedes the earlier historical statements in the 2 November 2026 documentation closeout entry that Step 2 had not started or that the final integration remained pending.
+
+## 6 November 2026 — Step 3 Baseline Classifier Implementation
+
+### Member 1 — Project Lead
+
+- Implemented the manifest-driven dataset loader in `src/office_item_classifier/dataset.py`.
+- Implemented image preprocessing, including EXIF orientation correction, grayscale conversion and resizing to 128 × 128 pixels.
+- Added 10 dataset-loader tests and successfully verified the complete decoding of 812 training images and 226 validation images.
+- Implemented HOG feature extraction in `src/office_item_classifier/features.py`, producing 8,100 features per image.
+- Added 10 HOG feature-extraction tests covering descriptor dimensions, numerical validity, deterministic extraction and invalid inputs.
+- Successfully ran the complete automated test suite, with all 20 tests passing.
+- Implemented `scripts/train_baseline.py` and trained the initial HOG + Linear SVM classifier using 812 training images.
+- Evaluated the model using 226 validation images, achieving 68.58% accuracy and 0.6497 macro-F1.
+- Generated the validation metrics, per-class classification reports, confusion matrix and saved model under `results/baseline/`.
+- Implemented `scripts/verify_baseline.py` and successfully reloaded the saved model.
+- Reproduced the validation accuracy, macro-F1 and confusion matrix from the reloaded model.
+- Confirmed that probability estimates are not enabled and that the held-out test dataset was not accessed.
+- Prepared `docs/step3-baseline-results.md` to document the baseline configuration, evaluation results and limitations.
+- Updated the project plan and visual-review documentation to reflect the approved D014 logical split and completed baseline work.
+- Configured Git LFS to track `.joblib` model files and verified that the baseline model matches the LFS tracking rule.
+
+**Evidence / Status:**
+
+- Branch: `feature/step3-baseline-classifier`.
+- Dataset loader: `src/office_item_classifier/dataset.py`.
+- HOG implementation: `src/office_item_classifier/features.py`.
+- Training script: `scripts/train_baseline.py`.
+- Verification script: `scripts/verify_baseline.py`.
+- Automated tests: 20 passed.
+- Validation accuracy: 68.58%.
+- Validation macro-F1: 0.6497.
+- Baseline outputs: `results/baseline/`.
+- Detailed results: `docs/step3-baseline-results.md`.
+- Git commit: `6fbae66` — baseline HOG + Linear SVM implementation and supporting files.
+- Pull Request: [PR #12](https://github.com/vashishmohess-svg/PDE3802-AI_ROBOTIC-Assessment-1/pull/12).
+- Git LFS: configured and successfully uploaded the 48,560,430-byte Joblib model.
+- Member 2's independent baseline code and model verification: completed; formal approval submitted on PR #12.
+- Final PR merge and repository synchronisation: pending.
+
+### AI Assistance Record
+
+ChatGPT provided code drafts, test scaffolding, debugging guidance and documentation suggestions. Member 1 executed the commands in the local project environment, inspected the outputs, applied corrections and verified the implementation. No percentage of AI contribution is claimed.
+
+**### Member 2 — Independent Baseline Verification**
+
+Member 2 completed the independent verification of the Step 3 baseline implementation on 6 November 2026 and submitted formal approval on PR #12.
+
+- Checked out the separate review branch `review/step3-baseline-pr12`.
+- Successfully retrieved the saved model through Git LFS and verified its size as 48,560,430 bytes.
+- Independently ran the complete automated test suite: 20/20 tests passed.
+- Reloaded the saved model and verified the Linear SVM configuration with `C = 1.0`.
+- Confirmed the eight classification classes and D014-approved manifest.
+- Confirmed 812 effective training images and 226 validation images.
+- Regenerated validation predictions and reproduced 68.58% accuracy and 0.6497 macro-F1.
+- Confirmed that the saved confusion matrix matched exactly.
+- Confirmed that the 103 held-out test images were not accessed.
+- Reviewed the dataset loader, HOG feature extraction, training and verification scripts, tests and supporting documentation.
+- Submitted a formal approved GitHub review on PR #12.
+- Identified one non-blocking documentation correction: the project plan still stated that the Git LFS model upload was pending.
+
+**Evidence / Status:**
+
+- Pull Request: https://github.com/vashishmohess-svg/PDE3802-AI_ROBOTIC-Assessment-1/pull/12
+- Review branch: `review/step3-baseline-pr12`.
+- Reviewed commit: `6fbae66`.
+- Automated tests: 20/20 passed.
+- Git LFS model retrieval: successful.
+- Validation metrics and confusion matrix: independently reproduced.
+- GitHub review: approved.
+- Member 2 confirmed a clean working tree and made no source-code, dataset, manifest or repository-history changes.
+
+Member 2's local verification evidence is retained in their temporary folder `PDE3802_PR12_Verification`.
+
+### Step 3 Integration Status**
+
+The initial baseline implementation, training, validation and saved-model verification have been completed by Member 1.
+
+- The baseline source code, tests, training script, verification script, saved model and validation results were committed in `6fbae66`.
+- Git LFS tracking was configured, and the 48,560,430-byte Joblib model was successfully uploaded.
+- PR #12 was submitted for integration.
+- Member 2 independently retrieved and verified the saved model, ran all 20 automated tests successfully, reproduced the validation metrics and confusion matrix, and submitted formal approval on PR #12.
+- One non-blocking documentation correction was identified: the project plan still described the Git LFS upload as pending.
+
+**Remaining integration work:**
+
+- Correct the outdated Git LFS statement in the project plan and finalise the contribution-log update.
+- Commit and push the documentation corrections to PR #12.
+- Confirm whether Member 2's approval remains active after the additional commit.
+- Merge PR #12.
+- Both members synchronise their local `main` branches with `origin/main`.
+- Both members verify the merged model, automated tests and saved-model validation results, and confirm clean working trees.
+
+Step 3 remains in progress until the documentation correction, PR merge and final synchronisation are completed.

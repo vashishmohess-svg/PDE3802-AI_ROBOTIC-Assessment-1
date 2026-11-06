@@ -1,0 +1,14 @@
+﻿Group_ID,Class,Images,Relationships,Supported_Edges,Unresolved_Edges,Original_Train,Original_Valid,Original_Test,Proposed_Split,Images_Reassigned
+G001,Scissors,7,15,15,0,3,2,2,train,4
+G002,Scissors,6,9,9,0,4,1,1,valid,5
+G003,Notebook,6,8,0,8,4,2,0,train,2
+G004,Notebook,5,4,1,3,3,1,1,train,2
+G005,Notebook,4,3,0,3,3,0,1,valid,4
+G006,Notebook,2,1,1,0,1,0,1,test,1
+G007,Calculator,2,1,1,0,1,1,0,train,1
+G008,Calculator,2,1,1,0,1,1,0,valid,1
+G009,Mouse,2,1,1,0,1,1,0,train,1
+G010,Mouse,2,1,1,0,1,1,0,valid,1
+G011,Notebook,2,1,0,1,1,1,0,valid,1
+G012,Notebook,2,1,0,1,1,1,0,test,2
+G013,Scissors,2,1,1,0,1,1,0,test,2

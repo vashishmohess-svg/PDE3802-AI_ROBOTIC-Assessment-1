@@ -76,12 +76,37 @@ ROS must not be used, in accordance with the lecturer's instruction. The propose
 
 ### Dataset Splits
 
-| Split | Number of images |
+**Original Physical Dataset Folders**
+
+The original dataset folders contain the following image counts:
+
+| Original split | Number of images |
 |---|---:|
-| Training | 816 |
-| Validation | 223 |
+| Training (`train`) | 816 |
+| Validation (`valid`) | 223 |
+| Testing (`test`) | 103 |
+| **Total** | **1,142** |
+
+These counts describe the original physical dataset folders audited in Step 1.
+
+**Approved Logical Dataset Splits — D014**
+
+Following the group-aware dataset review, the approved manifest-based logical allocation is:
+
+| Logical split | Number of images |
+|---|---:|
+| Training allocation | 813 |
+| Validation | 226 |
 | Testing | 103 |
 | **Total** | **1,142** |
+
+The classifier uses the approved manifest:
+
+`docs/evidence/step3.5.5J/step3.5.5K3_full_split_manifest_proposal.csv`
+
+The manifest maps images to their original physical locations and determines their logical assignments. The original dataset folders and image files remain unchanged.
+
+One severely pixelated Pencil image is excluded from model fitting. Therefore, the effective training count is **812 images**.
 
 ### Classification Classes
 
@@ -94,13 +119,13 @@ ROS must not be used, in accordance with the lecturer's instruction. The propose
 7. Pencil
 8. Scissors
 
-Both members have confirmed that they have the same dataset structure and image counts.
+Both members have confirmed the original dataset structure and image counts and participated in the dataset verification process.
 
-The existing training, validation and test splits must be preserved. The completed dataset audit did not identify a reason to change the existing split assignments.
+The original physical dataset folders must remain unchanged. The approved manifest must be used for logical training and validation assignments.
 
-The test dataset must remain separate from training and model selection. It will only be used for the final evaluation.
+The test dataset must remain separate from training and model selection. The 103 logical test images are reserved for final evaluation in Step 6 and must not be accessed during Steps 3 and 4.
 
-The dataset source and licence must be acknowledged in the project documentation and final dataset card.
+The dataset source and CC BY 4.0 licence must be acknowledged in the project documentation and final dataset card.
 
 ## 5. Project Folder Structure
 
@@ -111,34 +136,8 @@ repository-root/
 │
 ├── dataset/
 │   ├── train/
-│   │   ├── Bottle/
-│   │   ├── Calculator/
-│   │   ├── Keyboard/
-│   │   ├── Mouse/
-│   │   ├── Mug/
-│   │   ├── Notebook/
-│   │   ├── Pencil/
-│   │   └── Scissors/
-│   │
 │   ├── valid/
-│   │   ├── Bottle/
-│   │   ├── Calculator/
-│   │   ├── Keyboard/
-│   │   ├── Mouse/
-│   │   ├── Mug/
-│   │   ├── Notebook/
-│   │   ├── Pencil/
-│   │   └── Scissors/
-│   │
 │   └── test/
-│       ├── Bottle/
-│       ├── Calculator/
-│       ├── Keyboard/
-│       ├── Mouse/
-│       ├── Mug/
-│       ├── Notebook/
-│       ├── Pencil/
-│       └── Scissors/
 │
 ├── docs/
 │   ├── contribution-log.md
@@ -150,49 +149,75 @@ repository-root/
 │   ├── step2-application-interface.md
 │   ├── step2-classifier-requirements.md
 │   ├── step2-environment-setup.md
-│   └── step2-system-design-outline.md
+│   ├── step2-system-design-outline.md
+│   ├── step3-visual-label-review.md
+│   ├── step3-baseline-results.md
+│   └── evidence/
+│       └── step3.5.5J/
+│           └── approved dataset split and verification evidence
 │
 ├── report/
 │   └── .gitkeep
 │
 ├── results/
-│   ├── .gitkeep
-│   └── dataset_audit/
-│       ├── audit_summary.json
-│       ├── class_counts.csv
-│       ├── duplicates.json
-│       └── file_audit.csv
+│   ├── dataset_audit/
+│   │   ├── audit_summary.json
+│   │   ├── class_counts.csv
+│   │   ├── duplicates.json
+│   │   └── file_audit.csv
+│   │
+│   └── baseline/
+│       ├── baseline_hog_linear_svm.joblib
+│       ├── run_metadata.json
+│       ├── validation_metrics.json
+│       ├── validation_classification_report.json
+│       ├── validation_classification_report.csv
+│       ├── validation_confusion_matrix.csv
+│       └── validation_confusion_matrix.png
 │
 ├── scripts/
-│   └── audit_dataset.py
+│   ├── audit_dataset.py
+│   ├── train_baseline.py
+│   └── verify_baseline.py
 │
 ├── src/
-│   └── .gitkeep
+│   └── office_item_classifier/
+│       ├── __init__.py
+│       ├── dataset.py
+│       └── features.py
 │
 ├── tests/
-│   └── .gitkeep
+│   ├── test_dataset_loader.py
+│   └── test_hog_features.py
 │
-├── requirements-lock.txt
-├── requirements.txt
+├── .gitattributes
 ├── .gitignore
-└── README.md
+├── README.md
+├── requirements-lock.txt
+└── requirements.txt
 ```
 
-The tree reflects the tracked repository files checked with `git ls-files`. The dataset contains 816 tracked training images, 223 tracked validation images and 103 tracked test images. The eight class folders are present under each split.
+The `dataset` directory contains the original training, validation and test image folders. The original physical dataset structure and image assignments remain unchanged. The approved manifest in `docs/evidence/step3.5.5J/` determines the logical training, validation and held-out test assignments used by the classifier.
 
-The `dataset` directory contains the existing training, validation and testing splits. Their class-folder structure and image assignments must remain unchanged.
+The `docs` directory contains the project plan, decisions, requirements, system design, dataset audit, visual-review documentation, baseline results and supporting evidence.
 
-The `docs` directory contains the project documentation, requirements, interface planning, system design, decisions, environment setup and contribution records.
+The `scripts` directory contains the read-only dataset audit script, the baseline model training script and the saved-model verification script.
 
-The `scripts` directory currently contains the read-only dataset audit script. The `results/dataset_audit` directory contains the generated audit outputs.
+The `src/office_item_classifier` package contains the Python implementation. `dataset.py` handles manifest-driven dataset loading and image preprocessing. `features.py` implements HOG feature extraction.
+
+The `tests` directory contains automated tests for the dataset loader and HOG feature extractor.
+
+The `results/dataset_audit` directory stores the dataset audit outputs. The `results/baseline` directory stores the initial trained model and its validation evidence, including metrics, classification reports and confusion-matrix files.
+
+The `.gitattributes` file configures Git LFS tracking for Joblib model files. The `.gitignore` file excludes unnecessary temporary and environment files.
 
 The `requirements.txt` file records the six direct Python dependencies. The `requirements-lock.txt` file records the complete pinned dependency set.
 
-The `report`, `src` and `tests` directories are reserved for their respective project work.
+The `report` directory is reserved for the final system design report.
 
-The `.venv` directories are local virtual environments and are not part of the shared repository.
+The `.venv` directory is a local virtual environment and is not part of the shared project structure.
 
-The folder structure may be extended as development progresses, but existing project files and dataset folders must not be moved or renamed without an agreed reason.
+This structure may be extended as development progresses. Existing dataset files and established project files must not be moved or renamed without an agreed reason.
 
 ## 6. Development Stages
 
@@ -302,13 +327,106 @@ The work is divided into the following sub-stages:
 
 ### Step 3 — Baseline Classifier
 
-- Before training, visually inspect representative images from all eight classes and record any obvious label-quality issues. Investigate suspected mislabelled images and document any decisions while preserving the existing dataset splits.
-- Develop an initial image classification model.
-- Begin with a suitable baseline approach, such as HOG feature extraction with an SVM classifier.
-- Train the model using the training dataset.
-- Evaluate its performance using the validation dataset.
-- Record the initial results.
-- Keep the test dataset held out.
+The purpose of this stage is to develop and evaluate an initial image-classification model that recognises the eight agreed office-item classes.
+
+**Step 3.1 — Visual and Label Review (Complete)**
+
+- Inspect representative training images from all eight classes.
+- Have both members independently review the selected samples.
+- Investigate suspected image-quality and label issues.
+- Record the review findings.
+- Exclude the severely pixelated Pencil image from model fitting while preserving the original image and dataset folders.
+
+**Step 3.2 — Approved Dataset Allocation (Complete)**
+
+- Use the group-aware, manifest-based logical split approved under decision D014.
+- Preserve the original physical dataset folders and image files.
+- Use 812 eligible training images after the approved Pencil-image exclusion.
+- Use all 226 proposed validation images.
+- Keep all 103 proposed test images held out for Step 6.
+
+**Step 3.3 — Dataset Loader and Image Preprocessing (Complete)**
+
+- Implement manifest-driven dataset loading.
+- Apply EXIF orientation correction.
+- Convert images to grayscale.
+- Resize images to 128 × 128 pixels using OpenCV `INTER_AREA`.
+- Verify that the approved training and validation images can be decoded successfully.
+- Add automated dataset-loader tests.
+
+**Step 3.4 — HOG Feature Extraction (Complete)**
+
+- Implement Histogram of Oriented Gradients (HOG) feature extraction.
+- Use a 128 × 128 window, 16 × 16 block size, 8 × 8 block stride, 8 × 8 cell size and 9 orientation bins.
+- Verify the 8,100-feature descriptor for each image.
+- Check feature dimensions, numerical validity and deterministic extraction.
+- Add automated HOG feature-extraction tests.
+
+**Step 3.5 — Baseline HOG + Linear SVM (Complete)**
+
+- Implement an initial Support Vector Machine (SVM) classifier.
+- Use a linear kernel with `C = 1.0`.
+- Fit the classifier using the approved training set only.
+- Keep probability estimates disabled.
+- Save the fitted model and configuration.
+
+**Step 3.6 — Baseline Validation and Evaluation (Complete)**
+
+- Evaluate the baseline using the 226-image validation set.
+- Calculate accuracy and macro-F1.
+- Generate per-class precision, recall and F1 results.
+- Generate a confusion matrix.
+- Identify the largest classification errors and weaker-performing classes.
+- Record the results and limitations.
+
+The initial baseline achieved:
+
+- Validation accuracy: **68.58%**.
+- Validation macro-F1: **0.6497**.
+- Automated tests: **20 passed**.
+
+The strongest class by F1-score was Keyboard (0.8052). Pencil had the lowest F1-score (0.2857), followed by Mug (0.5333). These results will inform Step 4 model comparison.
+
+**Step 3.7 — Saved Model Verification (Complete)**
+
+- Reload the saved Joblib model.
+- Verify its classifier type, linear kernel and `C = 1.0` configuration.
+- Verify that probability estimates are not enabled.
+- Confirm that the saved model references the approved manifest.
+- Recreate validation predictions using the reloaded model.
+- Confirm that the reproduced accuracy, macro-F1 and confusion matrix match the saved results.
+- Confirm that the held-out test split has not been accessed.
+
+**Step 3.8 — Documentation and Git Integration (In Progress)**
+
+- Document the baseline configuration, validation results, confusion matrix and limitations in `docs/step3-baseline-results.md`.
+- Update the project plan, visual-review record and contribution log to reflect the completed baseline work.
+- Configure Git LFS to track Joblib model files and verify the tracking rule: completed.
+- Commit and push the baseline implementation, tests, scripts, saved model and validation results: completed in commit `6fbae66`.
+- Submit the baseline implementation through PR #12: completed.
+- Member 2 independently reviewed the implementation, automated tests, saved model and validation results and submitted formal approval on PR #12: completed.
+- Member 2 successfully retrieved the saved model through Git LFS and independently reproduced the validation metrics and confusion matrix.
+- Correct the remaining outdated Git LFS status statement in the project plan and update the contribution records.
+- Commit and push the documentation corrections to PR #12.
+- Confirm whether Member 2's approval remains active after the documentation update. Request renewed approval only if GitHub dismisses the existing review.
+- Review and merge PR #12.
+- Synchronise both members' repositories and verify the merged model, automated tests and clean working trees.
+
+**Step 3 completion criteria:**
+
+- The baseline classifier is implemented and successfully trained.
+- All approved training and validation images are processed successfully.
+- Automated tests pass.
+- Validation metrics and classification reports are saved.
+- The saved model can be reloaded and its validation results reproduced.
+- The held-out test split remains unused.
+- Documentation and contribution records are updated.
+- Member 2's independent verification and Git integration are completed.
+
+The detailed baseline results are recorded in `docs/step3-baseline-results.md`.
+
+**Important:** Completing the baseline does not mean that the final classifier has been selected. Model comparison and selection will take place separately in Step 4.
+
 
 ### Step 4 — Model Comparison and Selection
 
@@ -429,12 +547,12 @@ The final submission must include:
 
 ## 9. Current Project Status
 
-**Current stage: Step 2 — Environment Setup is complete. Step 3 — Baseline Classifier is next.**
+**Current stage: Step 3 — Baseline Classifier is in progress.** The HOG + Linear SVM baseline has been implemented, trained and evaluated using the approved training and validation data. The saved model has been reloaded and its validation results reproduced successfully. Member 2 has independently verified the implementation, passed all 20 automated tests, retrieved the saved model through Git LFS, reproduced the validation metrics and confusion matrix, and submitted formal approval on PR #12. The remaining work is the documentation correction identified during the review, PR #12 integration and final synchronisation of both members' repositories.
 
 ### Completed stages and integration
 
 - Step 0 — Project Setup and Git Collaboration: completed by both members.
-- Step 1 — Dataset Audit and Independent Verification: completed by both members. The targeted visual label-quality review remains a separate pre-training activity at the beginning of Step 3.
+- Step 1 — Dataset Audit and Independent Verification: completed by both members.
 - Step 2.1 — Repository Baseline: completed.
 - Step 2.2 — Independent Environment Inspection: completed.
 - Step 2.3 — Shared Environment Agreement: completed.
@@ -443,6 +561,14 @@ The final submission must include:
 - Step 2.5A — Shared Dependency Preparation and Dry-Run Resolution: completed.
 - Step 2.5B — Dependency Installation: completed by both members.
 - Step 2.6 — Runtime and Cross-Computer Verification: completed by both members.
+- Step 2.7 — Documentation and Integration: completed by both members.
+- Step 3.1 — Representative Visual and Label Review: completed by both members.
+- Step 3.2 — Approved Manifest-Based Dataset Allocation: completed.
+- Step 3.3 — Dataset Loader and Image Preprocessing: implemented and tested by Member 1.
+- Step 3.4 — HOG Feature Extraction: implemented and tested by Member 1.
+- Step 3.5 — Initial HOG + Linear SVM Baseline: trained by Member 1.
+- Step 3.6 — Baseline Validation and Evaluation: completed by Member 1.
+- Step 3.7 — Saved Model Verification: completed by Member 1.
 
 ### Merged pull requests and Git integration
 
@@ -469,18 +595,47 @@ Both members also reported matching `requirements-lock.txt` SHA-256 hashes:
 
 - Member 1 prepared `docs/step2-environment-setup.md`, documenting the agreed Python environment, hardware information, dependencies, installation procedure, runtime checks, Git integration and member contributions.
 - Member 2 independently reviewed the environment information and completed the final documentation review.
-- Both members successfully synchronised their local `main` branches with `origin/main` after PR #10 was merged.
-- Member 1 confirmed that local HEAD and `origin/main` both referenced `54f7fda`, the working tree was clean, and both documentation files were present.
-- Member 2 independently confirmed the same merge commit, clean working tree and presence of both documentation files.
+- Both members synchronised their local `main` branches with `origin/main` after PR #10 was merged.
+- Both members confirmed the merge commit, clean working trees and presence of the required documentation.
 - Both members completed the post-merge documentation verification.
 
-**Step 2.7 is complete. Steps 2.1–2.7 have been completed and verified by both members.**
+**Step 2 is complete. Steps 2.1–2.7 have been completed and verified by both members.**
 
-No outstanding technical or environment setup activities remain. This final closeout update records their completion following PR #10 and the successful verification by both members.
+### Step 3 — Baseline Classifier Progress
+
+The following work has been completed by Member 1:
+
+- The 48-image representative visual review was completed by both members.
+- One severely pixelated Pencil image was excluded from model fitting while preserving the original dataset image.
+- The D014-approved logical dataset allocation was implemented using the full split manifest.
+- The dataset loader successfully processed 812 training images and 226 validation images.
+- HOG feature extraction was implemented using 8,100 features per image.
+- The automated test suite passed all 20 tests: 10 dataset-loader tests and 10 HOG feature tests.
+- The linear SVM baseline was trained using 812 training images with `C = 1.0`.
+- Validation produced 68.58% accuracy and a macro-F1 score of 0.6497.
+- Validation metrics, per-class classification reports and confusion-matrix files were generated.
+- The saved Joblib model was reloaded and the validation metrics and confusion matrix were reproduced successfully.
+- The held-out test dataset was not accessed.
+
+The baseline configuration and detailed results are recorded in `docs/step3-baseline-results.md`.
+
+The `.joblib` model-file pattern is configured for Git LFS. The baseline model was committed in `6fbae66` and uploaded successfully through PR #12. Its verified file size is 48,560,430 bytes. Member 2 independently retrieved the model through Git LFS and successfully verified it on a separate computer.
+
+Member 2 also independently ran the complete automated test suite, with all 20 tests passing, and reproduced the validation accuracy, macro-F1 and confusion matrix.
+
+**Remaining Step 3 work:**
+
+- Correct the outdated Git LFS upload statement in this project plan and update the contribution log.
+- Commit and push the documentation corrections to PR #12.
+- Confirm that Member 2's formal approval remains active; request renewed approval only if GitHub dismisses it.
+- Merge PR #12 after the documentation correction and review.
+- Both members synchronise their local `main` branches with `origin/main`.
+- Verify the merged model, automated tests and saved-model validation results, and confirm clean working trees.
+
+Step 3 remains in progress until the documentation correction, PR integration and final synchronisation have been completed.
 
 ### Outstanding development stages
 
-- Step 3 — Baseline Classifier: not started.
 - Step 4 — Model Comparison and Selection: not started.
 - Step 5 — Prediction Application: not started.
 - Step 6 — Final Held-Out Evaluation: not started.
@@ -490,6 +645,8 @@ No outstanding technical or environment setup activities remain. This final clos
 - Step 10 — Videos: required assessment videos remain outstanding.
 - Step 11 — Final Checks and Release: final integration and submission checks remain outstanding.
 
-No final office-item classifier has been trained or evaluated at this stage. The prediction application has not yet been implemented or tested, and no physical robot has been constructed or integrated.
+The initial baseline is not yet the final selected classifier. Model comparison must take place in Step 4 using training and validation data only. The 103-image held-out test set remains reserved for Step 6.
 
-The team can now proceed to **Step 3 — Baseline Classifier**.
+The prediction application, camera input workflow and physical robot have not yet been implemented or integrated.
+
+The team must complete the outstanding Step 3 documentation, Git integration and Member 2 verification before proceeding to **Step 4 — Model Comparison and Selection**.

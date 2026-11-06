@@ -1,0 +1,56 @@
+{
+  "created_at": "2026-11-06T06:57:08.632656+04:00",
+  "python_version": "3.13.17",
+  "scikit_learn_version": "1.9.1",
+  "manifest_sha256": "40fad2a63bf4ba3185731154d1f5908901f5d224fd3f2d098fae84c9b234b7d5",
+  "classes": [
+    "Bottle",
+    "Calculator",
+    "Keyboard",
+    "Mouse",
+    "Mug",
+    "Notebook",
+    "Pencil",
+    "Scissors"
+  ],
+  "training_images": 812,
+  "validation_images": 226,
+  "test_images_used": 0,
+  "model_configuration": {
+    "kernel": "linear",
+    "C": 1.0,
+    "probability": false,
+    "decision_function_shape": "ovr"
+  },
+  "preprocessing": {
+    "orientation": "EXIF transpose",
+    "colour": "grayscale",
+    "image_size": [
+      128,
+      128
+    ],
+    "resize_interpolation": "cv2.INTER_AREA"
+  },
+  "hog_configuration": {
+    "window_size": [
+      128,
+      128
+    ],
+    "block_size": [
+      16,
+      16
+    ],
+    "block_stride": [
+      8,
+      8
+    ],
+    "cell_size": [
+      8,
+      8
+    ],
+    "bins": 9,
+    "feature_count": 8100
+  },
+  "fit_seconds": 6.889197499956936,
+  "total_pipeline_seconds": 12.109648599755019
+}

@@ -147,6 +147,59 @@ Documentation must be updated when the project workflow or agreed decisions chan
 
 **Reason:** The Assessment 1 Part A brief explicitly states that the organisation activity is not time-critical. This decision records that requirement while preserving the need for safe operation and appropriate safety responses.
 
+## D014 - Approved Group-Aware Manifest-Based Dataset Split
+
+**Decision date:** 6 November 2026
+
+**Decision status:** Approved by Member 1 (Project Lead), with Member 2's independent verification completed.
+
+**Decision:** Use the approved group-aware full split manifest to determine the logical training, validation and test assignments used during classifier development and final evaluation.
+
+### Relationship to earlier decision D005
+
+This decision supersedes D005 only in relation to the logical split assignments used by classifier code.
+
+The requirement to preserve the original dataset remains in force. The physical `dataset/train`, `dataset/valid` and `dataset/test` folders, their contents and their original assignments must not be moved, renamed, deleted or overwritten.
+
+### Approved logical split
+
+| Logical split | Images |
+|---|---:|
+| Training | 813 |
+| Validation | 226 |
+| Test | 103 |
+| **Total** | **1,142** |
+
+The manifest maps an image to its unchanged physical location using `Original_Split`, `Class` and `Filename`. The classifier uses `Proposed_Split` to determine its logical development assignment.
+
+### Eligibility and evaluation boundaries
+
+- Training: use only rows with `Proposed_Split=train` and `Effective_Training_Eligible=YES`. This gives 812 eligible training images.
+- Validation: use all 226 rows with `Proposed_Split=valid`. The training-eligibility field is not a validation filter.
+- Test: keep all 103 rows with `Proposed_Split=test` completely outside Step 3 and Step 4 image loading, preprocessing, feature extraction, training, validation and model selection. Reserve them for Step 6.
+
+The existing severely pixelated Pencil image remains in the original dataset, but is excluded from effective training.
+
+### Evidence and limitations
+
+The approved manifest has 1,142 records and eight represented classes. The 47 supported and unresolved candidate relationships are contained within their proposed groups and splits. Candidate 007 remains separate because it was classified as related but distinct.
+
+The 16 unresolved relationships remain unresolved; conservative grouping does not establish that they are confirmed duplicates. The allocation was manually configured and checked, not proven globally optimal. The review does not establish that every possible duplicate relationship in the dataset has been found.
+
+### Authoritative manifest
+
+`docs/evidence/step3.5.5J/step3.5.5K3_full_split_manifest_proposal.csv`
+
+Canonical committed Git-file SHA256 (LF line endings):
+
+`40FAD2A63BF4BA3185731154D1F5908901F5D224FD3F2D098FAE84C9B234B7D5`
+
+### Independent verification
+
+Member 2 independently verified the manifest contents, class counts, eligibility, group assignments and all 47 supported/unresolved relationships. The final canonical Git hash and documentation verification returned `OVERALL PASS` at shared commit `6b58e9fd25d4779a9ad8acff3909e40ca39d6e7b`.
+
+The original dataset remains unchanged.
+
 ## Open Questions — Not Yet Approved Decisions
 
 The following matters require further team agreement, technical evidence or validation. Listing them here does not constitute approval of a particular solution.
