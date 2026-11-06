@@ -213,7 +213,9 @@ Both members explicitly agreed to the selected configuration and its limitations
 
 ## 6. Validation Error Analysis and Visual Review
 
-The linear baseline misclassification review identified 20 incorrect predictions in the 226-image validation set.
+The linear baseline achieved a validation accuracy of 0.685841 across 226 validation images, corresponding to 155 correct predictions and 71 misclassifications.
+
+For focused visual error analysis, 20 selected misclassified examples were reviewed. These examples came from the three largest actual-class-to-predicted-class error groups identified in the baseline confusion matrix.
 
 The three largest error groups were:
 
@@ -250,7 +252,7 @@ Member 2 found no confirmed incorrect labels among the 20 reviewed validation er
 
 No dataset image was renamed, moved, deleted, edited, relabelled or reassigned as a result of this review.
 
-The visual findings are used to understand possible classification difficulties. They do not establish that all dataset images have been manually inspected or that every possible label issue has been identified.
+The visual findings help identify possible classification difficulties but do not establish that all 71 baseline misclassifications, or every image in the dataset, were manually inspected. The review covered the 20 selected validation examples only.
 
 Supporting files include:
 
@@ -370,31 +372,67 @@ The model comparison scripts and evidence were integrated into the Step 4 integr
 
 ### 9.2 Member 2 Independent Review
 
-**Status: Pending.**
+**Status: APPROVED — Independent review and verification completed on 6 November 2026.**
 
-Member 1 successfully executed the selected-model verification workflow using `scripts/verify_selected_model.py`.
+Member 2 independently reviewed the shared Step 4 snapshot on a separate laptop.
 
-The verification completed successfully, confirming that the permanent model could be reloaded, its configuration and manifest identity were correct, and all 226 validation predictions and reported metrics were reproduced.
+**Git snapshot reviewed:**
 
-An independent review by Member 2 of the selected-model implementation and supporting verification evidence remains outstanding.
+- Repository: `PDE3802-AI_ROBOTIC-Assessment-1`
+- Branch: `feature/step4-model-comparison`
+- Commit: `edb1664`
+- Checkout: Detached HEAD, read-only review.
+- Git working tree: Clean.
+- Permanent selected model: `results/selected_model/rbf_c10_hog_svm.joblib`
+- Verified model size: 51,676,393 bytes.
 
-The review will be conducted after the selected-model scripts and supporting evidence are made available on the shared Step 4 integration branch.
+Member 2 inspected the selected-model training and verification scripts, supporting source-code implementation, candidate comparison summaries, decision log, technical report, and selected-model metadata.
 
-The review will cover the model configuration, approved dataset allocation, preprocessing and HOG configuration, held-out test safeguards, reproducibility of validation results, and consistency of the saved evidence.
+The independent review confirmed:
 
-Member 2's review decision and any required corrections will be recorded here after the review has been completed. No independent approval is claimed at this stage.
+- RBF SVM configuration: `C=10`, `gamma=scale`, `class_weight=None`, decision function `ovr`, and probability estimation disabled.
+- HOG feature extraction produces 8,100 features per image using the approved preprocessing configuration.
+- The approved D014 manifest SHA-256 identity matches the selected-model evidence.
+- Training uses 812 eligible images and validation uses 226 images.
+- The 103 held-out test images remain reserved for Step 6.
+- All five candidate comparison results are consistent with the saved experimental evidence.
+- The selected candidate achieves the highest validation accuracy and macro-F1 among the five candidates.
 
-### 9.3 Review Findings and Follow-up
+**Independent verification execution**
 
-No independent Member 2 review findings have been recorded yet.
+Member 2 independently executed:
 
-Any observations, required corrections, and agreed follow-up actions will be documented after the independent review.
+`scripts/verify_selected_model.py`
 
-The selected-model verification has already passed the checks reported in Section 8. The independent review is intended to provide an additional source-code and evidence consistency check, rather than to claim that Member 2 independently executed the verification scripts.
+on their own laptop.
 
-## 10. Git Integration Evidence
+The execution successfully reloaded the permanent model, verified its configuration and manifest identity, recreated all 226 validation predictions exactly, and reproduced the saved validation accuracy, macro-F1, confusion matrix, and classification reports.
 
-The Step 4 work was developed and integrated on:
+The verification also confirmed 796 support vectors and a saved model size of 51,676,393 bytes. No held-out test images were accessed.
+
+**Review decision: APPROVED — No required model-code corrections identified.**
+
+Member 2 did not modify any project files, dataset images, model artifacts, or Git branches during the review.
+
+The independent review therefore provides additional confirmation that the selected-model implementation and verification evidence are consistent with the approved Step 4 protocol.
+
+### 9.3 Review Findings and Documentation Closeout
+
+Member 2 identified no required corrections to the selected-model implementation or verification scripts.
+
+The independent review identified the following documentation closeout actions:
+
+1. Clarify that the 20 visually reviewed validation errors were selected examples, not the complete set of baseline misclassifications.
+2. Record Member 2's completed independent review and verification in Sections 9.2, 9.3, and the Step 4 completion table.
+3. Update the Git integration record in Section 10 to include the pushed review snapshot at commit `edb1664`.
+
+These actions improve the accuracy, traceability, and completeness of the Step 4 project record. They do not represent defects in the selected classifier or its verification implementation.
+
+No model-code corrections or dataset modifications were required.
+
+## 10. Git Integration and Independent Review Evidence
+
+The Step 4 implementation and experimental comparison were developed and integrated on:
 
 `feature/step4-model-comparison`
 
@@ -406,19 +444,25 @@ The RBF comparison evidence was integrated through PR #17, with merge commit:
 
 `b49ddb6`
 
-The recorded integration branch head after PR #17 was:
+The subsequent Step 4 documentation, linear comparison evidence, permanent selected model, verification evidence, and supporting scripts were committed in:
 
-`b49ddb6`
+`edb1664` — `step4: add model comparison and selected model evidence`
 
-The selected permanent model and its seven supporting artifacts were created after these comparison-evidence integrations and are included in the Step 4 documentation and integration closeout work.
+This commit was pushed successfully to:
 
-Git LFS is configured through `.gitattributes` to track:
+`origin/feature/step4-model-comparison`
 
-`*.joblib filter=lfs diff=lfs merge=lfs -text`
+The selected permanent model was tracked using Git LFS. Its 51,676,393-byte model file was uploaded successfully, and the remote branch was synchronised with the local branch.
 
-The selected model was confirmed to match the Git LFS tracking rule before integration.
+**Independent review of the shared snapshot**
 
-The selected model and the remaining local Step 4 artifacts must be reviewed and committed through the controlled Step 4.8 integration process.
+Member 2 checked out the shared branch at commit `edb1664` in detached HEAD mode on a separate computer. The checkout had a clean Git working tree.
+
+Member 2 independently executed the selected-model verification script and approved the implementation and verification evidence without requiring model-code corrections.
+
+The review was performed against the shared commit `edb1664`. The subsequent documentation closeout changes record Member 2's findings and clarify the visual-review scope.
+
+At this stage, the Step 4 integration work remains on `feature/step4-model-comparison`. It has not yet been merged into `main`.
 
 ## 11. Limitations
 
@@ -430,7 +474,7 @@ The following limitations apply to the Step 4 results:
 4. The classifier processes one whole image at a time and is not an object detector.
 5. The model does not provide calibrated probability estimates.
 6. Prediction timing is based on the documented local experimental protocol and is not a universal hardware-performance guarantee.
-7. The visual error review covered the 20 baseline validation misclassifications, not every dataset image.
+7. The visual error review covered 20 selected examples from the 71 baseline validation misclassifications. It was not an exhaustive review of all validation errors or dataset images.
 8. Pencil remains the weakest-performing class by validation F1-score.
 9. The classifier has not yet been integrated into the Step 5 prediction application or a physical robot.
 
@@ -447,12 +491,14 @@ The following Step 4 activities have been completed:
 | 4.4 | Experiments and visual review | Complete |
 | 4.5 | Joint model selection | Complete |
 | 4.6 | Permanent selected-model verification | Complete |
-| 4.7 | Independent source-code review | Pending |
+| 4.7 | Independent source-code and evidence review | Complete |
 | 4.8 | Documentation and Git integration | In progress |
 | 4.9 | Final Step 4 closeout | Pending |
 
-The selected HOG + RBF SVM with C=10.0 has been jointly approved, trained, saved and successfully verified.
+The selected HOG + RBF SVM with C=10.0 has been jointly selected, permanently trained, independently verified, and approved by both project members.
+
+The 40 existing automated project tests passed. Member 2 also independently executed the selected-model verification successfully.
 
 The held-out test dataset remains untouched and reserved for Step 6.
 
-**Step 4 — Model Comparison and Selection: Experimental work, model selection and permanent-model verification complete; independent review, documentation and final Git integration in progress.**
+**Step 4 — Model Comparison and Selection: Experimental work, model selection, permanent-model verification and independent review complete; final documentation and Git closeout in progress.**
