@@ -4,7 +4,7 @@
 
 **Date:** 6 November 2026
 
-**Status:** Baseline trained and validation results reproduced. Member 2 independently verified the implementation and saved model on a second computer, reproduced the validation metrics and confusion matrix, and submitted formal approval on PR #12. Final documentation correction, PR integration and repository synchronisation remain pending.
+**Status:** Step 3 baseline implementation, training, validation, independent review and Git integration completed. PR #12 was merged at commit `a72d482`. Both members successfully synchronised their repositories and reproduced the saved-model validation results after the merge. The held-out test dataset remains unused and reserved for Step 6.
 
 ## 1. Purpose
 
@@ -135,16 +135,33 @@ Keyboard achieved the highest F1-score. Pencil achieved the lowest F1-score, fol
 
 These results identify areas for investigation in Step 4. They do not establish the exact visual cause of the errors.
 
-## 7. Automated testing
+## 7. Automated testing and verification**
 
-A total of 20 unit tests passed:
+A total of 20 unit tests passed during the baseline implementation and independent pre-merge review:
 
 - 10 dataset-loader tests.
 - 10 HOG feature-extraction tests.
 
 All 812 approved training images and 226 validation images were successfully decoded.
 
-The saved model was reloaded. Its reproduced accuracy, macro-F1 and confusion matrix matched the saved validation results.
+Member 2 independently ran the complete automated test suite during the PR #12 review and confirmed that all 20 tests passed.
+
+**Post-merge verification**
+
+After PR #12 was merged, both members independently:
+
+- Retrieved the merged model through Git LFS.
+- Reloaded the saved model using `scripts/verify_baseline.py`.
+- Verified the Linear SVM configuration and eight classification classes.
+- Confirmed that the saved model references the approved manifest.
+- Recreated 226 validation predictions.
+- Reproduced 68.58% accuracy and 0.6497 macro-F1.
+- Confirmed that the saved confusion matrix matched exactly.
+- Confirmed that the held-out test split was not accessed.
+
+The post-merge command `python -m pytest -q` could not execute on either computer because `pytest` was not installed and was not included in `requirements.txt` or `requirements-lock.txt`. This was an unavailable test-runner dependency, not a test failure. The earlier 20-test results remain the recorded successful test results.
+
+The post-merge saved-model verification script passed on both computers.
 
 ## 8. Generated baseline files
 
@@ -175,12 +192,20 @@ Pull Request: https://github.com/vashishmohess-svg/PDE3802-AI_ROBOTIC-Assessment
 7. Model comparison and selection remain for Step 4.
 8. Final held-out evaluation remains for Step 6.
 
-## 10. Current completion status
+## 10. Current completion status**
 
-The baseline implementation, training, validation and saved-model verification have been completed by Member 1.
+The baseline HOG + Linear SVM implementation, training, validation and saved-model verification have been completed by Member 1.
 
-Member 2 has independently reviewed the baseline implementation, automated tests, saved model and validation results. Member 2 successfully retrieved the model through Git LFS, ran all 20 automated tests, reproduced the validation accuracy of 68.58%, macro-F1 of 0.6497 and the saved confusion matrix, and submitted formal approval on PR #12.
+Member 2 independently reviewed the baseline implementation, automated tests, saved model and validation results. Member 2 successfully retrieved the model through Git LFS, passed all 20 automated tests during the pre-merge review, reproduced the validation accuracy of 68.58%, macro-F1 of 0.6497 and the saved confusion matrix, and submitted formal approval on PR #12.
 
-The remaining work is the correction of the outdated Git LFS statement in the project plan, the contribution-log update, the documentation commit and push, PR #12 merge, and final repository synchronisation by both members.
+PR #12 was successfully merged into `main` at commit `a72d482`.
 
-The baseline implementation and independent verification are complete. Step 3 remains in progress until the documentation correction, Git integration and final synchronisation are completed.
+Both members synchronised their local repositories with `origin/main`, successfully retrieved the merged model through Git LFS, confirmed clean working trees and independently ran `scripts/verify_baseline.py`. Both reproduced the same validation metrics and confusion matrix.
+
+The post-merge `pytest` command could not execute because `pytest` was absent from both virtual environments and the shared dependency files. The earlier 20/20 test results from implementation and independent review remain valid. Both post-merge saved-model verification runs passed.
+
+The held-out test dataset has not been accessed and remains reserved for Step 6.
+
+**Step 3 — Baseline Classifier is complete.**
+
+**Step 4 — Model Comparison and Selection has not started.**
