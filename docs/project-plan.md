@@ -310,6 +310,19 @@ The work is divided into the following sub-stages:
 - Record the initial results.
 - Keep the test dataset held out.
 
+**Approved manifest-based split rule (D014, 6 November 2026):**
+
+The original dataset folders remain unchanged. Step 3 code must map each
+manifest row to its original image using `Original_Split`, `Class` and
+`Filename`, and use `Proposed_Split` for logical assignment. Fit the
+baseline only on the 812 training rows marked
+`Effective_Training_Eligible=YES`. Validate on all 226 proposed
+validation images. Do not open or process the 103 proposed test images
+during Steps 3 or 4; reserve them for Step 6.
+
+See `docs/decisions.md` D014 and the approved manifest and evidence under
+`docs/evidence/step3.5.5J/`.
+
 ### Step 4 — Model Comparison and Selection
 
 - Experiment with suitable classification models.

@@ -83,17 +83,33 @@ The selected dataset subset contains 1,142 images across the eight selected clas
 
 ### 4.2 Dataset Handling Requirements
 
-The existing training, validation and testing splits must be preserved.
+The original physical training, validation and testing folders and their image assignments must remain unchanged. The approved manifest described in Section 4.3 defines the logical splits used by classifier development and evaluation.
 
-- The training split will be used to train the classifier.
-- The validation split will be used to monitor performance and support model comparison and selection.
-- The testing split must remain held out until the final evaluation.
+- The logical training split defined by the approved manifest will be used to train the classifier. Only rows marked `Effective_Training_Eligible=YES` are eligible for fitting.
+- The logical validation split defined by the approved manifest will be used to monitor performance and support model comparison and selection.
+- The logical test split defined by the approved manifest must remain held out until the final evaluation.
 
-The test split must not be used for training, model selection or repeated model tuning.
+The logical test split must not be used for training, model selection or repeated model tuning.
 
 The original dataset must not be modified by deleting, renaming, moving or reassigning images between the existing splits.
 
 The dataset source and CC BY 4.0 licence must be acknowledged in the project documentation.
+
+### 4.3 Approved group-aware manifest split (6 November 2026)
+
+The earlier Section 4.2 requirement to preserve the dataset splits means that the original physical folders and image files must remain unchanged. Following approved project decision D014, classifier development uses the logical assignments in:
+
+`docs/evidence/step3.5.5J/step3.5.5K3_full_split_manifest_proposal.csv`
+
+The loader must locate each original image using `Original_Split`, `Class` and `Filename`, and select its logical assignment using `Proposed_Split`. It must not move or copy the original images to new split folders.
+
+The approved logical counts are 813 training, 226 validation and 103 test images.
+
+Only the 812 training rows marked `Effective_Training_Eligible=YES` may be used to fit the Step 3 baseline. All 226 validation rows are used for validation; `Effective_Training_Eligible` is not a validation filter.
+
+The 103 proposed test images must not be opened or processed during Steps 3 and 4. They are reserved for Step 6.
+
+This clarification supersedes the earlier split-allocation interpretation in Section 4.2 while retaining the requirement to preserve the original dataset files and physical folder structure. See D014 in `docs/decisions.md` and the formal approval record in `docs/evidence/step3.5.5J/step3.5.5K4_dataset_split_approval.md`.
 
 ## 5. Input Requirements
 
