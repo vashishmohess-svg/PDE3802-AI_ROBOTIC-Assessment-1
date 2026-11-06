@@ -17,7 +17,7 @@ Each contribution should describe the work completed and include evidence where 
 | 30/10/2026 | Member 1 | Created and pushed the Step 0 contribution-log update after Member 2's pull request was merged. | Commit: `357d8bf` |
 | 6/11/2026 | Member 1 | Implemented and trained the baseline HOG + Linear SVM classifier, generated validation evidence, verified the saved model and submitted the implementation through PR #12. | Commit `6fbae66`; 20 tests passed; validation accuracy 68.58%; macro-F1 0.6497; Git LFS model uploaded successfully. |
 | 6/11/2026 | Member 2 | Independently verified the Step 3 baseline implementation, tests, saved model and validation results, and submitted formal approval on PR #12. | Review branch `review/step3-baseline-pr12`; 20/20 tests passed; model retrieved through Git LFS; validation metrics and confusion matrix reproduced; PR #12 approved. |
-
+| 6/11/2026 | Both members | Retrieved the merged Step 3 implementation and saved model, synchronised local repositories, and independently completed post-merge saved-model verification. | PR #12 merged at `a72d482`; both local `main` branches synchronised; Git LFS retrieval successful; clean working trees; validation accuracy 68.58%, macro-F1 0.6497 and confusion matrix reproduced. The post-merge pytest command could not execute because pytest was not installed. |
 
 ## Contribution Recording Rules
 
@@ -323,13 +323,15 @@ This update supersedes the earlier historical statements in the 2 November 2026 
 - Pull Request: [PR #12](https://github.com/vashishmohess-svg/PDE3802-AI_ROBOTIC-Assessment-1/pull/12).
 - Git LFS: configured and successfully uploaded the 48,560,430-byte Joblib model.
 - Member 2's independent baseline code and model verification: completed; formal approval submitted on PR #12.
-- Final PR merge and repository synchronisation: pending.
+- Final PR merge and repository synchronisation: completed. PR #12 was merged at a72d482, and both members synchronised their local main branches.
+
+
 
 ### AI Assistance Record
 
-ChatGPT provided code drafts, test scaffolding, debugging guidance and documentation suggestions. Member 1 executed the commands in the local project environment, inspected the outputs, applied corrections and verified the implementation. No percentage of AI contribution is claimed.
+ChatGPT was used as a learning and support tool during development. It provided explanations of relevant programming concepts, guidance on implementation approaches, structured outlines, partial examples and suggestions for testing and debugging. Member 1 used this guidance to understand the concepts, develop and adapt the project code, execute the commands, investigate errors, make corrections and verify the results. The implementation was completed and checked by Member 1. AI assistance is acknowledged as part of the development process; no percentage of AI contribution is claimed.
 
-**### Member 2 — Independent Baseline Verification**
+### Member 2 — Independent Baseline Verification
 
 Member 2 completed the independent verification of the Step 3 baseline implementation on 6 November 2026 and submitted formal approval on PR #12.
 
@@ -359,23 +361,53 @@ Member 2 completed the independent verification of the Step 3 baseline implement
 
 Member 2's local verification evidence is retained in their temporary folder `PDE3802_PR12_Verification`.
 
-### Step 3 Integration Status**
+### Step 3 Integration Status — Complete**
 
-The initial baseline implementation, training, validation and saved-model verification have been completed by Member 1.
+The initial baseline implementation, training, validation and saved-model verification were completed by Member 1. Member 2 independently reviewed the implementation and reproduced the results before PR #12 was merged.
 
-- The baseline source code, tests, training script, verification script, saved model and validation results were committed in `6fbae66`.
-- Git LFS tracking was configured, and the 48,560,430-byte Joblib model was successfully uploaded.
-- PR #12 was submitted for integration.
-- Member 2 independently retrieved and verified the saved model, ran all 20 automated tests successfully, reproduced the validation metrics and confusion matrix, and submitted formal approval on PR #12.
-- One non-blocking documentation correction was identified: the project plan still described the Git LFS upload as pending.
+**Member 1 — Post-merge Verification**
 
-**Remaining integration work:**
+- Switched to the local `main` branch.
+- Successfully synchronised with `origin/main` using `git pull --ff-only origin main`.
+- Successfully retrieved the model using `git lfs pull`.
+- Confirmed that local `main` and `origin/main` point to merge commit `a72d482`.
+- Confirmed a clean working tree using `git status -sb`.
+- Confirmed that the saved Joblib model was available and had a size of 48,560,430 bytes.
+- Successfully ran `python scripts/verify_baseline.py`.
+- Reproduced 68.58% validation accuracy and 0.6497 macro-F1.
+- Confirmed that the saved confusion matrix matched exactly.
+- Confirmed that the held-out test dataset was not accessed.
 
-- Correct the outdated Git LFS statement in the project plan and finalise the contribution-log update.
-- Commit and push the documentation corrections to PR #12.
-- Confirm whether Member 2's approval remains active after the additional commit.
-- Merge PR #12.
-- Both members synchronise their local `main` branches with `origin/main`.
-- Both members verify the merged model, automated tests and saved-model validation results, and confirm clean working trees.
+**Member 2 — Post-merge Verification**
 
-Step 3 remains in progress until the documentation correction, PR merge and final synchronisation are completed.
+- Switched to the local `main` branch.
+- Successfully synchronised with `origin/main` using `git pull --ff-only origin main`.
+- Successfully retrieved the model using `git lfs pull`.
+- Confirmed that local `main` and `origin/main` point to merge commit `a72d482`.
+- Confirmed a clean working tree using `git status -sb`.
+- Confirmed that the saved Joblib model was available and had a size of 48,560,430 bytes.
+- Successfully ran `python scripts/verify_baseline.py`.
+- Reproduced 68.58% validation accuracy and 0.6497 macro-F1.
+- Confirmed that the saved confusion matrix matched exactly.
+- Confirmed that the held-out test dataset was not accessed.
+
+**Automated Test-Runner Note**
+
+Both members attempted to run `python -m pytest -q` after the merge. The command could not execute because `pytest` was not installed in either project virtual environment. The shared `requirements.txt` and `requirements-lock.txt` also contained no pytest entry.
+
+The complete 20-test suite had already passed during the earlier implementation and independent pre-merge verification. No post-merge pytest rerun is claimed. Both post-merge saved-model verification scripts completed successfully.
+
+**Final Integration Status**
+
+- Baseline implementation and saved model: completed.
+- Member 2 independent baseline verification: completed.
+- Git LFS model upload and retrieval: completed.
+- PR #12: merged successfully.
+- Merge commit: `a72d482`.
+- Member 1 repository synchronisation: completed.
+- Member 2 repository synchronisation: completed.
+- Post-merge saved-model verification by both members: passed.
+- Working trees: clean on both computers.
+- Held-out test dataset: untouched and reserved for Step 6.
+
+**Step 3 — Baseline Classifier: completed by both members.**

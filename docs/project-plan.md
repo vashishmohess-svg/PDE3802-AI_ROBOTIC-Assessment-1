@@ -397,20 +397,23 @@ The strongest class by F1-score was Keyboard (0.8052). Pencil had the lowest F1-
 - Confirm that the reproduced accuracy, macro-F1 and confusion matrix match the saved results.
 - Confirm that the held-out test split has not been accessed.
 
-**Step 3.8 — Documentation and Git Integration (In Progress)**
+**Step 3.8 — Documentation and Git Integration (Complete)**
 
-- Document the baseline configuration, validation results, confusion matrix and limitations in `docs/step3-baseline-results.md`.
-- Update the project plan, visual-review record and contribution log to reflect the completed baseline work.
-- Configure Git LFS to track Joblib model files and verify the tracking rule: completed.
-- Commit and push the baseline implementation, tests, scripts, saved model and validation results: completed in commit `6fbae66`.
-- Submit the baseline implementation through PR #12: completed.
-- Member 2 independently reviewed the implementation, automated tests, saved model and validation results and submitted formal approval on PR #12: completed.
+- Documented the baseline configuration, validation results, confusion matrix and limitations in `docs/step3-baseline-results.md`.
+- Updated the project plan, visual-review record and contribution log.
+- Configured Git LFS to track Joblib model files and successfully uploaded the baseline model.
+- Committed and pushed the baseline implementation, automated tests, scripts, saved model and validation results in commit `6fbae66`.
+- Submitted the baseline implementation through PR #12.
+- Member 2 independently reviewed the implementation, tests, saved model and validation results and submitted formal approval.
 - Member 2 successfully retrieved the saved model through Git LFS and independently reproduced the validation metrics and confusion matrix.
-- Correct the remaining outdated Git LFS status statement in the project plan and update the contribution records.
-- Commit and push the documentation corrections to PR #12.
-- Confirm whether Member 2's approval remains active after the documentation update. Request renewed approval only if GitHub dismisses the existing review.
-- Review and merge PR #12.
-- Synchronise both members' repositories and verify the merged model, automated tests and clean working trees.
+- - Final documentation corrections were prepared following the successful merge of PR #12 and are being integrated separately.
+- PR #12 was successfully merged into `main` at commit `a72d482`.
+- Both members switched to `main`, synchronised with `origin/main` using `git pull --ff-only`, and successfully retrieved the model using `git lfs pull`.
+- Both members confirmed clean working trees and the same merge commit, `a72d482`.
+- Both members successfully executed `scripts/verify_baseline.py` after the merge and reproduced 68.58% validation accuracy, 0.6497 macro-F1 and the saved confusion matrix.
+- Both members confirmed that the held-out test dataset remained unused.
+
+**Post-merge automated test note:** The command `python -m pytest -q` could not be executed on either computer because `pytest` was not installed and was not listed in `requirements.txt` or `requirements-lock.txt`. This does not indicate a test failure. The complete 20-test suite had already passed during the earlier implementation and independent review. The post-merge saved-model verification script passed on both computers.
 
 **Step 3 completion criteria:**
 
@@ -547,7 +550,7 @@ The final submission must include:
 
 ## 9. Current Project Status
 
-**Current stage: Step 3 — Baseline Classifier is in progress.** The HOG + Linear SVM baseline has been implemented, trained and evaluated using the approved training and validation data. The saved model has been reloaded and its validation results reproduced successfully. Member 2 has independently verified the implementation, passed all 20 automated tests, retrieved the saved model through Git LFS, reproduced the validation metrics and confusion matrix, and submitted formal approval on PR #12. The remaining work is the documentation correction identified during the review, PR #12 integration and final synchronisation of both members' repositories.
+**Current stage: Step 3 — Baseline Classifier is complete.** The HOG + Linear SVM baseline has been implemented, trained and evaluated using the approved training and validation data. The saved model and its validation results were verified by both members. Member 2 independently reviewed the implementation, retrieved the model through Git LFS, passed all 20 automated tests during the pre-merge review, and formally approved PR #12. PR #12 was merged into `main` at commit `a72d482`. Both members synchronised their repositories, confirmed clean working trees and successfully reproduced the saved-model validation results after the merge. The held-out test dataset remains unused and is reserved for Step 6. **Step 4 — Model Comparison and Selection has not started.**
 
 ### Completed stages and integration
 
@@ -569,6 +572,8 @@ The final submission must include:
 - Step 3.5 — Initial HOG + Linear SVM Baseline: trained by Member 1.
 - Step 3.6 — Baseline Validation and Evaluation: completed by Member 1.
 - Step 3.7 — Saved Model Verification: completed by Member 1.
+- Step 3.8 — Documentation and Git Integration: completed; PR #12 merged at commit `a72d482`.
+- Step 3 — Baseline Classifier: completed by both members.
 
 ### Merged pull requests and Git integration
 
@@ -601,38 +606,45 @@ Both members also reported matching `requirements-lock.txt` SHA-256 hashes:
 
 **Step 2 is complete. Steps 2.1–2.7 have been completed and verified by both members.**
 
-### Step 3 — Baseline Classifier Progress
+### Step 3 — Baseline Classifier (Complete)**
 
-The following work has been completed by Member 1:
+The following work was completed by Member 1:
 
 - The 48-image representative visual review was completed by both members.
 - One severely pixelated Pencil image was excluded from model fitting while preserving the original dataset image.
 - The D014-approved logical dataset allocation was implemented using the full split manifest.
 - The dataset loader successfully processed 812 training images and 226 validation images.
 - HOG feature extraction was implemented using 8,100 features per image.
-- The automated test suite passed all 20 tests: 10 dataset-loader tests and 10 HOG feature tests.
-- The linear SVM baseline was trained using 812 training images with `C = 1.0`.
+- The automated test suite passed all 20 tests during implementation and independent pre-merge verification.
+- The Linear SVM baseline was trained using 812 training images with `C = 1.0`.
 - Validation produced 68.58% accuracy and a macro-F1 score of 0.6497.
 - Validation metrics, per-class classification reports and confusion-matrix files were generated.
 - The saved Joblib model was reloaded and the validation metrics and confusion matrix were reproduced successfully.
 - The held-out test dataset was not accessed.
 
+**Git and Independent Verification**
+
+- The baseline implementation and supporting files were committed in `6fbae66`.
+- Git LFS was configured, and the 48,560,430-byte Joblib model was successfully uploaded.
+- Member 2 independently retrieved and verified the saved model.
+- Member 2 ran all 20 automated tests successfully during the pre-merge review and reproduced the validation metrics and confusion matrix.
+- Member 2 submitted formal approval on PR #12.
+- PR #12 was merged into `main` at commit `a72d482`.
+- Both members synchronised their local `main` branches with `origin/main`.
+- Both members successfully retrieved the model using `git lfs pull`.
+- Both members confirmed clean working trees and the same merge commit.
+- Both members successfully ran `scripts/verify_baseline.py` after the merge and reproduced the saved validation accuracy, macro-F1 and confusion matrix.
+- Both members confirmed that the held-out test dataset remains reserved for Step 6.
+
+**Post-merge test-runner limitation**
+
+The post-merge command `python -m pytest -q` could not execute on either computer because `pytest` was not installed and was not listed in the shared dependency files. The earlier 20/20 test results from implementation and independent review remain valid. The post-merge saved-model verification script completed successfully on both computers.
+
+**Step 3 completion status:**
+
+Step 3 — Baseline Classifier is complete. The implementation, validation, independent review, Git integration, model retrieval and post-merge saved-model verification have been completed.
+
 The baseline configuration and detailed results are recorded in `docs/step3-baseline-results.md`.
-
-The `.joblib` model-file pattern is configured for Git LFS. The baseline model was committed in `6fbae66` and uploaded successfully through PR #12. Its verified file size is 48,560,430 bytes. Member 2 independently retrieved the model through Git LFS and successfully verified it on a separate computer.
-
-Member 2 also independently ran the complete automated test suite, with all 20 tests passing, and reproduced the validation accuracy, macro-F1 and confusion matrix.
-
-**Remaining Step 3 work:**
-
-- Correct the outdated Git LFS upload statement in this project plan and update the contribution log.
-- Commit and push the documentation corrections to PR #12.
-- Confirm that Member 2's formal approval remains active; request renewed approval only if GitHub dismisses it.
-- Merge PR #12 after the documentation correction and review.
-- Both members synchronise their local `main` branches with `origin/main`.
-- Verify the merged model, automated tests and saved-model validation results, and confirm clean working trees.
-
-Step 3 remains in progress until the documentation correction, PR integration and final synchronisation have been completed.
 
 ### Outstanding development stages
 
