@@ -400,13 +400,17 @@ The strongest class by F1-score was Keyboard (0.8052). Pencil had the lowest F1-
 **Step 3.8 — Documentation and Git Integration (In Progress)**
 
 - Document the baseline configuration, validation results, confusion matrix and limitations in `docs/step3-baseline-results.md`.
-- Update the project plan, dataset visual-review record and contribution log.
-- Track the saved Joblib model using Git LFS.
-- Commit and push the completed baseline implementation and documentation.
-- Have Member 2 independently review the implementation, tests, saved model and validation results.
-- Review and merge the contribution through GitHub.
-- Confirm that both members can retrieve the model and run the verification successfully.
-- Synchronise both members' repositories after integration.
+- Update the project plan, visual-review record and contribution log to reflect the completed baseline work.
+- Configure Git LFS to track Joblib model files and verify the tracking rule: completed.
+- Commit and push the baseline implementation, tests, scripts, saved model and validation results: completed in commit `6fbae66`.
+- Submit the baseline implementation through PR #12: completed.
+- Member 2 independently reviewed the implementation, automated tests, saved model and validation results and submitted formal approval on PR #12: completed.
+- Member 2 successfully retrieved the saved model through Git LFS and independently reproduced the validation metrics and confusion matrix.
+- Correct the remaining outdated Git LFS status statement in the project plan and update the contribution records.
+- Commit and push the documentation corrections to PR #12.
+- Confirm whether Member 2's approval remains active after the documentation update. Request renewed approval only if GitHub dismisses the existing review.
+- Review and merge PR #12.
+- Synchronise both members' repositories and verify the merged model, automated tests and clean working trees.
 
 **Step 3 completion criteria:**
 
@@ -543,7 +547,7 @@ The final submission must include:
 
 ## 9. Current Project Status
 
-**Current stage: Step 3 — Baseline Classifier is in progress.** The initial HOG + Linear SVM baseline has been implemented, trained and evaluated using the approved training and validation data. The saved model and its validation results have also been successfully verified. Documentation, repository integration and Member 2's independent baseline verification remain outstanding.
+**Current stage: Step 3 — Baseline Classifier is in progress.** The HOG + Linear SVM baseline has been implemented, trained and evaluated using the approved training and validation data. The saved model has been reloaded and its validation results reproduced successfully. Member 2 has independently verified the implementation, passed all 20 automated tests, retrieved the saved model through Git LFS, reproduced the validation metrics and confusion matrix, and submitted formal approval on PR #12. The remaining work is the documentation correction identified during the review, PR #12 integration and final synchronisation of both members' repositories.
 
 ### Completed stages and integration
 
@@ -615,21 +619,20 @@ The following work has been completed by Member 1:
 
 The baseline configuration and detailed results are recorded in `docs/step3-baseline-results.md`.
 
-The `.joblib` model-file pattern has been configured for Git LFS, and the local tracking rule has been verified. The model has not yet been committed or uploaded through Git LFS.
+The `.joblib` model-file pattern is configured for Git LFS. The baseline model was committed in `6fbae66` and uploaded successfully through PR #12. Its verified file size is 48,560,430 bytes. Member 2 independently retrieved the model through Git LFS and successfully verified it on a separate computer.
+
+Member 2 also independently ran the complete automated test suite, with all 20 tests passing, and reproduced the validation accuracy, macro-F1 and confusion matrix.
 
 **Remaining Step 3 work:**
 
-- Complete the contribution-log update.
-- Complete the visual-review documentation addendum for D014.
-- Review all documentation changes.
-- Confirm the Git LFS configuration and repository handling.
-- Commit and push the baseline implementation, results and documentation.
-- Have Member 2 independently verify the source code, tests, saved model and validation results.
-- Review and merge the contribution through GitHub.
-- Confirm that both members can retrieve the model and reproduce the verification results.
-- Synchronise both members' repositories.
+- Correct the outdated Git LFS upload statement in this project plan and update the contribution log.
+- Commit and push the documentation corrections to PR #12.
+- Confirm that Member 2's formal approval remains active; request renewed approval only if GitHub dismisses it.
+- Merge PR #12 after the documentation correction and review.
+- Both members synchronise their local `main` branches with `origin/main`.
+- Verify the merged model, automated tests and saved-model validation results, and confirm clean working trees.
 
-Step 3 remains in progress until these activities are completed.
+Step 3 remains in progress until the documentation correction, PR integration and final synchronisation have been completed.
 
 ### Outstanding development stages
 

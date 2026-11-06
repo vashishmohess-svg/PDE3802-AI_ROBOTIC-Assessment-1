@@ -4,7 +4,7 @@
 
 **Date:** 6 November 2026
 
-**Status:** Initial baseline trained and validation results reproduced. Member 2's independent verification remains pending.
+**Status:** Baseline trained and validation results reproduced. Member 2 independently verified the implementation and saved model on a second computer, reproduced the validation metrics and confusion matrix, and submitted formal approval on PR #12. Final documentation correction, PR integration and repository synchronisation remain pending.
 
 ## 1. Purpose
 
@@ -158,7 +158,11 @@ The following files are saved under `results/baseline/`:
 - `validation_confusion_matrix.png`
 - `run_metadata.json`
 
-The model file is configured for Git LFS tracking.
+The model file is configured for Git LFS tracking and was successfully committed and uploaded through PR #12 in commit `6fbae66`. The verified model file size is 48,560,430 bytes. Member 2 independently retrieved the model through Git LFS and verified that it could be loaded and used to reproduce the validation results.
+
+The baseline implementation and supporting files are available on branch `feature/step3-baseline-classifier`.
+
+Pull Request: https://github.com/vashishmohess-svg/PDE3802-AI_ROBOTIC-Assessment-1/pull/12
 
 ## 9. Limitations and next steps
 
@@ -175,6 +179,8 @@ The model file is configured for Git LFS tracking.
 
 The baseline implementation, training, validation and saved-model verification have been completed by Member 1.
 
-Documentation integration, Member 2's independent verification and Git integration remain outstanding.
+Member 2 has independently reviewed the baseline implementation, automated tests, saved model and validation results. Member 2 successfully retrieved the model through Git LFS, ran all 20 automated tests, reproduced the validation accuracy of 68.58%, macro-F1 of 0.6497 and the saved confusion matrix, and submitted formal approval on PR #12.
 
-Step 3 is therefore still in progress.
+The remaining work is the correction of the outdated Git LFS statement in the project plan, the contribution-log update, the documentation commit and push, PR #12 merge, and final repository synchronisation by both members.
+
+The baseline implementation and independent verification are complete. Step 3 remains in progress until the documentation correction, Git integration and final synchronisation are completed.
