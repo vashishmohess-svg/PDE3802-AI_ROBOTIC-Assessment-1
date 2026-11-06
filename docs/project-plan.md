@@ -53,9 +53,11 @@ The project uses:
 - The same project structure and dataset for both members.
 - Python 3.13.17 (64-bit) as the agreed interpreter.
 - Separate project-specific `.venv` virtual environments.
-- Shared dependency files, including `requirements.txt` and `requirements-lock.txt`.
+- Shared runtime dependency files: `requirements.txt` and `requirements-lock.txt`.
+- Shared development and testing dependency files: `requirements-dev.txt` and `requirements-dev-lock.txt`.
 
 Both members have installed and verified the agreed Python version and dependencies.
+Both members have also installed and independently verified the shared development testing dependencies. The development dependency setup uses `requirements-dev.txt` and the exact environment recorded in `requirements-dev-lock.txt`. Pytest is maintained as a development/testing dependency rather than being added to the runtime dependency files.
 
 Each member must use their own project virtual environment when working on the project. The shared dependency files should be used to maintain consistency between both computers.
 
@@ -193,6 +195,8 @@ repository-root/
 ├── .gitattributes
 ├── .gitignore
 ├── README.md
+├── requirements-dev-lock.txt
+├── requirements-dev.txt
 ├── requirements-lock.txt
 └── requirements.txt
 ```
@@ -397,7 +401,7 @@ The strongest class by F1-score was Keyboard (0.8052). Pencil had the lowest F1-
 - Confirm that the reproduced accuracy, macro-F1 and confusion matrix match the saved results.
 - Confirm that the held-out test split has not been accessed.
 
-**Step 3.8 — Documentation and Git Integration (Complete)**
+**Step 3.8 — Documentation, Dependency Integration and Git Verification (Complete)**
 
 - Documented the baseline configuration, validation results, confusion matrix and limitations in `docs/step3-baseline-results.md`.
 - Updated the project plan, visual-review record and contribution log.
@@ -405,30 +409,31 @@ The strongest class by F1-score was Keyboard (0.8052). Pencil had the lowest F1-
 - Committed and pushed the baseline implementation, automated tests, scripts, saved model and validation results in commit `6fbae66`.
 - Submitted the baseline implementation through PR #12.
 - Member 2 independently reviewed the implementation, tests, saved model and validation results and submitted formal approval.
-- Member 2 successfully retrieved the saved model through Git LFS and independently reproduced the validation metrics and confusion matrix.
-- - Final documentation corrections were prepared following the successful merge of PR #12 and are being integrated separately.
-- PR #12 was successfully merged into `main` at commit `a72d482`.
-- Both members switched to `main`, synchronised with `origin/main` using `git pull --ff-only`, and successfully retrieved the model using `git lfs pull`.
-- Both members confirmed clean working trees and the same merge commit, `a72d482`.
-- Both members successfully executed `scripts/verify_baseline.py` after the merge and reproduced 68.58% validation accuracy, 0.6497 macro-F1 and the saved confusion matrix.
-- Both members confirmed that the held-out test dataset remained unused.
-
-**Post-merge automated test note:** The command `python -m pytest -q` could not be executed on either computer because `pytest` was not installed and was not listed in `requirements.txt` or `requirements-lock.txt`. This does not indicate a test failure. The complete 20-test suite had already passed during the earlier implementation and independent review. The post-merge saved-model verification script passed on both computers.
+- PR #12 was merged into `main` at commit `a72d482`.
+- PR #13 integrated the final post-merge Step 3 documentation corrections at commit `edf3819`.
+- Identified and resolved the missing pytest development dependency through PR #14.
+- Added `requirements-dev.txt`, inheriting the existing runtime lock and specifying `pytest==9.2.0`.
+- Added `requirements-dev-lock.txt`, recording the complete 52-package development environment.
+- Kept `requirements.txt` and `requirements-lock.txt` unchanged.
+- Both members independently installed the locked development dependencies, confirmed exact package-list matches, ran `pip check`, passed all 20 automated tests and verified the saved baseline.
+- PR #14 was approved by Member 2 and merged into `main` at commit `b98cb3a`.
+- Both members synchronised their local `main` branches with `origin/main` after the merge.
+- Both members confirmed matching full commit hashes and clean working trees.
+- Both members ran `python -m pytest -q` after the merge and passed all 20 tests.
+- Both members ran `scripts/verify_baseline.py` successfully and reproduced 68.58% validation accuracy, 0.6497 macro-F1 and the saved confusion matrix.
+- Both members confirmed that the held-out test dataset remained unused and reserved for Step 6.
 
 **Step 3 completion criteria:**
 
-- The baseline classifier is implemented and successfully trained.
-- All approved training and validation images are processed successfully.
-- Automated tests pass.
-- Validation metrics and classification reports are saved.
-- The saved model can be reloaded and its validation results reproduced.
-- The held-out test split remains unused.
+- Baseline implementation, training and validation completed.
+- All 20 automated tests passed during implementation, independent review and final post-merge verification.
+- Development dependencies are recorded in shared files and independently verified.
+- The saved model and validation metrics can be reproduced.
+- The held-out test split remains untouched.
 - Documentation and contribution records are updated.
-- Member 2's independent verification and Git integration are completed.
+- Both members have completed independent review and post-merge Git verification.
 
 The detailed baseline results are recorded in `docs/step3-baseline-results.md`.
-
-**Important:** Completing the baseline does not mean that the final classifier has been selected. Model comparison and selection will take place separately in Step 4.
 
 
 ### Step 4 — Model Comparison and Selection
@@ -550,7 +555,21 @@ The final submission must include:
 
 ## 9. Current Project Status
 
-**Current stage: Step 3 — Baseline Classifier is complete.** The HOG + Linear SVM baseline has been implemented, trained and evaluated using the approved training and validation data. The saved model and its validation results were verified by both members. Member 2 independently reviewed the implementation, retrieved the model through Git LFS, passed all 20 automated tests during the pre-merge review, and formally approved PR #12. PR #12 was merged into `main` at commit `a72d482`. Both members synchronised their repositories, confirmed clean working trees and successfully reproduced the saved-model validation results after the merge. The held-out test dataset remains unused and is reserved for Step 6. **Step 4 — Model Comparison and Selection has not started.**
+**Current stage: Step 3 — Baseline Classifier is complete.**
+
+The initial HOG + Linear SVM baseline has been implemented, trained and evaluated using the approved training and validation data. Member 1 completed the implementation, while Member 2 independently reviewed the code, automated tests, saved model and validation results.
+
+PR #12 integrated the baseline implementation at commit `a72d482`. PR #13 integrated final Step 3 documentation corrections at commit `edf3819`. PR #14 added the locked pytest development dependencies and was merged at commit `b98cb3a`.
+
+Following PR #14, both members independently synchronised their local repositories, confirmed matching `main` and `origin/main` commit hashes, and verified clean working trees. Both members passed all 20 automated tests, confirmed that `pip check` reported no broken requirements, and independently reproduced the baseline validation accuracy of 68.58%, macro-F1 of 0.6497 and the saved confusion matrix.
+
+The development dependency setup is now recorded in `requirements-dev.txt` and `requirements-dev-lock.txt`. The existing runtime dependency files remain unchanged.
+
+The held-out test dataset remains unused and reserved for Step 6.
+
+**Step 3 — Baseline Classifier: COMPLETE.**
+
+**Step 4 — Model Comparison and Selection: NOT STARTED.**
 
 ### Completed stages and integration
 
@@ -572,8 +591,8 @@ The final submission must include:
 - Step 3.5 — Initial HOG + Linear SVM Baseline: trained by Member 1.
 - Step 3.6 — Baseline Validation and Evaluation: completed by Member 1.
 - Step 3.7 — Saved Model Verification: completed by Member 1.
-- Step 3.8 — Documentation and Git Integration: completed; PR #12 merged at commit `a72d482`.
 - Step 3 — Baseline Classifier: completed by both members.
+- Step 3.8 — Documentation, Dependency Integration and Git Verification: completed by both members; PRs #12, #13 and #14 merged.
 
 ### Merged pull requests and Git integration
 
@@ -585,8 +604,12 @@ The final submission must include:
 - PR #8 — Shared Python Dependencies: reviewed and merged at commit `9a985b2`.
 - PR #9 — Resolved Python Dependency Lock File: reviewed and merged at commit `b2e0aaa`.
 - PR #10 — Step 2.7 Environment Setup Documentation and Project Plan: approved and merged at commit `54f7fda`.
+- PR #11 — Step 2 Environment Setup Final Closeout: merged at commit `9d86700`
+- PR #12 — Baseline HOG + Linear SVM Implementation: reviewed and merged at commit `a72d482`.
+- PR #13 — Final Step 3 Documentation Corrections: reviewed and merged at commit `edf3819`.
+- PR #14 — Locked pytest Development Dependencies: independently verified, approved and merged at commit `b98cb3a`.
 
-Both members independently installed and tested the agreed Python environment. The shared dependency files contain six direct dependencies and 48 pinned package entries in the lock file.
+Both members independently installed and tested the agreed Python runtime environment. The runtime dependency files contain six direct dependencies, with 48 pinned package entries recorded in `requirements-lock.txt`. Development and testing dependencies are recorded separately in `requirements-dev.txt` and `requirements-dev-lock.txt`.
 
 Both members reported successful package imports, TensorFlow CPU execution, SVM testing, image decoding, Matplotlib testing and dependency consistency checks.
 
