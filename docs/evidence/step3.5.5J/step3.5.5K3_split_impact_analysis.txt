@@ -1,0 +1,37 @@
+STEP 3.5.5K.3 ? CONSERVATIVE SPLIT IMPACT ANALYSIS
+Member 2 CSV SHA-256: 28038526fe0c93ff2bc5ba723b65f8d090795a5ecf6bc6c4644a821997dae4de
+Original images: 1142
+Supported relationships: 31
+Unresolved relationships: 16
+Graph edges: 47
+Unique graph images: 44
+Connected groups: 13
+
+Original Train/Valid/Test: [816, 223, 103]
+Proposed Train/Valid/Test: [813, 226, 103]
+Effective proposed training images: 812
+
+Class impact:
+Bottle: 95/27/10 -> 95/27/10
+Calculator: 104/31/19 -> 104/31/19
+Keyboard: 122/37/14 -> 122/37/14
+Mouse: 108/34/14 -> 108/34/14
+Mug: 72/19/7 -> 72/19/7
+Notebook: 117/27/15 -> 115/28/16
+Pencil: 72/14/10 -> 72/14/10
+Scissors: 126/34/14 -> 125/36/13
+
+All 47 supported/unresolved relationships are contained within one proposed split.
+Related-but-distinct candidate 007 remains separate.
+All eight classes remain represented in all three splits.
+Original dataset image counts verified.
+Previously excluded Pencil image identified in the manifest.
+
+LIMITATIONS:
+Unresolved relationships are grouped conservatively for this proposal.
+They are not thereby reclassified as confirmed duplicates.
+Connected groups are candidate relationship groups, not proof that every
+image in a group derives from an identical source photograph.
+This allocation is a proposal, not an approved dataset modification.
+No original image or split was changed.
+No classifier training was performed.

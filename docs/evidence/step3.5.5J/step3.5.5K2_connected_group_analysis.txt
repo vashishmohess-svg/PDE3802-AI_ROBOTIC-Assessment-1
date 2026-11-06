@@ -1,0 +1,32 @@
+STEP 3.5.5K.2 ? CONNECTED IMAGE GROUP ANALYSIS
+
+Source CSV SHA-256: 28038526fe0c93ff2bc5ba723b65f8d090795a5ecf6bc6c4644a821997dae4de
+Source adjudication records: 48
+Shared-source-supported relationships: 31
+Unique affected image files: 27
+Connected candidate groups: 9
+
+Shared-source-supported pair split breakdown:
+train -> test: 10
+train -> valid: 15
+valid -> test: 6
+
+Connected candidate group details:
+G001: 7 images; 15 links; classes=Scissors; train=3; valid=2; test=2
+G002: 6 images; 9 links; classes=Scissors; train=4; valid=1; test=1
+G003: 2 images; 1 links; classes=Notebook; train=1; valid=0; test=1
+G004: 2 images; 1 links; classes=Notebook; train=0; valid=1; test=1
+G005: 2 images; 1 links; classes=Calculator; train=1; valid=1; test=0
+G006: 2 images; 1 links; classes=Calculator; train=1; valid=1; test=0
+G007: 2 images; 1 links; classes=Mouse; train=1; valid=1; test=0
+G008: 2 images; 1 links; classes=Mouse; train=1; valid=1; test=0
+G009: 2 images; 1 links; classes=Scissors; train=1; valid=1; test=0
+
+INTERPRETATION AND LIMITATION:
+Each graph edge represents a Member 2 shared-source-supported decision.
+Connected components are candidate relationship groups.
+Transitive connectivity does not independently prove that every
+image in a group is the same original photograph.
+No dataset images or split assignments were changed.
+No images were excluded.
+No classifier training was performed.

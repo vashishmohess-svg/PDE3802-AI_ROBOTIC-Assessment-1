@@ -1,0 +1,9 @@
+﻿Class,Original_Train,Original_Valid,Original_Test,Proposed_Train,Proposed_Valid,Proposed_Test,Delta_Train,Delta_Valid,Delta_Test
+Bottle,95,27,10,95,27,10,0,0,0
+Calculator,104,31,19,104,31,19,0,0,0
+Keyboard,122,37,14,122,37,14,0,0,0
+Mouse,108,34,14,108,34,14,0,0,0
+Mug,72,19,7,72,19,7,0,0,0
+Notebook,117,27,15,115,28,16,-2,1,1
+Pencil,72,14,10,72,14,10,0,0,0
+Scissors,126,34,14,125,36,13,-1,2,-1

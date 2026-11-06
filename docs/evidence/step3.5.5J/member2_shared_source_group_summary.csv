@@ -1,0 +1,10 @@
+﻿Candidate_Group_ID,Image_Count,Candidate_Pair_Count,Classes,Train_Images,Valid_Images,Test_Images,Candidate_IDs
+G001,7,15,Scissors,3,2,2,003;011;018;021;022;037;038;039;051;052;053;054;055;072;073
+G002,6,9,Scissors,4,1,1,002;004;005;008;009;016;017;019;020
+G003,2,1,Notebook,1,0,1,014
+G004,2,1,Notebook,0,1,1,074
+G005,2,1,Calculator,1,1,0,048
+G006,2,1,Calculator,1,1,0,036
+G007,2,1,Mouse,1,1,0,067
+G008,2,1,Mouse,1,1,0,012
+G009,2,1,Scissors,1,1,0,001
