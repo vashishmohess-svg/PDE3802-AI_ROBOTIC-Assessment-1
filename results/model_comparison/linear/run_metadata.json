@@ -1,0 +1,82 @@
+{
+  "created_at": "2026-11-06T16:07:32.793976+04:00",
+  "python_version": "3.13.17",
+  "scikit_learn_version": "1.9.1",
+  "numpy_version": "2.1.3",
+  "opencv_version": "4.14.0",
+  "joblib_version": "1.6.0",
+  "manifest_path": "docs/evidence/step3.5.5J/step3.5.5K3_full_split_manifest_proposal.csv",
+  "manifest_sha256": "40fad2a63bf4ba3185731154d1f5908901f5d224fd3f2d098fae84c9b234b7d5",
+  "classes": [
+    "Bottle",
+    "Calculator",
+    "Keyboard",
+    "Mouse",
+    "Mug",
+    "Notebook",
+    "Pencil",
+    "Scissors"
+  ],
+  "training_images": 812,
+  "validation_images": 226,
+  "test_images_used": 0,
+  "held_out_test_accessed": false,
+  "preprocessing": {
+    "orientation": "EXIF transpose",
+    "colour": "grayscale",
+    "image_size": [
+      128,
+      128
+    ],
+    "resize_interpolation": "cv2.INTER_AREA"
+  },
+  "hog_configuration": {
+    "window_size": [
+      128,
+      128
+    ],
+    "block_size": [
+      16,
+      16
+    ],
+    "block_stride": [
+      8,
+      8
+    ],
+    "cell_size": [
+      8,
+      8
+    ],
+    "bins": 9,
+    "feature_count": 8100
+  },
+  "training_feature_extraction_seconds": 0.42734119994565845,
+  "validation_feature_extraction_seconds": 0.1043703998439014,
+  "prediction_timing_method": "One warm-up prediction followed by 10 timed predictions over all 226 validation feature vectors; median elapsed time divided by image count.",
+  "model_size_method": "Uncompressed joblib serialization, protocol 5, measured in a temporary directory.",
+  "candidates": [
+    {
+      "name": "linear_baseline",
+      "display_name": "HOG + Linear SVM",
+      "kernel": "linear",
+      "C": 1.0,
+      "gamma": "scale",
+      "class_weight": null,
+      "probability": false,
+      "decision_function_shape": "ovr"
+    },
+    {
+      "name": "linear_balanced",
+      "display_name": "HOG + Balanced Linear SVM",
+      "kernel": "linear",
+      "C": 1.0,
+      "gamma": "scale",
+      "class_weight": "balanced",
+      "probability": false,
+      "decision_function_shape": "ovr"
+    }
+  ],
+  "validation_used_for_model_selection": true,
+  "independent_test_evaluation_performed": false,
+  "total_script_seconds": 46.72796870023012
+}

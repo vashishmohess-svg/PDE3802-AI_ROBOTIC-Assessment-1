@@ -64,21 +64,23 @@ Member 1 will coordinate the initial repository setup and connection to the loca
 
 The team must use the same agreed remote repository. A separate competing repository must not be used for project development.
 
-## D007 — Git Collaboration Workflow
+## D007 — Shared Repository and Branch-Based Collaboration
 
-**Decision:** Both members will use separate branches when contributing changes.
+**Decision:** The project uses a shared private GitHub repository and a branch-based collaboration workflow to support individual contributions, code review, integration, and traceability.
 
-**Workflow:**
+The `main` branch is maintained as the stable project baseline. Members must use task-specific branches for development rather than committing directly to `main` or another member's working branch.
 
-1. Member 1 prepares and pushes the initial project structure to the shared repository.
-2. Member 2 clones the repository.
-3. Member 2 creates a separate contribution branch.
-4. Member 2 makes and commits a genuine project contribution.
-5. Member 2 pushes the branch to GitHub.
-6. Member 1 reviews the changes before merging them into `main`.
-7. Both members pull the updated `main` branch.
+For Step 4, the following integration arrangement was adopted:
 
-**Reason:** This workflow helps prevent conflicting changes and provides a reviewable record of each member's contributions.
+- Member 1 maintained `feature/step4-model-comparison` as the Step 4 integration branch.
+- Member 2 developed the RBF SVM implementation on `feature/step4-rbf-svm`.
+- Member 1 reviewed Member 2's submitted work before integration.
+- Implementation changes and supporting experimental evidence were integrated into the Step 4 branch through pull requests #16 and #17.
+- The integrated Step 4 work remains separate from `main` until its verification, documentation, and closeout have been completed and the final integration has been reviewed.
+
+Both members must synchronise their local repositories with the appropriate remote branch after approved changes. Commits should be meaningful and descriptive, and pull requests should provide a reviewable record of changes.
+
+This workflow preserves contribution traceability, reduces the risk of conflicting changes, and allows the project to maintain a stable baseline while individual assessment stages are developed and reviewed.
 
 ## D008 — Git Commit and File Management
 
@@ -114,20 +116,27 @@ The dataset source and licence must be acknowledged in the README. The final dat
 
 Each member must verify their own environment and configure their Git identity before making commits.
 
-## D011 — Evaluation Method
+## D011 — Model Validation and Held-Out Test Policy
 
-**Decision:** Use the validation dataset for model comparison and reserve the test dataset for final evaluation.
+**Decision:** The validation dataset is used for model development, candidate comparison, error analysis, and model selection. The held-out test dataset is reserved exclusively for the authorised final evaluation stage in Step 6.
 
-**Reason:** The final test results should provide an independent assessment of the selected model's performance.
+For the Step 4 model comparison, all approved candidates must use the same fixed training and validation allocation established by D014. Training uses 812 eligible images, while validation uses 226 images. The 103 held-out test images must not be used for training, preprocessing, feature extraction, validation, hyperparameter selection, or model selection.
 
-The final evaluation must include:
+Model comparison considers:
 
-- Test accuracy.
-- Macro-F1 score.
-- Confusion matrix.
-- Error analysis.
+- Validation accuracy.
+- Macro-averaged F1-score.
+- Per-class precision, recall, and F1-score.
+- Confusion matrices and validation misclassification analysis.
+- Model fitting time.
+- Median prediction time per image, measured using the agreed timing procedure.
+- Saved model size and relevant experiment metadata.
 
-The test dataset must not be used to select or tune models.
+All candidates must use the same class order, preprocessing configuration, HOG feature-extraction configuration, and approved data allocation so that their results can be compared consistently.
+
+Validation results are used to select the most suitable candidate for the project. They must not be described as independent test performance or as proof of generalisation to unseen data. Grouped cross-validation was not performed during Step 4 and must not be claimed.
+
+The held-out test dataset remains untouched until Step 6, when the selected model may undergo the authorised final evaluation. Any reported results must clearly distinguish validation performance from final test performance.
 
 ## D012 — Project Documentation
 
@@ -154,6 +163,7 @@ Documentation must be updated when the project workflow or agreed decisions chan
 **Decision status:** Approved by Member 1 (Project Lead), with Member 2's independent verification completed.
 
 **Decision:** Use the approved group-aware full split manifest to determine the logical training, validation and test assignments used during classifier development and final evaluation.
+
 
 ### Relationship to earlier decision D005
 
@@ -199,6 +209,55 @@ Canonical committed Git-file SHA256 (LF line endings):
 Member 2 independently verified the manifest contents, class counts, eligibility, group assignments and all 47 supported/unresolved relationships. The final canonical Git hash and documentation verification returned `OVERALL PASS` at shared commit `6b58e9fd25d4779a9ad8acff3909e40ca39d6e7b`.
 
 The original dataset remains unchanged.
+
+## D015 — Selected HOG and RBF SVM Classifier
+
+**Decision date:** 6 November 2026
+**Status:** Jointly selected by Member 1 and Member 2; selected-model verification passed on 6 November 2026.
+
+**Decision:** The project selects the Histogram of Oriented Gradients (HOG) feature representation combined with a Radial Basis Function (RBF) Support Vector Machine (SVM) using `C=10` as the preferred classifier candidate for the subsequent project stage.
+
+The selected configuration is:
+
+- **Feature extraction:** HOG, producing 8,100 features per image.
+- **Classifier:** SVM with an RBF kernel.
+- **Regularisation parameter:** `C=10`.
+- **Gamma:** `scale`.
+- **Class weighting:** `None`.
+- **Decision function:** One-versus-rest (`ovr`).
+- **Probability estimation:** Disabled.
+- **Input preprocessing:** EXIF orientation correction, grayscale conversion, and resizing to 128 × 128 pixels using `INTER_AREA`.
+
+The comparison evaluated five candidates using the same approved training and validation allocation:
+
+| Candidate | Validation accuracy | Macro-F1 |
+|---|---:|---:|
+| Linear baseline | 0.6858 | 0.6497 |
+| Balanced linear | 0.6858 | 0.6497 |
+| RBF, C=0.1 | 0.2965 | 0.1708 |
+| RBF, C=1 | 0.7035 | 0.6183 |
+| RBF, C=10 | 0.7257 | 0.6831 |
+
+RBF SVM with `C=10` achieved the highest validation accuracy and macro-F1 among the five evaluated candidates. It was therefore preferred based on the agreed validation-based selection criteria. The selection was jointly accepted by both project members.
+
+The selected model was retrained and saved at:
+
+`results/selected_model/rbf_c10_hog_svm.joblib`
+
+Its recorded validation results are:
+
+- Validation accuracy: 72.57%.
+- Validation macro-F1: 0.6831.
+- Support vectors: 796.
+- Saved model size: 51,676,393 bytes.
+
+The recorded validation results reproduce the previous RBF C=10 candidate's accuracy, macro-F1, and confusion matrix.
+
+**Dataset restriction:** Training used 812 eligible images and validation used 226 images, following the approved manifest in D014. The 103 held-out test images were not used. The selected model's reported performance is therefore validation performance, not independent test performance.
+
+**Limitations:** Grouped cross-validation was not performed. The validation results alone cannot establish independent generalisation performance. The selected classifier must undergo the authorised final evaluation using the held-out test dataset in Step 6 before any independent test-performance claims are made.
+
+**Supporting evidence:** The candidate comparison results are stored under `results/model_comparison/`. The selected model, validation metrics, predictions, classification report, confusion matrix, and verification metadata are stored under `results/selected_model/`.
 
 ## Open Questions — Not Yet Approved Decisions
 

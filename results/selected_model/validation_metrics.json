@@ -1,0 +1,21 @@
+{
+  "selected_candidate": "rbf_c10",
+  "kernel": "rbf",
+  "C": 10.0,
+  "gamma": "scale",
+  "class_weight": "none",
+  "probability": false,
+  "validation_accuracy": 0.7256637168141593,
+  "validation_macro_f1": 0.6831491956946296,
+  "fit_seconds": 14.49363850010559,
+  "feature_extraction_seconds": 1.4917896003462374,
+  "model_size_bytes": 51676393,
+  "support_vector_count": 796,
+  "training_images": 812,
+  "validation_images": 226,
+  "test_images_used": 0,
+  "independent_test_evaluation_performed": false,
+  "reproduced_previous_accuracy": true,
+  "reproduced_previous_macro_f1": true,
+  "reproduced_previous_confusion_matrix": true
+}
