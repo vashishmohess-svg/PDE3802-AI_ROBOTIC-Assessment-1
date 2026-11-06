@@ -1,0 +1,3 @@
+candidate,kernel,C,gamma,class_weight,probability,validation_accuracy,validation_macro_f1,fit_seconds,prediction_median_ms_per_image,model_size_bytes,support_vector_count,validation_images,training_images,test_images_used
+linear_baseline,linear,1.0,scale,none,False,0.6858407079646017,0.6496542426340696,6.002412400208414,4.699492920808231,48560421,748,226,812,0
+linear_balanced,linear,1.0,scale,balanced,False,0.6858407079646017,0.6496542426340696,6.170754700433463,5.755114379396613,48560447,748,226,812,0

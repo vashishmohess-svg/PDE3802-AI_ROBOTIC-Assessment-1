@@ -1,0 +1,7 @@
+{
+  "test_accuracy": 0.6699029126213593,
+  "test_macro_f1": 0.6287620586244875,
+  "n_test_images": 103,
+  "model_path": "C:\\Users\\Nishant\\OneDrive\\Desktop\\final ai project\\results\\selected_model\\rbf_c10_hog_svm.joblib",
+  "manifest_path": "C:\\Users\\Nishant\\OneDrive\\Desktop\\final ai project\\docs\\evidence\\step3.5.5J\\step3.5.5K3_full_split_manifest_proposal.csv"
+}

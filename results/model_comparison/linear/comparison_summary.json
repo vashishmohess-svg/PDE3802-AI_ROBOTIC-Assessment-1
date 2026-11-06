@@ -1,0 +1,36 @@
+[
+  {
+    "candidate": "linear_baseline",
+    "kernel": "linear",
+    "C": 1.0,
+    "gamma": "scale",
+    "class_weight": "none",
+    "probability": false,
+    "validation_accuracy": 0.6858407079646017,
+    "validation_macro_f1": 0.6496542426340696,
+    "fit_seconds": 6.002412400208414,
+    "prediction_median_ms_per_image": 4.699492920808231,
+    "model_size_bytes": 48560421,
+    "support_vector_count": 748,
+    "validation_images": 226,
+    "training_images": 812,
+    "test_images_used": 0
+  },
+  {
+    "candidate": "linear_balanced",
+    "kernel": "linear",
+    "C": 1.0,
+    "gamma": "scale",
+    "class_weight": "balanced",
+    "probability": false,
+    "validation_accuracy": 0.6858407079646017,
+    "validation_macro_f1": 0.6496542426340696,
+    "fit_seconds": 6.170754700433463,
+    "prediction_median_ms_per_image": 5.755114379396613,
+    "model_size_bytes": 48560447,
+    "support_vector_count": 748,
+    "validation_images": 226,
+    "training_images": 812,
+    "test_images_used": 0
+  }
+]

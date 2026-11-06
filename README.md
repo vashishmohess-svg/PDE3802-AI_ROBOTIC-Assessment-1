@@ -228,40 +228,111 @@ Team members should commit meaningful changes regularly and avoid overwriting ea
 
 ## 8. Running the Project
 
-Detailed installation instructions, dependency requirements and execution commands will be added after the development environment and project implementation have been finalised.
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/vashishmohess-svg/PDE3802-AI_ROBOTIC-Assessment-1.git
+cd PDE3802-AI_ROBOTIC-Assessment-1
+```
+
+2. Create a virtual environment:
+```bash
+python -m venv .venv
+.venv\Scripts\activate  # On Windows
+source .venv/bin/activate  # On Linux/Mac
+```
+
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+### Running the Prediction Application
+
+The prediction application supports both image file and camera input.
+
+#### Classify an Image File
+
+```bash
+python scripts/predict_app.py --image path/to/image.jpg
+```
+
+Example:
+```bash
+python scripts/predict_app.py --image dataset/train/Bottle/00001_jpg.rf.7d50e7e57d941fdcb0df860c2245e619.jpg
+```
+
+#### Use Camera for Live Classification
+
+```bash
+python scripts/predict_app.py --camera
+```
+
+To use a specific camera index:
+```bash
+python scripts/predict_app.py --camera --camera-index 1
+```
+
+**Camera Controls:**
+- Press `c` to capture and classify the current frame
+- Press `q` to quit and release the camera
+
+### Running Tests
+
+Run the robustness tests:
+```bash
+python scripts/test_robustness.py
+```
+
+### Model Evaluation
+
+To run the final held-out test evaluation:
+```bash
+python scripts/evaluate_test_set.py
+```
+
+### Supported Image Formats
+
+The application supports the following image formats:
+- JPG/JPEG
+- PNG
 
 ## 9. Project Status
 
-**Current status: Documentation closeout in progress on branch `docs/documentation-closeout`.**
+**Current status: Steps 0-7 completed. Step 8 (Dataset Card and README) in progress.**
 
-### Completed stages and integration
+### Completed stages
 
-- Step 0 — Project Setup and Git Collaboration: completed by both members.
-- Step 1 — Dataset Audit and Independent Verification: completed by both members.
-- PR #2 — Member 1 dataset audit: merged at commit `4dd6336`.
-- PR #3 — Member 2 independent dataset verification: merged at commit `41746fb`.
-- PR #5 — Classifier Requirements: approved and merged at commit `3294c1e`.
-- PR #6 — Application Interface and System Design: approved and merged at commit `b25e047`.
-- Both members synchronised their local `main` branches with `origin/main` at `b25e047` and confirmed clean working trees.
+- **Step 0 — Project Setup and Git Collaboration:** completed by both members.
+- **Step 1 — Dataset Audit and Independent Verification:** completed by both members.
+- **Step 2 — Environment Setup:** completed by both members.
+- **Step 3 — Baseline Classifier:** completed. HOG + Linear SVM baseline achieved 68.58% validation accuracy.
+- **Step 4 — Model Comparison and Selection:** completed. Selected HOG + RBF SVM (C=10.0) with 72.57% validation accuracy.
+- **Step 5 — Prediction Application:** completed. Supports image file and camera input.
+- **Step 6 — Final Held-Out Evaluation:** completed. Test accuracy: 66.99%, Test macro-F1: 0.6288.
+- **Step 7 — Robustness and Input-Handling Tests:** completed. All 11 tests passed.
 
-### Current documentation closeout
+### In progress
 
-- The three planning documents have undergone a joint consistency review.
-- The agreed multiple-file processing clarification has been incorporated into the classifier requirements and application-interface documents.
-- The documentation structure has been consolidated into a single `docs/` directory.
-- The project plan and contribution log have been updated to reflect the verified project status.
-- PR #7 — Documentation closeout: submitted from branch `docs/documentation-closeout`. Member 2's initial review identified three outdated current-status statements; corrections have been incorporated into this revision.
-- Member 2's re-review and formal approval, Member 1's merge of PR #7, and final synchronisation by both members remain outstanding.
+- **Step 8 — Dataset Card and README:** Dataset card created, README updated with installation and usage instructions.
 
-### Outstanding development work
+### Remaining work
 
-- Official Step 2 — Environment Setup has not started.
-- Classifier implementation and model training have not started.
-- The prediction application has not been implemented or tested.
-- Final held-out model evaluation has not been performed.
-- No physical robot has been constructed or integrated.
+- **Step 9 — System Design Report:** To be completed.
+- **Step 10 — Videos:** To be prepared.
+- **Step 11 — Final Checks and Release:** To be completed.
 
-The project will proceed to official Step 2 — Environment Setup after the documentation closeout has been reviewed, approved and merged.
+### Model Performance Summary
+
+**Selected Model:** HOG + RBF SVM (C=10.0, gamma=scale)
+
+- **Validation accuracy:** 72.57%
+- **Validation macro-F1:** 0.6831
+- **Test accuracy:** 66.99%
+- **Test macro-F1:** 0.6288
+- **Support vectors:** 796
+- **Model size:** 51.7 MB
 
 ## 10. Assessment Deliverables
 

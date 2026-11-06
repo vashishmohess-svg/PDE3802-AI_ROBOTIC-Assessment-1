@@ -1,4 +1,5 @@
-﻿"""Manifest-driven dataset loading for the office-item classifier.
+﻿
+"""Manifest-driven dataset loading for the office-item classifier.
 
 The original dataset folders are never rearranged. Logical split assignment
 comes from the approved manifest.
@@ -16,9 +17,14 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal
 
-import cv2
 import numpy as np
-from PIL import Image, ImageOps, UnidentifiedImageError
+from PIL import Image, UnidentifiedImageError
+
+from .image_preprocessing import (
+    IMAGE_SIZE,
+    ImagePreprocessingError,
+    preprocess_pil_image,
+)
 
 
 CLASS_NAMES = (
@@ -31,8 +37,6 @@ CLASS_NAMES = (
     "Pencil",
     "Scissors",
 )
-
-IMAGE_SIZE = (128, 128)  # width, height
 
 MANIFEST_RELATIVE_PATH = Path(
     "docs/evidence/step3.5.5J/"
@@ -107,6 +111,7 @@ class LoadedSplit:
 
 def _canonical_sha256(data: bytes) -> str:
     """Hash file bytes after normalising Windows CRLF to canonical LF."""
+
     if b"\r" in data.replace(b"\r\n", b""):
         raise DatasetManifestError(
             "Manifest contains unexpected bare carriage-return characters."
@@ -120,10 +125,7 @@ def load_manifest(
     manifest_path: str | Path,
     dataset_root: str | Path,
 ) -> list[ImageRecord]:
-    """Read and validate the approved manifest without opening any images.
-
-    Reading manifest metadata does not load or process image pixels.
-    """
+    """Read and validate the approved manifest without opening any images."""
 
     manifest_path = Path(manifest_path)
     dataset_root = Path(dataset_root).resolve()
@@ -153,7 +155,7 @@ def load_manifest(
     }
 
     try:
-        text = raw_bytes.decode("utf-8-sig")
+        raw_bytes.decode("utf-8-sig")
     except UnicodeDecodeError as exc:
         raise DatasetManifestError(
             "Manifest is not valid UTF-8."
@@ -166,6 +168,7 @@ def load_manifest(
         columns = set(reader.fieldnames or [])
 
         missing_columns = required_columns - columns
+
         if missing_columns:
             raise DatasetManifestError(
                 f"Manifest is missing columns: {sorted(missing_columns)}"
@@ -187,16 +190,19 @@ def load_manifest(
         original_split = (row["Original_Split"] or "").strip()
         proposed_split = (row["Proposed_Split"] or "").strip()
         group_id = (row["Group_ID"] or "").strip()
+
         eligible = (
             row["Effective_Training_Eligible"] or ""
         ).strip()
+
         exclusion = (
             row["Existing_Training_Exclusion"] or ""
         ).strip()
 
         if class_name not in CLASS_NAMES:
             raise DatasetManifestError(
-                f"Unknown class at manifest line {line_number}: {class_name!r}"
+                f"Unknown class at manifest line {line_number}: "
+                f"{class_name!r}"
             )
 
         if original_split not in EXPECTED_ORIGINAL_COUNTS:
@@ -217,14 +223,17 @@ def load_manifest(
             or "\\" in filename
         ):
             raise DatasetManifestError(
-                f"Unsafe filename at manifest line {line_number}: {filename!r}"
+                f"Unsafe filename at manifest line {line_number}: "
+                f"{filename!r}"
             )
 
         key = (class_name, filename)
+
         if key in seen_keys:
             raise DatasetManifestError(
                 f"Duplicate class/filename record: {key}"
             )
+
         seen_keys.add(key)
 
         if proposed_split == "train":
@@ -283,6 +292,7 @@ def load_manifest(
         class_records = [
             r for r in records if r.class_name == class_name
         ]
+
         actual = tuple(
             sum(
                 1 for r in class_records
@@ -328,6 +338,7 @@ def load_manifest(
 
     # Confirm that no recorded candidate group crosses logical splits.
     group_splits: dict[str, set[str]] = defaultdict(set)
+
     for record in records:
         if record.group_id:
             group_splits[record.group_id].add(record.proposed_split)
@@ -342,7 +353,10 @@ def load_manifest(
             "At least one candidate group crosses proposed splits."
         )
 
-    grouped_records = [r for r in records if r.group_id]
+    grouped_records = [
+        r for r in records if r.group_id
+    ]
+
     if len(grouped_records) != 44:
         raise DatasetManifestError(
             f"Expected 44 grouped images, found {len(grouped_records)}."
@@ -401,6 +415,7 @@ def load_split_records(
 
     if missing:
         preview = "\n".join(str(path) for path in missing[:10])
+
         raise FileNotFoundError(
             f"{len(missing)} {split} image files are missing. "
             f"First missing paths:\n{preview}"
@@ -413,9 +428,8 @@ def load_image(
     record: ImageRecord,
     image_size: tuple[int, int] = IMAGE_SIZE,
 ) -> np.ndarray:
-    """Load one permitted image as a grayscale uint8 array.
+    """Load one permitted dataset image through shared preprocessing.
 
-    EXIF orientation is corrected before grayscale conversion and resizing.
     Test-split records are rejected before any file access.
     """
 
@@ -425,31 +439,23 @@ def load_image(
         )
 
     if len(image_size) != 2 or min(image_size) <= 0:
-        raise ValueError("image_size must contain two positive dimensions.")
+        raise ValueError(
+            "image_size must contain two positive dimensions."
+        )
 
     try:
         with Image.open(record.source_path) as image:
-            corrected = ImageOps.exif_transpose(image)
-            grayscale = ImageOps.grayscale(corrected)
-            pixels = np.asarray(grayscale, dtype=np.uint8)
+            resized = preprocess_pil_image(image, image_size)
 
-        resized = cv2.resize(
-            pixels,
-            image_size,
-            interpolation=cv2.INTER_AREA,
-        )
-
-    except (OSError, UnidentifiedImageError, cv2.error) as exc:
+    except (
+        OSError,
+        UnidentifiedImageError,
+        ImagePreprocessingError,
+    ) as exc:
         raise DatasetImageError(
             f"Could not load image for class {record.class_name}: "
             f"{record.source_path}"
         ) from exc
-
-    if resized.shape != (image_size[1], image_size[0]):
-        raise DatasetImageError(
-            f"Unexpected resized image shape {resized.shape} "
-            f"for {record.source_path}."
-        )
 
     return resized
 
@@ -477,7 +483,9 @@ def load_split_images(
         dtype=str,
     )
 
-    paths = tuple(record.source_path for record in records)
+    paths = tuple(
+        record.source_path for record in records
+    )
 
     return LoadedSplit(
         images=images,
