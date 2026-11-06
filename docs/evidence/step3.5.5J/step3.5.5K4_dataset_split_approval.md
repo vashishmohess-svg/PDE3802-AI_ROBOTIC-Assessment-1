@@ -113,7 +113,7 @@ Approved proposed split manifest:
 
 `docs/evidence/step3.5.5J/step3.5.5K3_full_split_manifest_proposal.csv`
 
-SHA256:
+Original Member 1 Windows working-copy SHA256 (CRLF line endings):
 
 `B5389FB8368A18AD54649B87A3EB6ABB47BC29FF0D0B373A6B86054B7CCA477D`
 
@@ -121,7 +121,7 @@ Member 2 adjudication file:
 
 `docs/evidence/step3.5.5J/member2_adjudication.csv`
 
-SHA256:
+Original Member 1 Windows working-copy SHA256 (CRLF line endings):
 
 `28038526fe0c93ff2bc5ba723b65f8d090795a5ecf6bc6c4644a821997dae4de`
 
@@ -129,11 +129,49 @@ Conservative group membership file:
 
 `docs/evidence/step3.5.5J/step3.5.5K3_conservative_group_membership.csv`
 
-SHA256:
+Original Member 1 Windows working-copy SHA256 (CRLF line endings):
 
 `5548BEA4ED1C7C5CBA2E5F1E88E9246E578BD2172FADB73F7181CBE4EFD14CB5`
 
-## 8. Approval status
+## 8. Git line-ending normalisation and canonical committed hashes
+
+The original hashes in Section 7 identify Member 1's Windows working-copy
+files, which use CRLF line endings.
+
+A subsequent byte-level diagnostic compared those files with the exact
+committed Git objects at commit:
+
+`14ade034758ad304318e8a7dafeaf4c6ff84d968`
+
+The diagnostic established that Git stored the CSV files using LF
+line endings. Member 1's Git system configuration has
+`core.autocrlf=true`, and no `.gitattributes` rule overrides the
+line-ending behaviour for these files.
+
+For each of the three files, replacing CRLF with LF in the original
+working-copy bytes produced a byte-for-byte match with the committed
+Git object. Therefore, the hash differences are caused exclusively
+by line-ending normalisation, not by differences in CSV content.
+
+Canonical committed Git-file SHA256 values (LF line endings):
+
+| Evidence file | Canonical committed SHA256 |
+|---|---|
+| `step3.5.5K3_full_split_manifest_proposal.csv` | `40FAD2A63BF4BA3185731154D1F5908901F5D224FD3F2D098FAE84C9B234B7D5` |
+| `member2_adjudication.csv` | `AE2F9D1BD5F02A58700DD900430A3181B4DC3BCB288397BF547698A842735BE4` |
+| `step3.5.5K3_conservative_group_membership.csv` | `FEDB0089E8A62255E78F87A288E48A0EFDBF9D7CD72AB4C42006C874B25B995D` |
+
+The original Windows working-copy hashes remain preserved in Section 7.
+Both hash forms identify the same logical file content under different
+line-ending representations.
+
+The diagnostic did not modify the CSV files or the dataset.
+
+Detailed diagnostic evidence is recorded in:
+
+`docs/evidence/step3.5.5J/step3.5.5K4_git_hash_normalization_verification.txt`
+
+## 9. Approval status
 
 The project lead's approval is recorded on 6 November 2026.
 

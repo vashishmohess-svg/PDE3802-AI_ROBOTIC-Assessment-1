@@ -1,0 +1,93 @@
+STEP 3.5.5K.4 - GIT HASH NORMALISATION VERIFICATION
+
+Date: 6 November 2026
+Diagnostic performed by: Member 1
+Repository commit examined:
+14ade034758ad304318e8a7dafeaf4c6ff84d968
+
+PURPOSE
+
+Investigate why Member 2's direct SHA256 checks against the
+committed Git files differed from the original Member 1 hashes.
+
+RESULT
+
+All three original Windows working-copy hashes matched their
+previously recorded values.
+
+For all three files:
+- Working-copy line endings: CRLF only.
+- Committed Git object line endings: LF only.
+- Working-copy bytes and Git bytes were not directly identical.
+- Replacing CRLF with LF made the byte sequences identical.
+- Normalised working-copy SHA256 equalled committed Git SHA256.
+
+FILE 1 - PROPOSED FULL SPLIT MANIFEST
+
+Path:
+docs/evidence/step3.5.5J/step3.5.5K3_full_split_manifest_proposal.csv
+
+Original Windows working-copy SHA256:
+B5389FB8368A18AD54649B87A3EB6ABB47BC29FF0D0B373A6B86054B7CCA477D
+
+Committed Git-file SHA256 (LF):
+40FAD2A63BF4BA3185731154D1F5908901F5D224FD3F2D098FAE84C9B234B7D5
+
+Newline counts:
+Working copy: CRLF=1143, bare_LF=0, bare_CR=0
+Committed Git: CRLF=0, bare_LF=1143, bare_CR=0
+
+Normalised byte comparison: TRUE
+
+FILE 2 - MEMBER 2 ADJUDICATION
+
+Path:
+docs/evidence/step3.5.5J/member2_adjudication.csv
+
+Original Windows working-copy SHA256:
+28038526FE0C93FF2BC5BA723B65F8D090795A5ECF6BC6C4644A821997DAE4DE
+
+Committed Git-file SHA256 (LF):
+AE2F9D1BD5F02A58700DD900430A3181B4DC3BCB288397BF547698A842735BE4
+
+Newline counts:
+Working copy: CRLF=49, bare_LF=0, bare_CR=0
+Committed Git: CRLF=0, bare_LF=49, bare_CR=0
+
+Normalised byte comparison: TRUE
+
+FILE 3 - CONSERVATIVE GROUP MEMBERSHIP
+
+Path:
+docs/evidence/step3.5.5J/step3.5.5K3_conservative_group_membership.csv
+
+Original Windows working-copy SHA256:
+5548BEA4ED1C7C5CBA2E5F1E88E9246E578BD2172FADB73F7181CBE4EFD14CB5
+
+Committed Git-file SHA256 (LF):
+FEDB0089E8A62255E78F87A288E48A0EFDBF9D7CD72AB4C42006C874B25B995D
+
+Newline counts:
+Working copy: CRLF=45, bare_LF=0, bare_CR=0
+Committed Git: CRLF=0, bare_LF=45, bare_CR=0
+
+Normalised byte comparison: TRUE
+
+GIT CONFIGURATION
+
+System core.autocrlf: true
+Root .gitattributes: absent
+Per-file text/eol attributes: unspecified
+
+CONCLUSION
+
+All three SHA256 mismatches are explained exclusively by
+CRLF-to-LF line-ending normalisation.
+
+No CSV content discrepancy was detected by the byte-normalised
+comparison.
+
+The original working-copy hashes are retained. The canonical
+committed Git-file hashes are recorded separately.
+
+No dataset image or CSV file was modified by the diagnostic.
