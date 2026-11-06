@@ -1,0 +1,21 @@
+{
+  "model": "HOG + Linear SVM",
+  "validation_images": 226,
+  "training_images": 812,
+  "class_count": 8,
+  "validation_accuracy": 0.6858407079646017,
+  "validation_accuracy_percent": 68.58407079646017,
+  "validation_macro_f1": 0.6496542426340696,
+  "training_feature_shape": [
+    812,
+    8100
+  ],
+  "validation_feature_shape": [
+    226,
+    8100
+  ],
+  "fit_seconds": 6.889197499956936,
+  "training_feature_extraction_seconds": 0.32667399989441037,
+  "validation_feature_extraction_seconds": 0.09396870015189052,
+  "held_out_test_accessed": false
+}

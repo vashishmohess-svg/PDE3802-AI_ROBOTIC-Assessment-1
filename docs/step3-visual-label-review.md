@@ -175,25 +175,49 @@ The agreed conclusion is that this is an unsuitable image for baseline training,
 2. Preserve the original image file in `dataset/train/Pencil/`.
 3. Do not rename, move, edit, delete or relabel the original image.
 4. Record the exclusion explicitly and apply it reproducibly in the baseline training pipeline.
-5. Do not silently alter the original dataset or its audited image counts.
+5. Do not silently alter the original dataset or its physical folder structure.
 
-The expected baseline training count is therefore **815 images** (816 original training images minus this one documented training-time exclusion), assuming no further exclusions are approved.
+**Original physical training count at the time of review:**
 
-The original training split remains unchanged at 816 files. The 815 figure refers to the expected effective input count for baseline training after the exclusion is implemented. The validation and test splits are unaffected.
+The original `dataset/train/` folder contained 816 images. Before the later group-aware logical allocation was approved, excluding this one image would have resulted in an expected training count of 815 images.
+
+**Updated effective training count following D014 approval on 6 November 2026:**
+
+The approved manifest-based logical allocation assigns 813 images to training, 226 to validation and 103 to the held-out test split.
+
+The pixelated Pencil image is excluded from the logical training allocation. Therefore, the actual effective baseline training input contains **812 images**.
+
+The earlier expectation of 815 images is superseded by the D014-approved manifest allocation and must not be used as the current training count.
+
+The original physical dataset remains unchanged: the image is still present in its original folder, and the original training folder still contains 816 files. The validation and test logical assignments are determined by the approved manifest.
+
+Refer to `docs/decisions.md` D014 and the approved manifest under `docs/evidence/step3.5.5J/`.
 
 ## 7. Dataset preservation and handling rules
 
-- The original dataset files, folder structure, filenames, labels and train/validation/test assignments are to be preserved.
-- No image was deleted, moved, renamed, edited or relabelled during this visual review.
-- The excluded Pencil image remains physically present in the original dataset.
-- The training pipeline must implement the exclusion explicitly rather than changing or deleting the source image.
-- Training must use the training split only.
-- Validation must remain separate and must not be used for fitting the baseline model.
-- The test split must remain held out for the later final evaluation stage.
-- Any additional proposed exclusions or label changes must be recorded, justified and agreed by both members before implementation.
+- The original dataset files, physical folder structure, filenames and class folders must remain unchanged.
+- No image was deleted, moved, renamed, edited or relabelled during the visual review or baseline implementation.
+- The excluded pixelated Pencil image remains physically present in its original `dataset/train/Pencil/` folder.
+- The approved D014 manifest determines the logical training, validation and test assignments. It maps each image to its original physical location using `Original_Split`, `Class` and `Filename`, and uses `Proposed_Split` for logical assignment.
+- Baseline fitting must use only the 812 training records marked `Effective_Training_Eligible=YES`.
+- All 226 proposed validation images must remain separate from model fitting and be used for validation.
+- The 103 proposed test images must remain held out during Steps 3 and 4 and must only be accessed for final evaluation in Step 6.
+- The training pipeline must apply the approved exclusion reproducibly rather than changing or deleting the source image.
+- Any additional proposed exclusions or label changes must be recorded, justified and approved by both members before implementation.
+- The original physical dataset counts and the approved logical split counts must be reported separately to avoid confusion.
 
-## 8. Conclusion and handover to baseline design
+Refer to `docs/decisions.md` D014 and the approved manifest and supporting evidence under `docs/evidence/step3.5.5J/`.
 
-The representative visual review covered 48 selected images across all eight training classes. Both members independently reviewed the samples and agreed on the observations recorded above. One full-resolution Pencil image was jointly judged unsuitable for baseline training and approved for explicit training-time exclusion, while preserving the source dataset unchanged.
+## 8. Conclusion and handover to baseline development
 
-The visual-review findings complete the Step 3.4 visual-review checkpoint and are ready to inform Step 3.5 — Initial HOG + SVM Baseline Approach. The document does not claim that all 816 training images have been manually inspected, and it does not claim that the baseline exclusion has already been implemented in code.
+The representative visual review covered 48 selected training images across all eight classification classes. Both members independently reviewed the samples and agreed on the observations recorded in this document.
+
+One Pencil image was inspected by both members at full resolution and judged unsuitable for baseline training because of its severe pixelation and image quality. Both members approved its exclusion from model fitting while preserving the original image and its class-folder assignment.
+
+Following approval of decision D014 on 6 November 2026, the group-aware logical dataset allocation was applied through the approved manifest. The original physical dataset folders and image files remain unchanged. The effective baseline training set contains 812 images after the approved exclusion, with 226 validation images and 103 held-out test images.
+
+The baseline data loader applies the exclusion reproducibly. The HOG + Linear SVM baseline was subsequently trained using the approved training data and evaluated using the validation data. The held-out test images were not accessed.
+
+The visual-review findings, image-quality observations and agreed exclusion decision informed the baseline implementation. This review remains a representative sample inspection of 48 images and does not establish that every image in the dataset has been manually inspected or that every class label is correct.
+
+For the baseline configuration and results, refer to `docs/step3-baseline-results.md`. For the approved logical dataset allocation, refer to decision D014 and the evidence under `docs/evidence/step3.5.5J/`.

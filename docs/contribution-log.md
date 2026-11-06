@@ -258,3 +258,79 @@ This section records the joint consistency review and completed documentation co
 - Official Step 2 — Environment Setup has not started.
 - Classifier implementation, model training, prediction-application implementation and physical robot construction or integration have not started.
 - No dataset images, existing split assignments or dataset-audit outputs were changed during this documentation closeout work.
+
+## 4 November 2026 — Step 2.7 Environment Setup Documentation and Integration
+
+### Member 1 — Project Lead
+
+- Prepared `docs/step2-environment-setup.md`, documenting the agreed Python environment, hardware information, dependencies, installation procedure, runtime checks, Git integration and member contributions.
+- Updated the project documentation to reflect the agreed environment and completed verification activities.
+- Submitted the documentation changes for review through PR #10.
+
+### Member 2 — Independent Review
+
+- Independently reviewed the environment documentation.
+- Checked the agreed Python environment, dependency information and verification records.
+- Completed the final documentation review and approval.
+
+### Final Integration Status
+
+- PR #10 — Step 2.7 Environment Setup Documentation and Project Plan: approved and merged at commit `54f7fda`.
+- Member 1 and Member 2 synchronised their local `main` branches with `origin/main`.
+- Both members confirmed the merged documentation was available and their working trees were clean.
+- Both members completed the post-merge documentation verification.
+- **Step 2.7 — Documentation and Integration: completed.**
+- **Step 2 — Environment Setup: completed by both members.**
+
+This update supersedes the earlier historical statements in the 2 November 2026 documentation closeout entry that Step 2 had not started or that the final integration remained pending.
+
+## 6 November 2026 — Step 3 Baseline Classifier Implementation
+
+### Member 1 — Project Lead
+
+- Implemented the manifest-driven dataset loader in `src/office_item_classifier/dataset.py`.
+- Implemented image preprocessing, including EXIF orientation correction, grayscale conversion and resizing to 128 × 128 pixels.
+- Added 10 dataset-loader tests and successfully verified the complete decoding of 812 training images and 226 validation images.
+- Implemented HOG feature extraction in `src/office_item_classifier/features.py`, producing 8,100 features per image.
+- Added 10 HOG feature-extraction tests covering descriptor dimensions, numerical validity, deterministic extraction and invalid inputs.
+- Successfully ran the complete automated test suite, with all 20 tests passing.
+- Implemented `scripts/train_baseline.py` and trained the initial HOG + Linear SVM classifier using 812 training images.
+- Evaluated the model using 226 validation images, achieving 68.58% accuracy and 0.6497 macro-F1.
+- Generated the validation metrics, per-class classification reports, confusion matrix and saved model under `results/baseline/`.
+- Implemented `scripts/verify_baseline.py` and successfully reloaded the saved model.
+- Reproduced the validation accuracy, macro-F1 and confusion matrix from the reloaded model.
+- Confirmed that probability estimates are not enabled and that the held-out test dataset was not accessed.
+- Prepared `docs/step3-baseline-results.md` to document the baseline configuration, evaluation results and limitations.
+- Updated the project plan and visual-review documentation to reflect the approved D014 logical split and completed baseline work.
+- Configured Git LFS to track `.joblib` model files and verified that the baseline model matches the LFS tracking rule.
+
+**Evidence / Status:**
+
+- Branch: `feature/step3-baseline-classifier`.
+- Dataset loader: `src/office_item_classifier/dataset.py`.
+- HOG implementation: `src/office_item_classifier/features.py`.
+- Training script: `scripts/train_baseline.py`.
+- Verification script: `scripts/verify_baseline.py`.
+- Automated tests: 20 passed.
+- Validation accuracy: 68.58%.
+- Validation macro-F1: 0.6497.
+- Baseline outputs: `results/baseline/`.
+- Detailed results: `docs/step3-baseline-results.md`.
+- Git commit and pull request: pending.
+- Member 2's independent baseline code and model verification: pending.
+
+### AI Assistance Record
+
+ChatGPT provided code drafts, test scaffolding, debugging guidance and documentation suggestions. Member 1 executed the commands in the local project environment, inspected the outputs, applied corrections and verified the implementation. No percentage of AI contribution is claimed.
+
+### Member 2 — Independent Baseline Verification
+
+Independent verification of the Step 3 baseline implementation, automated tests, saved model and validation results remains pending. Member 2's earlier dataset review, visual inspection and approved split verification are recorded in the relevant dataset and visual-review evidence.
+
+### Step 3 Integration Status
+
+The initial baseline implementation, training, validation and saved-model verification have been completed by Member 1.
+
+The remaining work includes final documentation review, Git integration, Member 2's independent baseline verification and synchronisation of both members' repositories.
+
+Step 3 remains in progress until these activities are completed.
