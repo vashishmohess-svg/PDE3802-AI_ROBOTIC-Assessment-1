@@ -410,4 +410,113 @@ The complete 20-test suite had already passed during the earlier implementation 
 - Working trees: clean on both computers.
 - Held-out test dataset: untouched and reserved for Step 6.
 
-**Step 3 — Baseline Classifier: completed by both members.**
+## 6 November 2026 — Step 3 Documentation Corrections and Development Dependency Integration
+
+### PR #13 — Final Step 3 Documentation Corrections
+
+#### Member 1 — Project Lead
+
+- Reviewed the Step 3 documentation following the successful merge of PR #12.
+- Prepared final corrections to `docs/contribution-log.md`, `docs/project-plan.md` and `docs/step3-baseline-results.md`.
+- Corrected outdated status statements and clarified the actual post-PR #12 verification results.
+- Recorded the successful synchronisation and saved-model verification by both members.
+- Created branch `docs/step3-post-merge-corrections`.
+- Submitted the documentation corrections through PR #13.
+- Reviewed Member 2's approval and merged PR #13 into `main`.
+
+#### Member 2 — Independent Review
+
+- Independently reviewed the final Step 3 documentation corrections in PR #13.
+- Checked that the documentation accurately reflected the merged baseline implementation and post-merge verification.
+- Submitted formal approval on PR #13.
+
+#### PR #13 Integration Evidence
+
+- Pull Request: https://github.com/vashishmohess-svg/PDE3802-AI_ROBOTIC-Assessment-1/pull/13
+- Branch: `docs/step3-post-merge-corrections`.
+- Merge commit: `edf3819`.
+- Files updated: `docs/contribution-log.md`, `docs/project-plan.md` and `docs/step3-baseline-results.md`.
+- Status: Approved and merged.
+
+### PR #14 — Development Dependency Setup and Independent Verification
+
+#### Member 1 — Project Lead
+
+- Inspected the existing runtime dependency files and confirmed that pytest was not included.
+- Confirmed that `.pytest_cache/` was already excluded through `.gitignore`.
+- Created branch `chore/step3-test-dependencies`.
+- Created `requirements-dev.txt`, referencing the existing `requirements-lock.txt` and specifying `pytest==9.2.0`.
+- Installed pytest 9.2.0 in the existing project virtual environment using Python 3.13.17.
+- Generated `requirements-dev-lock.txt` from the verified environment, recording 52 pinned packages.
+- Compared the generated lock file with the installed package list and confirmed an exact match.
+- Ran `python -m pip check` successfully.
+- Ran the complete automated test suite before submitting the pull request: 20 tests passed.
+- Ran `scripts/verify_baseline.py` and reproduced 68.58% validation accuracy, 0.6497 macro-F1 and the saved confusion matrix.
+- Confirmed that the held-out test split remained unused.
+- Committed the two development dependency files and pushed the branch.
+- Submitted PR #14 for independent review.
+
+#### Member 2 — Independent Review
+
+- Fetched and checked out `chore/step3-test-dependencies`.
+- Confirmed that the dependency changes introduced only `requirements-dev.txt` and `requirements-dev-lock.txt`.
+- Independently installed the development environment using `requirements-dev-lock.txt`.
+- Confirmed Python 3.13.17 and pytest 9.2.0.
+- Ran `python -m pip check` and confirmed that no broken requirements were found.
+- Compared the installed packages with the development lock file and confirmed an exact match.
+- Independently ran the complete automated test suite: 20 tests passed.
+- Ran `scripts/verify_baseline.py` and reproduced the validation metrics and confusion matrix.
+- Confirmed that the held-out test dataset was not accessed.
+- Reviewed the dependency changes and submitted formal approval on PR #14.
+
+#### PR #14 Integration Evidence
+
+- Pull Request: https://github.com/vashishmohess-svg/PDE3802-AI_ROBOTIC-Assessment-1/pull/14
+- Branch: `chore/step3-test-dependencies`.
+- Development dependency commit: `b3bcf52`.
+- Files added: `requirements-dev.txt` and `requirements-dev-lock.txt`.
+- Member 2 review: Approved.
+- Merge commit: `b98cb3a`.
+- Status: Approved and merged.
+
+### Final Post-PR #14 Verification — Both Members
+
+Following the successful merge of PR #14, both members independently synchronised their local `main` branches with `origin/main`.
+
+Both members confirmed:
+
+- Local `main` and `origin/main` matched the merge commit `b98cb3a946678eff3a55201d4a27f0e460a26d48`.
+- Their working trees were clean.
+- Python 3.13.17 and pytest 9.2.0 were available.
+- `python -m pip check` reported no broken requirements.
+- The complete automated test suite passed: 20/20 tests.
+- `scripts/verify_baseline.py` completed successfully.
+- Validation accuracy of 68.58% and macro-F1 of 0.6497 were reproduced.
+- The saved confusion matrix matched exactly.
+- The held-out test split remained untouched.
+
+Actual post-merge test execution times:
+
+| Member | Automated test result | Execution time |
+|---|---|---:|
+| Member 1 | 20 passed | 20.15 seconds |
+| Member 2 | 20 passed | 5.79 seconds |
+
+The earlier post-PR #12 pytest limitation was resolved through the separate development dependency setup in PR #14.
+
+### AI Assistance Record — Dependency Setup and Verification
+
+ChatGPT was used as a learning and support tool during the development dependency setup and verification process. It provided explanations of the distinction between runtime and development dependencies, guidance on preparing the development requirements files, structured commands for package installation and lock-file verification, and suggestions for automated testing and repository checks. Member 1 used this guidance to understand the dependency setup, create and inspect the files, execute the commands, investigate results and verify the environment. Member 2 independently installed the locked dependencies, executed the tests and verified the baseline results. Both members checked the actual command outputs. AI assistance is acknowledged as part of the development process; no percentage of AI contribution is claimed.
+
+### Step 3 Final Integration Status
+
+- PR #12 — Baseline HOG + Linear SVM implementation: merged.
+- PR #13 — Final Step 3 documentation corrections: merged.
+- PR #14 — Locked pytest development dependencies: merged.
+- Both members independently completed post-merge dependency, automated test and saved-model verification.
+- Both members confirmed synchronised local `main` branches and clean working trees.
+- The baseline validation results remain reproducible.
+- The held-out test dataset remains reserved for Step 6.
+- Step 4 has not started.
+
+**Step 3 — Baseline Classifier: COMPLETE.**

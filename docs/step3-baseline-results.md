@@ -135,33 +135,96 @@ Keyboard achieved the highest F1-score. Pencil achieved the lowest F1-score, fol
 
 These results identify areas for investigation in Step 4. They do not establish the exact visual cause of the errors.
 
-## 7. Automated testing and verification**
+## 7. Automated Testing and Verification
 
-A total of 20 unit tests passed during the baseline implementation and independent pre-merge review:
+A total of 20 automated tests were implemented and successfully passed during baseline development and independent pre-merge review:
 
 - 10 dataset-loader tests.
 - 10 HOG feature-extraction tests.
 
-All 812 approved training images and 226 validation images were successfully decoded.
+All 812 effective training images and 226 validation images were successfully decoded during the baseline implementation.
 
-Member 2 independently ran the complete automated test suite during the PR #12 review and confirmed that all 20 tests passed.
+### 7.1 Historical post-PR #12 test-runner limitation
 
-**Post-merge verification**
+After PR #12 was merged, both members independently attempted to execute:
 
-After PR #12 was merged, both members independently:
+`python -m pytest -q`
 
-- Retrieved the merged model through Git LFS.
-- Reloaded the saved model using `scripts/verify_baseline.py`.
-- Verified the Linear SVM configuration and eight classification classes.
-- Confirmed that the saved model references the approved manifest.
-- Recreated 226 validation predictions.
-- Reproduced 68.58% accuracy and 0.6497 macro-F1.
-- Confirmed that the saved confusion matrix matched exactly.
-- Confirmed that the held-out test split was not accessed.
+The command could not execute because `pytest` was not installed in either project virtual environment and was not included in the existing `requirements.txt` or `requirements-lock.txt`.
 
-The post-merge command `python -m pytest -q` could not execute on either computer because `pytest` was not installed and was not included in `requirements.txt` or `requirements-lock.txt`. This was an unavailable test-runner dependency, not a test failure. The earlier 20-test results remain the recorded successful test results.
+This was an unavailable test-runner dependency, not a failure of the 20 automated tests. The earlier successful 20/20 test results from implementation and independent pre-merge review remained valid.
 
-The post-merge saved-model verification script passed on both computers.
+Both members successfully completed the post-PR #12 saved-model verification using `scripts/verify_baseline.py`.
+
+This limitation was subsequently resolved through PR #14.
+
+### 7.2 Development dependency integration - PR #14
+
+A separate development dependency setup was introduced to make the automated tests reproducible on both computers without changing the existing runtime dependency definitions.
+
+The following files were added:
+
+- `requirements-dev.txt` - inherits the existing pinned runtime dependencies from `requirements-lock.txt` and adds `pytest==9.2.0`.
+- `requirements-dev-lock.txt` - records the complete 52-package development environment, including pytest and its supporting packages.
+
+The existing `requirements.txt` and `requirements-lock.txt` were left unchanged. The existing `.gitignore` already excluded `.pytest_cache/`, so no modification was necessary.
+
+Member 1 implemented the dependency setup, installed pytest and generated the development lock file. Member 2 independently installed the locked environment, checked the installed package versions against the lock file, ran the tests and reviewed the dependency changes.
+
+PR #14 - Add locked pytest development dependencies - was formally approved by Member 2 and merged into `main`.
+
+- Development dependency commit: `b3bcf52`.
+- Pull Request: [PR #14](https://github.com/vashishmohess-svg/PDE3802-AI_ROBOTIC-Assessment-1/pull/14).
+- Merge commit: `b98cb3a`.
+
+### 7.3 Post-PR #14 verification by both members
+
+Following the merge of PR #14, both members independently synchronised their local `main` branches with `origin/main` and performed the dependency, automated test and saved-model verification checks.
+
+The agreed environment was Python 3.13.17 with pytest 9.2.0.
+
+| Verification | Member 1 | Member 2 |
+|---|---:|---:|
+| `python -m pip check` | Passed | Passed |
+| pytest version | 9.2.0 | 9.2.0 |
+| Automated tests | 20 passed | 20 passed |
+| Test execution time | 20.15 seconds | 5.79 seconds |
+| Baseline verification | Passed | Passed |
+| Validation accuracy | 68.58% | 68.58% |
+| Validation macro-F1 | 0.6497 | 0.6497 |
+| Confusion matrix | Exact match | Exact match |
+| Held-out test images accessed | 0 | 0 |
+
+Both members independently confirmed the following:
+
+- The saved Joblib model was successfully reloaded.
+- The Linear SVM configuration and `C = 1.0` were verified.
+- Probability estimates remained disabled.
+- The approved manifest identity was verified.
+- The reloaded model generated 226 validation predictions.
+- Validation accuracy of 68.58% and macro-F1 of 0.6497 were reproduced.
+- The saved confusion matrix matched the reproduced predictions exactly.
+- The held-out test split remained untouched.
+- `python -m pip check` reported no broken requirements.
+
+### 7.4 Final repository integration
+
+PR #14 was merged into `main` at commit:
+
+`b98cb3a946678eff3a55201d4a27f0e460a26d48`
+
+Both members independently confirmed:
+
+- Their current branch was `main`.
+- Their local `HEAD` matched `origin/main` at the PR #14 merge commit.
+- Their working trees were clean.
+- The development dependency files were present on `main`.
+- All 20 automated tests passed after the merge.
+- Saved-model verification completed successfully.
+
+The earlier post-PR #12 test-runner limitation is therefore resolved. The automated tests are now available through the shared development dependency setup.
+
+The held-out test dataset remains unused and reserved for Step 6.
 
 ## 8. Generated baseline files
 
@@ -192,20 +255,77 @@ Pull Request: https://github.com/vashishmohess-svg/PDE3802-AI_ROBOTIC-Assessment
 7. Model comparison and selection remain for Step 4.
 8. Final held-out evaluation remains for Step 6.
 
-## 10. Current completion status**
+## 10. Current Completion Status
 
-The baseline HOG + Linear SVM implementation, training, validation and saved-model verification have been completed by Member 1.
+Member 1 implemented, trained and evaluated the baseline HOG + Linear SVM classifier. Member 2 independently reviewed the implementation and verified the saved model and validation results.
 
-Member 2 independently reviewed the baseline implementation, automated tests, saved model and validation results. Member 2 successfully retrieved the model through Git LFS, passed all 20 automated tests during the pre-merge review, reproduced the validation accuracy of 68.58%, macro-F1 of 0.6497 and the saved confusion matrix, and submitted formal approval on PR #12.
+### 10.1 Baseline implementation
 
-PR #12 was successfully merged into `main` at commit `a72d482`.
+- Member 1 implemented the manifest-driven dataset loader and image preprocessing.
+- HOG feature extraction was implemented and verified, producing 8,100 features per image.
+- The baseline Linear SVM was trained using the 812 effective training images.
+- Validation used all 226 approved validation images.
+- The resulting baseline achieved 68.58% validation accuracy and 0.6497 macro-F1.
+- The saved model, validation reports and confusion matrix were generated and committed.
+- The saved model was configured for Git LFS and successfully retrieved by both members.
 
-Both members synchronised their local repositories with `origin/main`, successfully retrieved the merged model through Git LFS, confirmed clean working trees and independently ran `scripts/verify_baseline.py`. Both reproduced the same validation metrics and confusion matrix.
+### 10.2 Pull requests and integration
 
-The post-merge `pytest` command could not execute because `pytest` was absent from both virtual environments and the shared dependency files. The earlier 20/20 test results from implementation and independent review remain valid. Both post-merge saved-model verification runs passed.
+The following Step 3 pull requests have been merged:
 
-The held-out test dataset has not been accessed and remains reserved for Step 6.
+| Pull Request | Purpose | Merge commit |
+|---|---|---|
+| PR #12 | Baseline HOG + Linear SVM implementation | `a72d482` |
+| PR #13 | Final post-merge Step 3 documentation corrections | `edf3819` |
+| PR #14 | Locked pytest development dependencies | `b98cb3a` |
 
-**Step 3 — Baseline Classifier is complete.**
+PR #12 received Member 2's independent review of the baseline implementation, automated tests, saved model and validation results.
 
-**Step 4 — Model Comparison and Selection has not started.**
+PR #13 corrected the Step 3 documentation following the baseline merge.
+
+PR #14 resolved the missing pytest development dependency and was independently reviewed and approved by Member 2.
+
+### 10.3 Final post-merge verification
+
+Both members synchronised their local repositories with `origin/main` after PR #14.
+
+The final shared main commit is:
+
+`b98cb3a946678eff3a55201d4a27f0e460a26d48`
+
+Both members independently:
+
+- Confirmed that local `main` matched `origin/main`.
+- Confirmed clean working trees.
+- Confirmed Python 3.13.17 and pytest 9.2.0.
+- Ran `python -m pip check` successfully.
+- Ran the complete automated test suite, with 20/20 tests passing.
+- Ran `scripts/verify_baseline.py` successfully.
+- Reproduced 68.58% validation accuracy and 0.6497 macro-F1.
+- Confirmed an exact match between the saved and reproduced confusion matrices.
+- Confirmed that the saved model referenced the approved manifest.
+- Confirmed that no held-out test images were accessed.
+
+### 10.4 Remaining limitations
+
+1. The baseline is an initial classifier, not necessarily the final selected model.
+2. It classifies one whole image into one class; it is not an object detector.
+3. It does not provide calibrated confidence probabilities.
+4. Pencil and Mug remain the weakest-performing classes and require attention during model comparison.
+5. The held-out test dataset has not been accessed and remains reserved for Step 6.
+6. The prediction application and camera-input workflow remain for Step 5.
+7. Physical robot construction and integration remain outside the completed baseline implementation.
+
+### 10.5 Final Step 3 status
+
+The baseline implementation, validation, independent review, dependency integration, automated testing, saved-model verification and Git integration have been completed.
+
+Both members independently reproduced the baseline results after the final dependency integration.
+
+The final documentation closeout is being prepared on the `docs/step3-final-closeout` branch for independent review and integration.
+
+**Step 3 - Baseline Classifier: COMPLETE.**
+
+**Step 4 - Model Comparison and Selection: NOT STARTED.**
+
+The held-out test dataset remains reserved for Step 6.
