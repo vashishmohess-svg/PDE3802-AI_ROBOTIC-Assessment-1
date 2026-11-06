@@ -1,0 +1,63 @@
+{
+  "Bottle": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 27.0
+  },
+  "Calculator": {
+    "precision": 1.0,
+    "recall": 0.03225806451612903,
+    "f1-score": 0.0625,
+    "support": 31.0
+  },
+  "Keyboard": {
+    "precision": 0.39622641509433965,
+    "recall": 0.5675675675675675,
+    "f1-score": 0.4666666666666667,
+    "support": 37.0
+  },
+  "Mouse": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 34.0
+  },
+  "Mug": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 19.0
+  },
+  "Notebook": {
+    "precision": 0.9,
+    "recall": 0.32142857142857145,
+    "f1-score": 0.47368421052631576,
+    "support": 28.0
+  },
+  "Pencil": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 14.0
+  },
+  "Scissors": {
+    "precision": 0.2222222222222222,
+    "recall": 1.0,
+    "f1-score": 0.36363636363636365,
+    "support": 36.0
+  },
+  "accuracy": 0.29646017699115046,
+  "macro avg": {
+    "precision": 0.31480607966457025,
+    "recall": 0.2401567754390335,
+    "f1-score": 0.17081090510366825,
+    "support": 226.0
+  },
+  "weighted avg": {
+    "precision": 0.3489397228251795,
+    "recall": 0.29646017699115046,
+    "f1-score": 0.20158510465625043,
+    "support": 226.0
+  }
+}

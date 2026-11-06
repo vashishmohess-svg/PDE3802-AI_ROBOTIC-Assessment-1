@@ -1,0 +1,9 @@
+Actual / Predicted,Bottle,Calculator,Keyboard,Mouse,Mug,Notebook,Pencil,Scissors
+Bottle,21,1,2,0,1,2,0,0
+Calculator,0,20,2,5,0,4,0,0
+Keyboard,1,1,31,1,0,2,0,1
+Mouse,2,0,1,28,0,0,0,3
+Mug,7,0,0,1,8,1,0,2
+Notebook,1,3,1,2,0,19,0,2
+Pencil,4,0,3,2,0,1,0,4
+Scissors,1,1,0,1,0,1,0,32
